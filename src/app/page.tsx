@@ -180,8 +180,8 @@ export default function HomePage() {
                 </div>
                 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-                  Payments & Subscriptions for Software —{' '}
-                  <span className="gradient-text">Without Holding Funds</span>
+                  Payments &{' '}
+                  <span className="gradient-text">Subscriptions</span>
                 </h1>
                 
                 <p className="text-xl text-dark-300 mb-4 max-w-xl">

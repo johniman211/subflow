@@ -53,7 +53,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Phone</h3>
-                    <p className="text-gray-600">+211 912 345 678</p>
+                    <p className="text-gray-600">+211929385157</p>
                     <p className="text-sm text-gray-500">Mon-Fri, 9am-5pm EAT</p>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">WhatsApp</h3>
-                    <p className="text-gray-600">+211 912 345 678</p>
+                    <p className="text-gray-600">+211929385157</p>
                     <p className="text-sm text-gray-500">Quick support via WhatsApp</p>
                   </div>
                 </div>
