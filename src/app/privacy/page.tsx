@@ -10,7 +10,7 @@ export default function PrivacyPage() {
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-xl">S</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">SubFlow</span>
+              <span className="text-xl font-bold text-gray-900">Losetify</span>
             </Link>
             <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
               Sign In
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         <div className="prose prose-lg text-gray-600 max-w-none">
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">1. Introduction</h2>
           <p>
-            SubFlow ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy 
+            Losetify ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy 
             explains how we collect, use, disclose, and safeguard your information when you use our 
             subscription management platform.
           </p>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
 
       <footer className="bg-gray-100 py-8 mt-16">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} SubFlow. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Losetify. All rights reserved.</p>
         </div>
       </footer>
     </div>

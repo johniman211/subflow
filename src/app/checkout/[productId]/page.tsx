@@ -51,7 +51,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
                 </span>
               </div>
               <span className="text-white/80 font-medium">
-                {product.users?.business_name || 'SubFlow'}
+                {product.users?.business_name || 'Losetify'}
               </span>
             </div>
 
@@ -76,7 +76,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
             </div>
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4" />
-              <span>Powered by SubFlow</span>
+              <span>Powered by Losetify</span>
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
                 </div>
                 <div className="flex items-center gap-1">
                   <Shield className="h-3 w-3" />
-                  <span>Powered by SubFlow</span>
+                  <span>Powered by Losetify</span>
                 </div>
               </div>
             </div>

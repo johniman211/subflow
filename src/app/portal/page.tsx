@@ -284,7 +284,7 @@ export default function CustomerPortal() {
       {/* Footer */}
       <footer className="border-t border-slate-200 bg-white mt-12">
         <div className="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-slate-500">
-          Powered by SubFlow • Subscription Management for South Sudan
+          Powered by Losetify • Subscription Management for South Sudan
         </div>
       </footer>
     </div>

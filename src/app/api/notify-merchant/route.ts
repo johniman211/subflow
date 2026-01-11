@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
             </center>
           </div>
           <div class="footer">
-            <p>SubFlow - Subscription Management Platform</p>
+            <p>Losetify - Subscription Management Platform</p>
           </div>
         </div>
       </body>
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'SubFlow <notifications@resend.dev>',
+          from: 'Losetify <notifications@resend.dev>',
           to: [merchant.email],
           subject: emailSubject,
           html: emailHtml,

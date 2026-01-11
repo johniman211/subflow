@@ -25,9 +25,9 @@ export default function HomePage() {
           <nav className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center shadow-lemon">
-                <span className="text-dark-900 font-black text-xl">S</span>
+                <span className="text-dark-900 font-black text-xl">L</span>
               </div>
-              <span className="text-xl font-bold text-white">SubFlow</span>
+              <span className="text-xl font-bold text-white">Losetify</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <Link href="#features" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Features</Link>
@@ -176,7 +176,7 @@ export default function HomePage() {
               <div className="order-1 lg:order-2 text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 bg-lemon-400/10 border border-lemon-400/20 text-lemon-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
                   <Sparkles className="h-4 w-4" />
-                  <span>Built for Africa</span>
+                  <span>Built for South Sudan</span>
                 </div>
                 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
@@ -366,7 +366,7 @@ export default function HomePage() {
                   <div className="w-16 h-16 bg-dark-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <X className="h-8 w-8 text-dark-400" />
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">SubFlow</h3>
+                  <h3 className="text-lg font-bold text-white mb-2">Losetify</h3>
                   <p className="text-dark-400 font-semibold">Never holds funds</p>
                 </div>
               </div>
@@ -524,9 +524,9 @@ export default function HomePage() {
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center">
-                  <span className="text-dark-900 font-black text-xl">S</span>
+                  <span className="text-dark-900 font-black text-xl">L</span>
                 </div>
-                <span className="text-xl font-bold text-white">SubFlow</span>
+                <span className="text-xl font-bold text-white">Losetify</span>
               </div>
               <p className="text-dark-400 text-sm mb-6 max-w-xs">
                 The all-in-one subscription and payment platform built for Africa's digital economy.
@@ -568,7 +568,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="border-t border-dark-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-dark-500 text-sm">© {new Date().getFullYear()} SubFlow. All rights reserved.</p>
+            <p className="text-dark-500 text-sm">© {new Date().getFullYear()} Losetify. All rights reserved.</p>
             <p className="text-dark-500 text-sm">Built with 💛 for Africa</p>
           </div>
         </div>

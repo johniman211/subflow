@@ -43,7 +43,7 @@ export async function POST(request: Request) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-SubFlow-Signature': signature,
+            'X-Losetify-Signature': signature,
           },
           body: JSON.stringify(payload),
         });

@@ -10,7 +10,7 @@ export default function TermsPage() {
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-xl">S</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">SubFlow</span>
+              <span className="text-xl font-bold text-gray-900">Losetify</span>
             </Link>
             <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
               Sign In
@@ -26,13 +26,13 @@ export default function TermsPage() {
         <div className="prose prose-lg text-gray-600 max-w-none">
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">1. Acceptance of Terms</h2>
           <p>
-            By accessing or using SubFlow's subscription management platform ("Service"), you agree to be 
+            By accessing or using Losetify's subscription management platform ("Service"), you agree to be 
             bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">2. Description of Service</h2>
           <p>
-            SubFlow provides a subscription and access control platform that enables merchants to:
+            Losetify provides a subscription and access control platform that enables merchants to:
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Create and manage digital products with subscription pricing</li>
@@ -41,7 +41,7 @@ export default function TermsPage() {
             <li>Track subscriptions, revenue, and customer data</li>
           </ul>
           <p className="mt-4">
-            <strong>Important:</strong> SubFlow does not process or hold funds. All payments are made directly 
+            <strong>Important:</strong> Losetify does not process or hold funds. All payments are made directly 
             from customers to merchants. We only verify payments and manage subscription access.
           </p>
 
@@ -55,7 +55,7 @@ export default function TermsPage() {
           </ul>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">4. Merchant Responsibilities</h2>
-          <p>As a merchant using SubFlow, you agree to:</p>
+          <p>As a merchant using Losetify, you agree to:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Provide accurate product descriptions and pricing</li>
             <li>Fulfill your obligations to customers who purchase your products</li>
@@ -66,7 +66,7 @@ export default function TermsPage() {
           </ul>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">5. Prohibited Uses</h2>
-          <p>You may not use SubFlow to:</p>
+          <p>You may not use Losetify to:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Sell illegal products or services</li>
             <li>Engage in fraud or deceptive practices</li>
@@ -78,20 +78,20 @@ export default function TermsPage() {
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">6. Fees and Payments</h2>
           <p>
-            SubFlow may charge fees for certain features or usage tiers. Current pricing is available 
+            Losetify may charge fees for certain features or usage tiers. Current pricing is available 
             on our website. We reserve the right to modify pricing with reasonable notice.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">7. Intellectual Property</h2>
           <p>
-            The SubFlow platform, including its design, features, and content, is owned by us and 
+            The Losetify platform, including its design, features, and content, is owned by us and 
             protected by intellectual property laws. You retain ownership of your products and content 
             uploaded to our platform.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">8. Limitation of Liability</h2>
           <p>
-            SubFlow is provided "as is" without warranties of any kind. We are not liable for:
+            Losetify is provided "as is" without warranties of any kind. We are not liable for:
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Disputes between merchants and customers</li>
@@ -103,7 +103,7 @@ export default function TermsPage() {
 
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">9. Indemnification</h2>
           <p>
-            You agree to indemnify and hold SubFlow harmless from any claims, damages, or expenses 
+            You agree to indemnify and hold Losetify harmless from any claims, damages, or expenses 
             arising from your use of the Service or violation of these terms.
           </p>
 
@@ -138,7 +138,7 @@ export default function TermsPage() {
 
       <footer className="bg-gray-100 py-8 mt-16">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} SubFlow. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Losetify. All rights reserved.</p>
         </div>
       </footer>
     </div>

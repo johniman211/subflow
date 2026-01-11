@@ -6,8 +6,8 @@ import { ArrowLeft, Copy, Check, Code, Globe, Webhook, Key, CreditCard, Users, T
 
 const codeExamples = {
   javascript: {
-    checkout: `// Initialize SubFlow
-const subflow = new SubFlow('pk_live_your_public_key');
+    checkout: `// Initialize Losetify
+const subflow = new Losetify('pk_live_your_public_key');
 
 // Open checkout modal
 subflow.checkout({
@@ -100,11 +100,11 @@ if (hash_equals($expected, $signature)) {
   wordpress: {
     plugin: `<?php
 /**
- * Plugin Name: SubFlow Integration
- * Description: Accept payments via SubFlow
+ * Plugin Name: Losetify Integration
+ * Description: Accept payments via Losetify
  */
 
-// Add SubFlow SDK to your theme
+// Add Losetify SDK to your theme
 function subflow_enqueue_scripts() {
     wp_enqueue_script(
         'subflow-sdk',
@@ -124,12 +124,12 @@ function subflow_checkout_button($atts) {
     ], $atts);
     
     return sprintf(
-        '<button onclick="openSubFlowCheckout(\'%s\')">%s</button>
+        '<button onclick="openLosetifyCheckout(\'%s\')">%s</button>
         <script>
-        function openSubFlowCheckout(priceId) {
+        function openLosetifyCheckout(priceId) {
             const phone = prompt("Enter your phone number:");
             if (phone) {
-                const subflow = new SubFlow("pk_live_your_key");
+                const subflow = new Losetify("pk_live_your_key");
                 subflow.checkout({
                     priceId: priceId,
                     customerPhone: phone,
@@ -203,7 +203,7 @@ export default function DocsPage() {
             <Link href="/" className="text-gray-600 hover:text-gray-900">
               <ArrowLeft className="h-5 w-5" />
             </Link>
-            <h1 className="text-xl font-bold text-gray-900">SubFlow API Documentation</h1>
+            <h1 className="text-xl font-bold text-gray-900">Losetify API Documentation</h1>
           </div>
           <Link href="/dashboard/api-keys" className="btn-primary btn-sm">
             Get API Keys
@@ -248,7 +248,7 @@ export default function DocsPage() {
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Start</h2>
                   <p className="text-gray-600 mb-6">
-                    Integrate SubFlow payments into your website in minutes. Accept MTN Mobile Money 
+                    Integrate Losetify payments into your website in minutes. Accept MTN Mobile Money 
                     and Bank Transfers from customers in South Sudan.
                   </p>
                 </div>
@@ -504,7 +504,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="sdk-modal"
                     language="javascript"
-                    code={`const subflow = new SubFlow('pk_live_your_public_key');
+                    code={`const subflow = new Losetify('pk_live_your_public_key');
 
 // Open checkout in a modal
 subflow.checkout({
@@ -531,7 +531,7 @@ subflow.checkout({
                   <CodeBlock
                     id="sdk-redirect"
                     language="javascript"
-                    code={`const subflow = new SubFlow('pk_live_your_public_key');
+                    code={`const subflow = new Losetify('pk_live_your_public_key');
 
 // Redirect to hosted checkout page
 subflow.checkout({

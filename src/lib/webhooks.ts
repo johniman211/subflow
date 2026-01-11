@@ -38,9 +38,9 @@ export async function deliverWebhook(
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-SubFlow-Signature': signature,
-          'X-SubFlow-Timestamp': timestamp.toString(),
-          'X-SubFlow-Event': eventType,
+          'X-Losetify-Signature': signature,
+          'X-Losetify-Timestamp': timestamp.toString(),
+          'X-Losetify-Event': eventType,
         },
         body: JSON.stringify({
           event: eventType,

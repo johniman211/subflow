@@ -11,7 +11,7 @@ export default function ContactPage() {
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-xl">S</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">SubFlow</span>
+              <span className="text-xl font-bold text-gray-900">Losetify</span>
             </Link>
             <div className="flex items-center space-x-4">
               <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
@@ -130,7 +130,7 @@ export default function ContactPage() {
 
       <footer className="bg-gray-100 py-8">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} SubFlow. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Losetify. All rights reserved.</p>
         </div>
       </footer>
     </div>

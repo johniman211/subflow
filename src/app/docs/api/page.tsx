@@ -11,7 +11,7 @@ export default function ApiDocsPage() {
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-xl">S</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">SubFlow</span>
+              <span className="text-xl font-bold text-gray-900">Losetify</span>
             </Link>
             <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
               Sign In
@@ -26,7 +26,7 @@ export default function ApiDocsPage() {
         </Link>
 
         <h1 className="text-4xl font-bold text-gray-900 mb-4">API Reference</h1>
-        <p className="text-xl text-gray-600 mb-12">Integrate SubFlow into your applications</p>
+        <p className="text-xl text-gray-600 mb-12">Integrate Losetify into your applications</p>
 
         <div className="space-y-12">
           {/* Authentication */}

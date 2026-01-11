@@ -11,7 +11,7 @@ export default function AboutPage() {
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-xl">S</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">SubFlow</span>
+              <span className="text-xl font-bold text-gray-900">Losetify</span>
             </Link>
             <div className="flex items-center space-x-4">
               <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
@@ -28,7 +28,7 @@ export default function AboutPage() {
       <main>
         {/* Hero */}
         <section className="container mx-auto px-4 py-20 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">About SubFlow</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">About Losetify</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             We're building the subscription infrastructure for emerging markets, 
             starting with South Sudan and expanding across East Africa.
@@ -85,7 +85,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Our Story</h2>
           <div className="prose prose-lg text-gray-600 mx-auto">
             <p>
-              SubFlow was born out of a simple observation: businesses in South Sudan and East Africa 
+              Losetify was born out of a simple observation: businesses in South Sudan and East Africa 
               struggle to accept recurring payments for their digital products and services.
             </p>
             <p>
@@ -99,7 +99,7 @@ export default function AboutPage() {
               between customer and merchant – we just make sure the right people get access.
             </p>
             <p>
-              Today, SubFlow powers subscriptions for SaaS founders, app developers, and digital sellers 
+              Today, Losetify powers subscriptions for SaaS founders, app developers, and digital sellers 
               across the region. We're just getting started.
             </p>
           </div>
@@ -109,7 +109,7 @@ export default function AboutPage() {
         <section className="bg-gray-900 py-20">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold text-white mb-6">Ready to get started?</h2>
-            <p className="text-gray-400 mb-8">Join merchants across South Sudan using SubFlow</p>
+            <p className="text-gray-400 mb-8">Join merchants across South Sudan using Losetify</p>
             <Link href="/auth/register" className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100">
               Create Free Account <ArrowRight className="h-5 w-5" />
             </Link>
@@ -119,7 +119,7 @@ export default function AboutPage() {
 
       <footer className="bg-gray-100 py-8">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} SubFlow. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Losetify. All rights reserved.</p>
         </div>
       </footer>
     </div>
