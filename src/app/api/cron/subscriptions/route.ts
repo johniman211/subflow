@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const supabase = createServiceRoleClient();
+  const supabase = createServiceRoleClient() as any;
   const results = {
     processed: 0,
     statusUpdates: { expired: 0, past_due: 0 },

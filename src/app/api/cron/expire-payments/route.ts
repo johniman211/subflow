@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Find and expire pending payments that are past their expiry time
-    const { data: expiredPayments, error } = await supabase
+    const { data: expiredPayments, error } = await (supabase as any)
       .from('payments')
       .update({ status: 'expired', updated_at: new Date().toISOString() })
       .eq('status', 'pending')
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     return Response.json({
       success: true,
       expired_count: expiredPayments?.length || 0,
-      expired_payments: expiredPayments?.map(p => p.reference_code) || [],
+      expired_payments: expiredPayments?.map((p: any) => p.reference_code) || [],
     });
   } catch (error: any) {
     console.error('Cron error:', error);
