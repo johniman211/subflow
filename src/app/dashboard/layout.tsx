@@ -21,9 +21,9 @@ export default async function DashboardLayout({
     .single();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark-950">
       <DashboardNav user={profile} />
-      <main className="lg:pl-64">
+      <main className="lg:pl-72">
         <div className="px-4 py-8 sm:px-6 lg:px-8">
           {children}
         </div>
