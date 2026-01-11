@@ -23,8 +23,11 @@ import {
   PieChart,
   ChevronRight,
   Home,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { useState } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
@@ -50,6 +53,7 @@ export function DashboardNav({ user }: DashboardNavProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -60,26 +64,46 @@ export function DashboardNav({ user }: DashboardNavProps) {
   return (
     <>
       {/* Mobile menu button */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-xl border-b border-dark-800 px-4 py-3">
+      <div className={cn(
+        "lg:hidden fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b px-4 py-3",
+        theme === 'dark' ? 'bg-dark-900/95 border-dark-800' : 'bg-white/95 border-gray-200'
+      )}>
         <div className="flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-lemon-400 rounded-lg flex items-center justify-center">
               <span className="text-dark-900 font-black">S</span>
             </div>
-            <span className="font-bold text-white">SubFlow</span>
+            <span className={cn("font-bold", theme === 'dark' ? 'text-white' : 'text-gray-900')}>SubFlow</span>
           </Link>
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-dark-400 hover:text-white transition-colors"
-          >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className={cn(
+                "p-2 rounded-lg transition-colors",
+                theme === 'dark' ? 'text-dark-400 hover:text-white hover:bg-dark-800' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+              )}
+            >
+              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={cn(
+                "p-2 transition-colors",
+                theme === 'dark' ? 'text-dark-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
+              )}
+            >
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-dark-900 pt-16">
+        <div className={cn(
+          "lg:hidden fixed inset-0 z-40 pt-16",
+          theme === 'dark' ? 'bg-dark-900' : 'bg-white'
+        )}>
           <nav className="px-4 py-4 space-y-1 overflow-y-auto max-h-[calc(100vh-4rem)]">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
@@ -92,7 +116,9 @@ export function DashboardNav({ user }: DashboardNavProps) {
                     'flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all',
                     isActive
                       ? 'bg-lemon-400/10 text-lemon-400 border border-lemon-400/20'
-                      : 'text-dark-300 hover:bg-dark-800 hover:text-white'
+                      : theme === 'dark' 
+                        ? 'text-dark-300 hover:bg-dark-800 hover:text-white'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                   )}
                 >
                   <item.icon className="h-5 w-5 mr-3" />
@@ -100,10 +126,15 @@ export function DashboardNav({ user }: DashboardNavProps) {
                 </Link>
               );
             })}
-            <hr className="border-dark-800 my-4" />
+            <hr className={theme === 'dark' ? 'border-dark-800' : 'border-gray-200'} />
             <button
               onClick={handleSignOut}
-              className="flex items-center w-full px-4 py-3 text-sm font-medium text-dark-400 hover:text-white hover:bg-dark-800 rounded-xl transition-all"
+              className={cn(
+                "flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all",
+                theme === 'dark' 
+                  ? 'text-dark-400 hover:text-white hover:bg-dark-800' 
+                  : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+              )}
             >
               <LogOut className="h-5 w-5 mr-3" />
               Sign Out
@@ -114,26 +145,44 @@ export function DashboardNav({ user }: DashboardNavProps) {
 
       {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col">
-        <div className="flex flex-col flex-grow bg-dark-900 border-r border-dark-800 pt-6 pb-4 overflow-y-auto">
+        <div className={cn(
+          "flex flex-col flex-grow border-r pt-6 pb-4 overflow-y-auto",
+          theme === 'dark' ? 'bg-dark-900 border-dark-800' : 'bg-white border-gray-200'
+        )}>
           {/* Logo */}
           <div className="flex items-center flex-shrink-0 px-6 mb-2">
             <Link href="/dashboard" className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center shadow-lemon">
                 <span className="text-dark-900 font-black text-xl">S</span>
               </div>
-              <span className="text-xl font-bold text-white">SubFlow</span>
+              <span className={cn("text-xl font-bold", theme === 'dark' ? 'text-white' : 'text-gray-900')}>SubFlow</span>
             </Link>
           </div>
 
-          {/* Back to Home Link */}
-          <div className="px-4 mb-6">
+          {/* Back to Home + Theme Toggle */}
+          <div className="px-4 mb-6 flex items-center justify-between">
             <Link 
               href="/"
-              className="flex items-center gap-2 px-3 py-2 text-sm text-dark-400 hover:text-lemon-400 transition-colors"
+              className={cn(
+                "flex items-center gap-2 px-3 py-2 text-sm hover:text-lemon-400 transition-colors",
+                theme === 'dark' ? 'text-dark-400' : 'text-gray-500'
+              )}
             >
               <Home className="h-4 w-4" />
               Back to Home
             </Link>
+            <button
+              onClick={toggleTheme}
+              className={cn(
+                "p-2 rounded-lg transition-colors",
+                theme === 'dark' 
+                  ? 'text-dark-400 hover:text-white hover:bg-dark-800' 
+                  : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+              )}
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
           </div>
 
           {/* Navigation */}
@@ -148,12 +197,18 @@ export function DashboardNav({ user }: DashboardNavProps) {
                     'group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-200',
                     isActive
                       ? 'bg-lemon-400/10 text-lemon-400 border border-lemon-400/20'
-                      : 'text-dark-300 hover:bg-dark-800 hover:text-white'
+                      : theme === 'dark'
+                        ? 'text-dark-300 hover:bg-dark-800 hover:text-white'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                   )}
                 >
                   <item.icon className={cn(
                     'h-5 w-5 mr-3 transition-colors',
-                    isActive ? 'text-lemon-400' : 'text-dark-500 group-hover:text-dark-300'
+                    isActive 
+                      ? 'text-lemon-400' 
+                      : theme === 'dark' 
+                        ? 'text-dark-500 group-hover:text-dark-300'
+                        : 'text-gray-400 group-hover:text-gray-600'
                   )} />
                   {item.name}
                   {isActive && (
@@ -166,16 +221,24 @@ export function DashboardNav({ user }: DashboardNavProps) {
 
           {/* User Section */}
           <div className="px-4 mt-auto">
-            <div className="border-t border-dark-800 pt-4">
-              <div className="px-4 py-3 rounded-xl bg-dark-800/50 mb-2">
-                <p className="text-sm font-semibold text-white truncate">
+            <div className={cn("border-t pt-4", theme === 'dark' ? 'border-dark-800' : 'border-gray-200')}>
+              <div className={cn(
+                "px-4 py-3 rounded-xl mb-2",
+                theme === 'dark' ? 'bg-dark-800/50' : 'bg-gray-100'
+              )}>
+                <p className={cn("text-sm font-semibold truncate", theme === 'dark' ? 'text-white' : 'text-gray-900')}>
                   {user?.business_name || user?.full_name}
                 </p>
-                <p className="text-xs text-dark-400 truncate">{user?.email}</p>
+                <p className={cn("text-xs truncate", theme === 'dark' ? 'text-dark-400' : 'text-gray-500')}>{user?.email}</p>
               </div>
               <button
                 onClick={handleSignOut}
-                className="flex items-center w-full px-4 py-2.5 text-sm font-medium text-dark-400 hover:text-white hover:bg-dark-800 rounded-xl transition-all"
+                className={cn(
+                  "flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-xl transition-all",
+                  theme === 'dark' 
+                    ? 'text-dark-400 hover:text-white hover:bg-dark-800'
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                )}
               >
                 <LogOut className="h-5 w-5 mr-3" />
                 Sign Out

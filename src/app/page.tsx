@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Menu, XIcon } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Menu, XIcon, Package } from 'lucide-react';
 import { useState } from 'react';
 
 export default function HomePage() {
@@ -176,21 +176,34 @@ export default function HomePage() {
               <div className="order-1 lg:order-2 text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 bg-lemon-400/10 border border-lemon-400/20 text-lemon-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
                   <Sparkles className="h-4 w-4" />
-                  <span>Built for Africa's Digital Economy</span>
+                  <span>Built for Africa</span>
                 </div>
                 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-                  Subscriptions & Payments{' '}
-                  <span className="gradient-text">Made Easy Peasy</span>
+                  Payments & Subscriptions for Software —{' '}
+                  <span className="gradient-text">Without Holding Funds</span>
                 </h1>
                 
-                <p className="text-xl text-dark-300 mb-8 max-w-xl">
-                  The all-in-one platform for selling software, digital products, and subscriptions in Africa. Accept Mobile Money, manage access, grow revenue.
+                <p className="text-xl text-dark-300 mb-4 max-w-xl">
+                  Sell software, digital products, and subscriptions.<br />
+                  Accept one-time or recurring payments.<br />
+                  Customers pay you directly. We unlock access automatically.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
+                <div className="flex flex-col gap-2 text-dark-400 text-sm mb-8">
+                  <span className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-lemon-400" />
+                    Works with MTN MoMo & Bank Transfer
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-lemon-400" />
+                    No payment APIs. No wallets. No escrow. No risk.
+                  </span>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row items-center gap-4">
                   <Link href="/auth/register" className="w-full sm:w-auto btn-primary btn-lg group">
-                    Start Selling Free
+                    Start Free
                     <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link href="#how-it-works" className="w-full sm:w-auto btn-outline btn-lg">
@@ -198,35 +211,55 @@ export default function HomePage() {
                     See How It Works
                   </Link>
                 </div>
-                
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-dark-400">
-                  <span className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-lemon-400" />
-                    No setup fees
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-lemon-400" />
-                    No monthly fees
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-lemon-400" />
-                    Get paid directly
-                  </span>
-                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Trusted By / Social Proof */}
+        {/* One-Line Explanation */}
+        <section className="py-12 bg-dark-900">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-xl md:text-2xl text-dark-300 font-medium">
+              We verify payments and manage subscriptions — <span className="text-lemon-400">your money goes straight to you.</span>
+            </p>
+          </div>
+        </section>
+
+        {/* Partners / Social Proof */}
         <section className="py-16 border-y border-dark-800">
           <div className="container mx-auto px-4">
-            <p className="text-center text-dark-400 mb-8">Trusted by businesses across Africa</p>
-            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-50">
-              {['TechStartup', 'AfriApp', 'DigiServe', 'CloudAfrica', 'PayEasy'].map((brand, i) => (
-                <span key={i} className="text-xl font-bold text-dark-300">{brand}</span>
+            <p className="text-center text-dark-400 mb-8">Trusted partners & integrations</p>
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
+              {['MTN MoMo', 'Equity Bank', 'PaySSD', 'TechStartup', 'Digicash'].map((brand, i) => (
+                <span key={i} className="text-xl font-bold text-dark-300 opacity-70 hover:opacity-100 transition-opacity">{brand}</span>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Who It's For */}
+        <section className="section-dark">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <span className="badge-grape mb-4">Who It's For</span>
+              <h2 className="text-3xl md:text-4xl font-black mb-4">Built for</h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              {[
+                { icon: Code, label: 'SaaS & Software Companies' },
+                { icon: Smartphone, label: 'App Developers' },
+                { icon: Package, label: 'Digital Product Sellers' },
+                { icon: Globe, label: 'Online Services' },
+              ].map((item, i) => (
+                <div key={i} className="text-center p-6 rounded-2xl bg-dark-800/50 border border-dark-700 hover:border-lemon-400/30 transition-all">
+                  <item.icon className="h-8 w-8 text-lemon-400 mx-auto mb-3" />
+                  <p className="font-semibold text-white text-sm">{item.label}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-dark-400 mt-8 text-lg">
+              If you sell access, licenses, or downloads — <span className="text-lemon-400">this is for you.</span>
+            </p>
           </div>
         </section>
 
@@ -234,27 +267,27 @@ export default function HomePage() {
         <section id="features" className="section-dark">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <span className="badge-lemon mb-4">Features</span>
+              <span className="badge-lemon mb-4">Access Control</span>
               <h2 className="text-3xl md:text-5xl font-black mb-4">
-                Everything you need to{' '}
-                <span className="gradient-text">sell & grow</span>
+                The Real{' '}
+                <span className="gradient-text">Value We Provide</span>
               </h2>
               <p className="text-xl text-dark-400 max-w-2xl mx-auto">
-                From payment collection to subscription management, we've got you covered.
+                We are not a payment processor. We are a subscription & access control platform.
               </p>
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {[
-                { icon: CreditCard, title: 'Accept Mobile Money', desc: 'MTN MoMo, Airtel Money, and bank transfers. Customers pay you directly.' },
-                { icon: Lock, title: 'Access Control', desc: 'Automatically lock & unlock subscriptions. API keys for your apps & websites.' },
-                { icon: Bell, title: 'Smart Notifications', desc: 'SMS, WhatsApp & Email reminders for renewals and expiring subscriptions.' },
-                { icon: PieChart, title: 'Analytics Dashboard', desc: 'Track revenue, subscribers, growth rates and more in real-time.' },
-                { icon: Users, title: 'Customer Management', desc: 'Full customer database with search, notes, tags and export features.' },
-                { icon: Code, title: 'Developer API', desc: 'RESTful API with webhooks for custom integrations and automation.' },
-                { icon: Zap, title: 'Instant Setup', desc: 'No bank approvals, no MoMo API needed. Start selling in minutes.' },
+                { icon: Lock, title: 'Auto Lock & Unlock', desc: 'Automatically lock & unlock subscriptions based on payment status.' },
+                { icon: Code, title: 'API Keys', desc: 'API keys for apps & websites. Perfect for software, SaaS, and digital products.' },
+                { icon: PieChart, title: 'No-Code Dashboard', desc: 'No-code dashboard for non-technical sellers. View payments, confirm in one click.' },
+                { icon: CreditCard, title: 'MTN MoMo & Bank', desc: 'MTN MoMo support and bank transfer support. Guest checkout, no customer login.' },
+                { icon: Users, title: 'Customer Management', desc: 'See active subscribers, track revenue & growth, export customer data.' },
+                { icon: Smartphone, title: 'Mobile-First', desc: 'Built for South Sudan, expanding to East Africa. Mobile-first design.' },
+                { icon: Zap, title: 'Start in Minutes', desc: 'No bank approvals, no MoMo API needed, no legal headache. Scales as you grow.' },
                 { icon: Globe, title: 'Multi-Currency', desc: 'Support for SSP, USD, and expanding to more African currencies.' },
-                { icon: Shield, title: 'No Fund Holding', desc: 'We never touch your money. Payments go directly to your account.' },
+                { icon: Shield, title: 'No Fund Holding', desc: 'Customer pays you directly. We never hold funds. No wallets, no escrow.' },
               ].map((feature, i) => (
                 <div key={i} className="feature-card">
                   <div className="icon">
@@ -277,13 +310,14 @@ export default function HomePage() {
                 Three steps to{' '}
                 <span className="gradient-text-purple">start selling</span>
               </h2>
+              <p className="text-xl text-dark-400">That's it. Simple.</p>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {[
-                { num: '01', title: 'Create Product', desc: 'Set your price, currency (SSP or USD), and billing cycle (one-time or recurring).' },
-                { num: '02', title: 'Share Link', desc: 'Send your checkout link to customers. They pay via Mobile Money or bank transfer.' },
-                { num: '03', title: 'Get Paid', desc: 'Confirm payment in one click. Access unlocks automatically. Money goes to you.' },
+                { num: '01', title: 'Create a Product', desc: 'Set price, currency (SSP or USD), and billing (one-time, recurring, or trial period).' },
+                { num: '02', title: 'Share Checkout Link', desc: 'Customer pays you directly via MTN MoMo or bank transfer.' },
+                { num: '03', title: 'Access Unlocks', desc: 'You confirm payment → we activate the subscription or delivery. Money goes to you.' },
               ].map((step, i) => (
                 <div key={i} className="relative">
                   <div className="card p-8 h-full hover:border-lemon-400/30 transition-all duration-300 group">
@@ -307,7 +341,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <span className="badge-lemon mb-4">Transparency</span>
+                <span className="badge-lemon mb-4">Payment Transparency</span>
                 <h2 className="text-3xl md:text-4xl font-black mb-4">
                   Your money, <span className="gradient-text">your control</span>
                 </h2>
@@ -316,7 +350,7 @@ export default function HomePage() {
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="card-lemon p-8 text-center">
                   <div className="w-16 h-16 bg-lemon-400/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <Users className="h-8 w-8 text-lemon-400" />
+                    <Check className="h-8 w-8 text-lemon-400" />
                   </div>
                   <h3 className="text-lg font-bold text-white mb-2">Customer</h3>
                   <p className="text-lemon-400 font-semibold">Pays you directly</p>
@@ -348,9 +382,9 @@ export default function HomePage() {
             <div className="text-center mb-16">
               <span className="badge-lemon mb-4">Pricing</span>
               <h2 className="text-3xl md:text-5xl font-black mb-4">
-                Simple, transparent <span className="gradient-text">pricing</span>
+                Start free. <span className="gradient-text">Upgrade when you grow.</span>
               </h2>
-              <p className="text-xl text-dark-400">Start free, pay only when you grow</p>
+              <p className="text-xl text-dark-400">Simple monthly pricing for merchants.</p>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -458,14 +492,18 @@ export default function HomePage() {
           <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-5xl font-black mb-6">
-                Ready to start <span className="gradient-text">selling?</span>
+                Start Selling Software & Digital Products <span className="gradient-text">Today</span>
               </h2>
-              <p className="text-xl text-dark-300 mb-8">
-                Join hundreds of African businesses already using SubFlow to manage subscriptions and grow revenue.
-              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-dark-400 mb-8">
+                <span>No setup fees.</span>
+                <span>•</span>
+                <span>No money held.</span>
+                <span>•</span>
+                <span>No risk.</span>
+              </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/auth/register" className="btn-primary btn-lg group">
-                  Create Free Account
+                  Create Merchant Account
                   <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link href="/contact" className="btn-outline btn-lg">
