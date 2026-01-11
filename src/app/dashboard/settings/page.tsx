@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { SOUTH_SUDAN_BANKS } from '@/lib/constants';
-import { Loader2, Save } from 'lucide-react';
+import { Loader2, Save, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [userId, setUserId] = useState<string | null>(null);
   
   const [settings, setSettings] = useState({
     full_name: '',
@@ -32,7 +33,8 @@ export default function SettingsPage() {
     const { data: { user } } = await supabase.auth.getUser();
     
     if (user) {
-      const { data } = await supabase
+      setUserId(user.id);
+      const { data, error } = await supabase
         .from('users')
         .select('*')
         .eq('id', user.id)
@@ -52,6 +54,9 @@ export default function SettingsPage() {
           bank_account_name_usd: data.bank_account_name_usd || '',
         });
       }
+      if (error) {
+        console.error('Error fetching settings:', error);
+      }
     }
     setLoading(false);
   };
@@ -60,16 +65,37 @@ export default function SettingsPage() {
     setSaving(true);
     setMessage({ type: '', text: '' });
 
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    if (!userId) {
+      setMessage({ type: 'error', text: 'User not authenticated. Please refresh and try again.' });
+      setSaving(false);
+      return;
+    }
 
-    const { error } = await supabase
+    const supabase = createClient();
+
+    const { data, error } = await supabase
       .from('users')
-      .update(settings)
-      .eq('id', user?.id);
+      .update({
+        full_name: settings.full_name,
+        business_name: settings.business_name,
+        phone: settings.phone,
+        mtn_momo_number: settings.mtn_momo_number,
+        bank_name_ssp: settings.bank_name_ssp,
+        bank_account_number_ssp: settings.bank_account_number_ssp,
+        bank_account_name_ssp: settings.bank_account_name_ssp,
+        bank_name_usd: settings.bank_name_usd,
+        bank_account_number_usd: settings.bank_account_number_usd,
+        bank_account_name_usd: settings.bank_account_name_usd,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', userId)
+      .select();
 
     if (error) {
-      setMessage({ type: 'error', text: error.message });
+      console.error('Update error:', error);
+      setMessage({ type: 'error', text: `Failed to save: ${error.message}` });
+    } else if (!data || data.length === 0) {
+      setMessage({ type: 'error', text: 'No rows updated. Please check your permissions.' });
     } else {
       setMessage({ type: 'success', text: 'Settings saved successfully!' });
     }
@@ -79,27 +105,32 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+        <Loader2 className="h-8 w-8 animate-spin text-lemon-400" />
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6 pt-16 lg:pt-0">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-600 mt-1">Manage your account and payment settings</p>
+        <h1 className="text-2xl font-bold text-white">Settings</h1>
+        <p className="text-dark-400 mt-1">Manage your account and payment settings</p>
       </div>
 
       {message.text && (
-        <div className={`p-4 rounded-lg ${message.type === 'error' ? 'bg-danger-50 text-danger-600' : 'bg-success-50 text-success-600'}`}>
+        <div className={`p-4 rounded-xl flex items-center gap-3 ${
+          message.type === 'error' 
+            ? 'bg-danger-500/10 border border-danger-500/20 text-danger-500' 
+            : 'bg-success-500/10 border border-success-500/20 text-success-500'
+        }`}>
+          {message.type === 'error' ? <AlertCircle className="h-5 w-5" /> : <CheckCircle className="h-5 w-5" />}
           {message.text}
         </div>
       )}
 
       {/* Profile Settings */}
       <div className="card p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Profile</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">Profile</h2>
         <div className="space-y-4">
           <div>
             <label className="label">Full Name</label>
@@ -133,9 +164,14 @@ export default function SettingsPage() {
       </div>
 
       {/* MTN MoMo Settings */}
-      <div className="card p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">MTN Mobile Money</h2>
-        <p className="text-sm text-gray-600 mb-4">
+      <div className="card p-6 border-lemon-400/20">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
+            <span className="text-lemon-400 font-bold text-sm">MTN</span>
+          </div>
+          <h2 className="text-lg font-semibold text-white">MTN Mobile Money</h2>
+        </div>
+        <p className="text-sm text-dark-400 mb-4">
           This is the number customers will send payments to. Make sure it&apos;s correct!
         </p>
         <div>
@@ -152,8 +188,13 @@ export default function SettingsPage() {
 
       {/* SSP Bank Account */}
       <div className="card p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Bank Account (SSP)</h2>
-        <p className="text-sm text-gray-600 mb-4">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-8 h-8 bg-grape-500/20 rounded-lg flex items-center justify-center">
+            <span className="text-grape-400 font-bold text-sm">SSP</span>
+          </div>
+          <h2 className="text-lg font-semibold text-white">Bank Account (SSP)</h2>
+        </div>
+        <p className="text-sm text-dark-400 mb-4">
           South Sudanese Pound bank account for local transfers.
         </p>
         <div className="space-y-4">
@@ -193,8 +234,13 @@ export default function SettingsPage() {
 
       {/* USD Bank Account */}
       <div className="card p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Bank Account (USD)</h2>
-        <p className="text-sm text-gray-600 mb-4">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-8 h-8 bg-success-500/20 rounded-lg flex items-center justify-center">
+            <span className="text-success-500 font-bold text-sm">USD</span>
+          </div>
+          <h2 className="text-lg font-semibold text-white">Bank Account (USD)</h2>
+        </div>
+        <p className="text-sm text-dark-400 mb-4">
           US Dollar bank account for international transfers.
         </p>
         <div className="space-y-4">

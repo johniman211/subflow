@@ -1,6 +1,6 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { formatCurrency } from '@/lib/utils';
-import { Package, CreditCard, Users, TrendingUp, Plus, ArrowRight, Sparkles } from 'lucide-react';
+import { Package, CreditCard, Users, TrendingUp, Plus, ArrowRight, Sparkles, AlertTriangle, Settings } from 'lucide-react';
 import Link from 'next/link';
 
 function getGreeting(): string {
@@ -25,11 +25,13 @@ export default async function DashboardPage() {
     supabase.from('payments').select('*', { count: 'exact', head: true }).eq('merchant_id', user?.id),
     supabase.from('subscriptions').select('*', { count: 'exact', head: true }).eq('merchant_id', user?.id).eq('status', 'active'),
     supabase.from('payments').select('*, prices(name, currency)').eq('merchant_id', user?.id).order('created_at', { ascending: false }).limit(5),
-    supabase.from('users').select('full_name, business_name').eq('id', user?.id).single(),
+    supabase.from('users').select('full_name, business_name, mtn_momo_number, bank_name_ssp, bank_name_usd').eq('id', user?.id).single(),
   ]);
 
   const userName = profile?.full_name?.split(' ')[0] || 'there';
   const businessName = profile?.business_name || 'your business';
+  
+  const hasPaymentMethod = !!(profile?.mtn_momo_number || profile?.bank_name_ssp || profile?.bank_name_usd);
 
   const stats = [
     { name: 'Total Products', value: productsCount || 0, icon: Package, href: '/dashboard/products', color: 'lemon' },
@@ -39,7 +41,33 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-8 pt-16 lg:pt-0">
+    <div className="space-y-6 pt-16 lg:pt-0">
+      {/* Payment Method Warning Banner */}
+      {!hasPaymentMethod && (
+        <div className="bg-warning-500/10 border border-warning-500/30 rounded-2xl p-5">
+          <div className="flex flex-col md:flex-row md:items-center gap-4">
+            <div className="flex items-start gap-4 flex-1">
+              <div className="w-12 h-12 bg-warning-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                <AlertTriangle className="h-6 w-6 text-warning-500" />
+              </div>
+              <div>
+                <h3 className="font-bold text-white mb-1">Configure Your Payment Methods</h3>
+                <p className="text-dark-300 text-sm">
+                  You haven&apos;t set up any payment methods yet. Add your MTN Mobile Money number or bank account details so customers know where to send payments.
+                </p>
+              </div>
+            </div>
+            <Link 
+              href="/dashboard/settings" 
+              className="btn-primary flex-shrink-0 bg-warning-500 hover:bg-warning-600 text-dark-900"
+            >
+              <Settings className="h-5 w-5 mr-2" />
+              Configure Now
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
