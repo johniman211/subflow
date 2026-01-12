@@ -8,7 +8,7 @@ export default function TermsPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-xl">S</span>
+                <span className="text-white font-bold text-xl">L</span>
               </div>
               <span className="text-xl font-bold text-gray-900">Losetify</span>
             </Link>
@@ -130,7 +130,7 @@ export default function TermsPage() {
             For questions about these Terms of Service, please contact us at:
           </p>
           <ul className="list-none pl-0 space-y-1 mt-4">
-            <li><strong>Email:</strong> legal@subflow.app</li>
+            <li><strong>Email:</strong> legal@losetify.com</li>
             <li><strong>Address:</strong> Juba, South Sudan</li>
           </ul>
         </div>

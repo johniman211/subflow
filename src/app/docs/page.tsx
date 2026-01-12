@@ -7,10 +7,10 @@ import { ArrowLeft, Copy, Check, Code, Globe, Webhook, Key, CreditCard, Users, T
 const codeExamples = {
   javascript: {
     checkout: `// Initialize Losetify
-const subflow = new Losetify('pk_live_your_public_key');
+const losetify = new Losetify('pk_live_your_public_key');
 
 // Open checkout modal
-subflow.checkout({
+losetify.checkout({
   priceId: 'price_abc123',
   customerPhone: '+211912345678',
   customerEmail: 'customer@example.com',
@@ -23,7 +23,7 @@ subflow.checkout({
   }
 });`,
     accessCheck: `// Check subscription access (Server-side only)
-const response = await fetch('https://your-app.com/api/v1/access/check', {
+const response = await fetch('https://losetify.com/api/v1/access/check', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer sk_live_your_secret_key',
@@ -49,7 +49,7 @@ if (has_access) {
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-  CURLOPT_URL => "https://your-app.com/api/v1/access/check",
+  CURLOPT_URL => "https://losetify.com/api/v1/access/check",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_POST => true,
   CURLOPT_HTTPHEADER => [
@@ -74,8 +74,8 @@ if ($result['has_access']) {
     webhook: `<?php
 // Verify webhook signature
 $payload = file_get_contents('php://input');
-$signature = $_SERVER['HTTP_X_SUBFLOW_SIGNATURE'];
-$timestamp = $_SERVER['HTTP_X_SUBFLOW_TIMESTAMP'];
+$signature = $_SERVER['HTTP_X_LOSETIFY_SIGNATURE'];
+$timestamp = $_SERVER['HTTP_X_LOSETIFY_TIMESTAMP'];
 
 $expected = hash_hmac('sha256', $timestamp . '.' . $payload, $webhook_secret);
 
@@ -105,19 +105,19 @@ if (hash_equals($expected, $signature)) {
  */
 
 // Add Losetify SDK to your theme
-function subflow_enqueue_scripts() {
+function losetify_enqueue_scripts() {
     wp_enqueue_script(
-        'subflow-sdk',
-        'https://your-app.com/sdk/subflow.js',
+        'losetify-sdk',
+        'https://losetify.com/sdk/losetify.js',
         [],
         '1.0.0',
         true
     );
 }
-add_action('wp_enqueue_scripts', 'subflow_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'losetify_enqueue_scripts');
 
 // Shortcode for checkout button
-function subflow_checkout_button($atts) {
+function losetify_checkout_button($atts) {
     $atts = shortcode_atts([
         'price_id' => '',
         'text' => 'Subscribe Now',
@@ -129,8 +129,8 @@ function subflow_checkout_button($atts) {
         function openLosetifyCheckout(priceId) {
             const phone = prompt("Enter your phone number:");
             if (phone) {
-                const subflow = new Losetify("pk_live_your_key");
-                subflow.checkout({
+                const losetify = new Losetify("pk_live_your_key");
+                losetify.checkout({
                     priceId: priceId,
                     customerPhone: phone,
                     onSuccess: () => location.reload()
@@ -142,13 +142,13 @@ function subflow_checkout_button($atts) {
         esc_html($atts['text'])
     );
 }
-add_shortcode('subflow_checkout', 'subflow_checkout_button');
+add_shortcode('losetify_checkout', 'losetify_checkout_button');
 
 // Check access before showing content
-function subflow_check_access($product_id, $phone) {
-    $response = wp_remote_post('https://your-app.com/api/v1/access/check', [
+function losetify_check_access($product_id, $phone) {
+    $response = wp_remote_post('https://losetify.com/api/v1/access/check', [
         'headers' => [
-            'Authorization' => 'Bearer ' . SUBFLOW_SECRET_KEY,
+            'Authorization' => 'Bearer ' . LOSETIFY_SECRET_KEY,
             'Content-Type' => 'application/json',
         ],
         'body' => json_encode([
@@ -270,7 +270,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="sdk-script"
                     language="html"
-                    code={`<script src="https://your-subflow-app.com/sdk/subflow.js"></script>`}
+                    code={`<script src="https://losetify.com/sdk/losetify.js"></script>`}
                   />
                 </div>
 
@@ -322,7 +322,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="auth-header"
                     language="bash"
-                    code={`curl -X POST https://your-app.com/api/v1/access/check \\
+                    code={`curl -X POST https://losetify.com/api/v1/access/check \\
   -H "Authorization: Bearer sk_live_your_secret_key" \\
   -H "Content-Type: application/json" \\
   -d '{"product_id": "...", "customer_phone": "..."}'`}
@@ -465,7 +465,7 @@ export default function DocsPage() {
                 <div className="card p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Plugin Code</h3>
                   <p className="text-gray-600">
-                    Create a new file <code className="bg-gray-100 px-2 py-1 rounded">wp-content/plugins/subflow/subflow.php</code>:
+                    Create a new file <code className="bg-gray-100 px-2 py-1 rounded">wp-content/plugins/losetify/losetify.php</code>:
                   </p>
                   <CodeBlock
                     id="wordpress-plugin"
@@ -480,7 +480,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="wordpress-shortcode"
                     language="html"
-                    code={`[subflow_checkout price_id="price_abc123" text="Subscribe Now"]`}
+                    code={`[losetify_checkout price_id="price_abc123" text="Subscribe Now"]`}
                   />
                 </div>
               </div>
@@ -495,7 +495,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="sdk-install"
                     language="html"
-                    code={`<script src="https://your-subflow-app.com/sdk/subflow.js"></script>`}
+                    code={`<script src="https://losetify.com/sdk/losetify.js"></script>`}
                   />
                 </div>
 
@@ -504,10 +504,10 @@ export default function DocsPage() {
                   <CodeBlock
                     id="sdk-modal"
                     language="javascript"
-                    code={`const subflow = new Losetify('pk_live_your_public_key');
+                    code={`const losetify = new Losetify('pk_live_your_public_key');
 
 // Open checkout in a modal
-subflow.checkout({
+losetify.checkout({
   priceId: 'price_abc123',
   customerPhone: '+211912345678',
   customerEmail: 'customer@example.com', // optional
@@ -531,10 +531,10 @@ subflow.checkout({
                   <CodeBlock
                     id="sdk-redirect"
                     language="javascript"
-                    code={`const subflow = new Losetify('pk_live_your_public_key');
+                    code={`const losetify = new Losetify('pk_live_your_public_key');
 
 // Redirect to hosted checkout page
-subflow.checkout({
+losetify.checkout({
   priceId: 'price_abc123',
   customerPhone: '+211912345678',
   mode: 'redirect',
