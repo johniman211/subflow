@@ -150,8 +150,8 @@ export default function AdminPlans() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Platform Plans</h1>
-          <p className="text-gray-600 mt-1">Manage subscription plans and pricing</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Platform Plans</h1>
+          <p className="text-gray-600 dark:text-dark-400 mt-1">Manage subscription plans and pricing</p>
         </div>
         <button
           onClick={handleCreate}
@@ -167,8 +167,8 @@ export default function AdminPlans() {
         {plans.map((plan) => (
           <div
             key={plan.id}
-            className={`bg-white rounded-2xl border-2 p-6 relative ${
-              plan.is_featured ? 'border-amber-500' : 'border-gray-200'
+            className={`bg-white dark:bg-dark-800 rounded-2xl border-2 p-6 relative ${
+              plan.is_featured ? 'border-amber-500' : 'border-gray-200 dark:border-dark-700'
             }`}
           >
             {plan.is_featured && (
@@ -181,13 +181,13 @@ export default function AdminPlans() {
             
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-lg font-bold text-gray-900">{plan.name}</h3>
-                <p className="text-sm text-gray-500">{plan.description}</p>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">{plan.name}</h3>
+                <p className="text-sm text-gray-500 dark:text-dark-400">{plan.description}</p>
               </div>
               <div className="flex gap-1">
                 <button
                   onClick={() => handleEdit(plan)}
-                  className="p-2 hover:bg-gray-100 rounded-lg text-gray-600"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg text-gray-600 dark:text-dark-400"
                 >
                   <Edit2 className="h-4 w-4" />
                 </button>
@@ -204,34 +204,34 @@ export default function AdminPlans() {
 
             <div className="mb-4">
               <div className="mb-1">
-                <span className="text-2xl font-black text-gray-900">
+                <span className="text-2xl font-black text-gray-900 dark:text-white">
                   {(plan.price_monthly_ssp || 0).toLocaleString()} SSP
                 </span>
-                <span className="text-gray-500">/mo</span>
+                <span className="text-gray-500 dark:text-dark-400">/mo</span>
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-500 dark:text-dark-400">
                 ${plan.price_monthly} USD/mo
               </div>
               {plan.price_yearly_ssp > 0 && (
-                <p className="text-xs text-gray-400">{plan.price_yearly_ssp?.toLocaleString()} SSP/year</p>
+                <p className="text-xs text-gray-400 dark:text-dark-500">{plan.price_yearly_ssp?.toLocaleString()} SSP/year</p>
               )}
             </div>
 
             <div className="space-y-2 mb-4">
-              <p className="text-xs font-medium text-gray-500 uppercase">Features</p>
+              <p className="text-xs font-medium text-gray-500 dark:text-dark-400 uppercase">Features</p>
               {plan.features?.map((feature, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                <div key={i} className="flex items-center gap-2 text-sm text-gray-600 dark:text-dark-300">
                   <Check className="h-4 w-4 text-green-500" />
                   {feature}
                 </div>
               ))}
             </div>
 
-            <div className="pt-4 border-t border-gray-200">
-              <p className="text-xs text-gray-500">
+            <div className="pt-4 border-t border-gray-200 dark:border-dark-700">
+              <p className="text-xs text-gray-500 dark:text-dark-400">
                 Max Subscribers: {plan.limits?.max_subscribers === -1 ? 'Unlimited' : plan.limits?.max_subscribers || 50}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-dark-400">
                 API Access: {plan.limits?.api_access ? 'Yes' : 'No'}
               </p>
               {plan.trial_days > 0 && (
@@ -250,41 +250,41 @@ export default function AdminPlans() {
           <div className="fixed inset-0 bg-black/50" onClick={() => setIsModalOpen(false)} />
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
-              <div className="relative bg-white rounded-2xl shadow-xl max-w-2xl w-full my-8 p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">
+              <div className="relative bg-white dark:bg-dark-900 rounded-2xl shadow-xl max-w-2xl w-full my-8 p-6">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
                   {editingPlan.id ? 'Edit Plan' : 'Create Plan'}
                 </h2>
 
                 <div className="space-y-4 max-h-[60vh] overflow-y-auto">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-1">Name</label>
                       <input
                         type="text"
                         value={editingPlan.name}
                         onChange={(e) => setEditingPlan({ ...editingPlan, name: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-lg text-gray-900 dark:text-white dark:bg-dark-800"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Slug</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-1">Slug</label>
                       <input
                         type="text"
                         value={editingPlan.slug}
                         onChange={(e) => setEditingPlan({ ...editingPlan, slug: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-lg text-gray-900 dark:text-white dark:bg-dark-800"
                         placeholder="auto-generated if empty"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-1">Description</label>
                     <input
                       type="text"
                       value={editingPlan.description}
                       onChange={(e) => setEditingPlan({ ...editingPlan, description: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-lg text-gray-900 dark:text-white dark:bg-dark-800"
                     />
                   </div>
 
@@ -298,7 +298,7 @@ export default function AdminPlans() {
                           type="number"
                           value={editingPlan.price_monthly_ssp || 0}
                           onChange={(e) => setEditingPlan({ ...editingPlan, price_monthly_ssp: parseFloat(e.target.value) || 0 })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-lg text-gray-900 dark:text-white dark:bg-dark-800"
                           placeholder="e.g. 50000"
                         />
                       </div>
@@ -308,7 +308,7 @@ export default function AdminPlans() {
                           type="number"
                           value={editingPlan.price_yearly_ssp || 0}
                           onChange={(e) => setEditingPlan({ ...editingPlan, price_yearly_ssp: parseFloat(e.target.value) || 0 })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-lg text-gray-900 dark:text-white dark:bg-dark-800"
                           placeholder="e.g. 500000"
                         />
                       </div>
@@ -325,7 +325,7 @@ export default function AdminPlans() {
                           type="number"
                           value={editingPlan.price_monthly}
                           onChange={(e) => setEditingPlan({ ...editingPlan, price_monthly: parseFloat(e.target.value) || 0 })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-lg text-gray-900 dark:text-white dark:bg-dark-800"
                           placeholder="e.g. 29"
                         />
                       </div>
@@ -335,7 +335,7 @@ export default function AdminPlans() {
                           type="number"
                           value={editingPlan.price_yearly}
                           onChange={(e) => setEditingPlan({ ...editingPlan, price_yearly: parseFloat(e.target.value) || 0 })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-lg text-gray-900 dark:text-white dark:bg-dark-800"
                           placeholder="e.g. 290"
                         />
                       </div>
@@ -343,7 +343,7 @@ export default function AdminPlans() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Trial Days</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-1">Trial Days</label>
                     <input
                       type="number"
                       value={editingPlan.trial_days}
@@ -354,7 +354,7 @@ export default function AdminPlans() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Max Subscribers (-1 for unlimited)</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-1">Max Subscribers (-1 for unlimited)</label>
                       <input
                         type="number"
                         value={editingPlan.limits?.max_subscribers ?? 50}
@@ -362,7 +362,7 @@ export default function AdminPlans() {
                           ...editingPlan, 
                           limits: { ...editingPlan.limits, max_subscribers: parseInt(e.target.value) }
                         })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-lg text-gray-900 dark:text-white dark:bg-dark-800"
                       />
                     </div>
                     <div className="flex items-end gap-4">
@@ -376,7 +376,7 @@ export default function AdminPlans() {
                           })}
                           className="rounded"
                         />
-                        <span className="text-sm text-gray-700">API Access</span>
+                        <span className="text-sm text-gray-700 dark:text-dark-300">API Access</span>
                       </label>
                       <label className="flex items-center gap-2">
                         <input
@@ -388,13 +388,13 @@ export default function AdminPlans() {
                           })}
                           className="rounded"
                         />
-                        <span className="text-sm text-gray-700">Webhooks</span>
+                        <span className="text-sm text-gray-700 dark:text-dark-300">Webhooks</span>
                       </label>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Features</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">Features</label>
                     {editingPlan.features?.map((feature, i) => (
                       <div key={i} className="flex gap-2 mb-2">
                         <input
@@ -427,7 +427,7 @@ export default function AdminPlans() {
                         onChange={(e) => setEditingPlan({ ...editingPlan, is_active: e.target.checked })}
                         className="rounded"
                       />
-                      <span className="text-sm text-gray-700">Active</span>
+                      <span className="text-sm text-gray-700 dark:text-dark-300">Active</span>
                     </label>
                     <label className="flex items-center gap-2">
                       <input
@@ -436,15 +436,15 @@ export default function AdminPlans() {
                         onChange={(e) => setEditingPlan({ ...editingPlan, is_featured: e.target.checked })}
                         className="rounded"
                       />
-                      <span className="text-sm text-gray-700">Featured</span>
+                      <span className="text-sm text-gray-700 dark:text-dark-300">Featured</span>
                     </label>
                   </div>
                 </div>
 
-                <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
+                <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200 dark:border-dark-700">
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+                    className="px-4 py-2 text-gray-700 dark:text-dark-300 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg"
                   >
                     Cancel
                   </button>

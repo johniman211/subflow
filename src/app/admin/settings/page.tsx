@@ -73,8 +73,8 @@ export default function AdminSettings() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Platform Settings</h1>
-          <p className="text-gray-600 mt-1">Configure payment receiving accounts</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Platform Settings</h1>
+          <p className="text-gray-600 dark:text-dark-400 mt-1">Configure payment receiving accounts</p>
         </div>
         <button
           onClick={handleSave}
@@ -96,19 +96,19 @@ export default function AdminSettings() {
 
       <div className="grid gap-6">
         {/* MTN MoMo */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+        <div className="bg-white dark:bg-dark-800 rounded-2xl border border-gray-200 dark:border-dark-700 p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center">
               <Smartphone className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-gray-900">MTN Mobile Money</h2>
-              <p className="text-sm text-gray-500">Users will send payments to this number</p>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white">MTN Mobile Money</h2>
+              <p className="text-sm text-gray-500 dark:text-dark-400">Users will send payments to this number</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">MoMo Number</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">MoMo Number</label>
               <input
                 type="text"
                 value={paymentSettings.mtn_momo.number}
@@ -116,12 +116,12 @@ export default function AdminSettings() {
                   ...paymentSettings,
                   mtn_momo: { ...paymentSettings.mtn_momo, number: e.target.value }
                 })}
-                className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                 placeholder="+211 9XX XXX XXX"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Account Name</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">Account Name</label>
               <input
                 type="text"
                 value={paymentSettings.mtn_momo.name}
@@ -129,7 +129,7 @@ export default function AdminSettings() {
                   ...paymentSettings,
                   mtn_momo: { ...paymentSettings.mtn_momo, name: e.target.value }
                 })}
-                className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                 placeholder="Losetify"
               />
             </div>
@@ -137,19 +137,19 @@ export default function AdminSettings() {
         </div>
 
         {/* Bank SSP */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+        <div className="bg-white dark:bg-dark-800 rounded-2xl border border-gray-200 dark:border-dark-700 p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
               <Building className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-gray-900">Bank Account (SSP)</h2>
-              <p className="text-sm text-gray-500">South Sudanese Pound bank account</p>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white">Bank Account (SSP)</h2>
+              <p className="text-sm text-gray-500 dark:text-dark-400">South Sudanese Pound bank account</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Bank Name</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">Bank Name</label>
               <input
                 type="text"
                 value={paymentSettings.bank_ssp.bank_name}
@@ -157,12 +157,12 @@ export default function AdminSettings() {
                   ...paymentSettings,
                   bank_ssp: { ...paymentSettings.bank_ssp, bank_name: e.target.value }
                 })}
-                className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                 placeholder="Bank Name"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Account Number</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">Account Number</label>
               <input
                 type="text"
                 value={paymentSettings.bank_ssp.account_number}
@@ -170,12 +170,12 @@ export default function AdminSettings() {
                   ...paymentSettings,
                   bank_ssp: { ...paymentSettings.bank_ssp, account_number: e.target.value }
                 })}
-                className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                 placeholder="Account Number"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Account Name</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">Account Name</label>
               <input
                 type="text"
                 value={paymentSettings.bank_ssp.account_name}
@@ -183,7 +183,7 @@ export default function AdminSettings() {
                   ...paymentSettings,
                   bank_ssp: { ...paymentSettings.bank_ssp, account_name: e.target.value }
                 })}
-                className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                 placeholder="Account Holder Name"
               />
             </div>
@@ -191,19 +191,19 @@ export default function AdminSettings() {
         </div>
 
         {/* Bank USD */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+        <div className="bg-white dark:bg-dark-800 rounded-2xl border border-gray-200 dark:border-dark-700 p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
               <Building className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-gray-900">Bank Account (USD)</h2>
-              <p className="text-sm text-gray-500">US Dollar bank account for international payments</p>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white">Bank Account (USD)</h2>
+              <p className="text-sm text-gray-500 dark:text-dark-400">US Dollar bank account for international payments</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Bank Name</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">Bank Name</label>
               <input
                 type="text"
                 value={paymentSettings.bank_usd.bank_name}
@@ -211,12 +211,12 @@ export default function AdminSettings() {
                   ...paymentSettings,
                   bank_usd: { ...paymentSettings.bank_usd, bank_name: e.target.value }
                 })}
-                className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                 placeholder="Bank Name"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Account Number</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">Account Number</label>
               <input
                 type="text"
                 value={paymentSettings.bank_usd.account_number}
@@ -224,12 +224,12 @@ export default function AdminSettings() {
                   ...paymentSettings,
                   bank_usd: { ...paymentSettings.bank_usd, account_number: e.target.value }
                 })}
-                className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                 placeholder="Account Number"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Account Name</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-dark-300 mb-2">Account Name</label>
               <input
                 type="text"
                 value={paymentSettings.bank_usd.account_name}
@@ -237,7 +237,7 @@ export default function AdminSettings() {
                   ...paymentSettings,
                   bank_usd: { ...paymentSettings.bank_usd, account_name: e.target.value }
                 })}
-                className="w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                 placeholder="Account Holder Name"
               />
             </div>

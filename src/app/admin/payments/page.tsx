@@ -119,21 +119,21 @@ export default function AdminPayments() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'confirmed':
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">Confirmed</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">Confirmed</span>;
       case 'matched':
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700">Matched</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">Matched</span>;
       case 'failed':
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700">Failed</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">Failed</span>;
       default:
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700">Pending</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">Pending</span>;
     }
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Platform Payments</h1>
-        <p className="text-gray-600 mt-1">Manage subscription payments from users</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Platform Payments</h1>
+        <p className="text-gray-600 dark:text-dark-400 mt-1">Manage subscription payments from users</p>
       </div>
 
       {/* Filters */}
@@ -144,14 +144,14 @@ export default function AdminPayments() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900"
+            className="w-full pl-12 pr-4 py-3 bg-white dark:bg-dark-800 border border-gray-300 dark:border-dark-600 rounded-xl text-gray-900 dark:text-white"
             placeholder="Search by name, email, or reference..."
           />
         </div>
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900"
+          className="px-4 py-3 bg-white dark:bg-dark-800 border border-gray-300 dark:border-dark-600 rounded-xl text-gray-900 dark:text-white"
         >
           <option value="all">All Status</option>
           <option value="pending">Pending</option>
@@ -162,49 +162,49 @@ export default function AdminPayments() {
       </div>
 
       {/* Payments Table */}
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-dark-900 rounded-2xl border border-gray-200 dark:border-dark-700 overflow-hidden">
         {loading ? (
           <div className="p-8 text-center">
             <Loader2 className="h-8 w-8 animate-spin text-gray-400 mx-auto" />
           </div>
         ) : filteredPayments.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-dark-700">
+              <thead className="bg-gray-50 dark:bg-dark-800">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Plan</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reference</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-400 uppercase">User</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-400 uppercase">Plan</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-400 uppercase">Amount</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-400 uppercase">Reference</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-400 uppercase">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-400 uppercase">Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-400 uppercase">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-dark-900 divide-y divide-gray-200 dark:divide-dark-700">
                 {filteredPayments.map((payment) => (
-                  <tr key={payment.id} className="hover:bg-gray-50">
+                  <tr key={payment.id} className="hover:bg-gray-50 dark:hover:bg-dark-800">
                     <td className="px-6 py-4">
-                      <p className="font-medium text-gray-900">{payment.users?.full_name || 'Unknown'}</p>
-                      <p className="text-sm text-gray-500">{payment.users?.email}</p>
+                      <p className="font-medium text-gray-900 dark:text-white">{payment.users?.full_name || 'Unknown'}</p>
+                      <p className="text-sm text-gray-500 dark:text-dark-400">{payment.users?.email}</p>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-gray-900">{payment.platform_plans?.name}</p>
-                      <p className="text-xs text-gray-500">{payment.billing_period}</p>
+                      <p className="text-gray-900 dark:text-white">{payment.platform_plans?.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-dark-400">{payment.billing_period}</p>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="font-semibold text-gray-900">{formatCurrency(payment.amount, payment.currency)}</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">{formatCurrency(payment.amount, payment.currency)}</p>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="font-mono text-sm text-gray-900">{payment.reference_code}</p>
+                      <p className="font-mono text-sm text-gray-900 dark:text-white">{payment.reference_code}</p>
                       {payment.transaction_id && (
-                        <p className="text-xs text-gray-500 truncate max-w-[150px]">{payment.transaction_id}</p>
+                        <p className="text-xs text-gray-500 dark:text-dark-400 truncate max-w-[150px]">{payment.transaction_id}</p>
                       )}
                     </td>
                     <td className="px-6 py-4">
                       {getStatusBadge(payment.status)}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-dark-400">
                       {formatDateTime(payment.created_at)}
                     </td>
                     <td className="px-6 py-4">
@@ -250,7 +250,7 @@ export default function AdminPayments() {
             </table>
           </div>
         ) : (
-          <div className="p-8 text-center text-gray-500">
+          <div className="p-8 text-center text-gray-500 dark:text-dark-400">
             No payments found
           </div>
         )}

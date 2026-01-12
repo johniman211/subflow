@@ -57,13 +57,13 @@ export default function BillingPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'confirmed':
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">Confirmed</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">Confirmed</span>;
       case 'matched':
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700">Processing</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">Processing</span>;
       case 'failed':
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700">Failed</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">Failed</span>;
       default:
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700">Pending</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">Pending</span>;
     }
   };
 
@@ -178,7 +178,7 @@ export default function BillingPage() {
             return (
               <div
                 key={p.id}
-                className={`border-2 rounded-xl p-4 ${
+                className={`border-2 rounded-xl p-4 bg-white dark:bg-dark-800 ${
                   isCurrentPlan 
                     ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20' 
                     : 'border-gray-200 dark:border-dark-700'
@@ -191,7 +191,10 @@ export default function BillingPage() {
                   )}
                 </div>
                 <p className="text-2xl font-black text-gray-900 dark:text-white">
-                  ${p.price_monthly}<span className="text-sm font-normal text-gray-500">/mo</span>
+                  {(p.price_monthly_ssp || 0).toLocaleString()} <span className="text-sm font-normal text-gray-500">SSP/mo</span>
+                </p>
+                <p className="text-sm text-gray-500 dark:text-dark-400">
+                  ${p.price_monthly} USD/mo
                 </p>
                 <ul className="mt-3 space-y-1">
                   {p.features?.slice(0, 4).map((f: string, i: number) => (
