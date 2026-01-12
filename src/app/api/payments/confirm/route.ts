@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/client';
 import { createServiceRoleClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { triggerWebhook, WEBHOOK_EVENTS } from '@/lib/webhooks';
+import { notifyAdmin, notifyMerchant, notifyCustomer } from '@/lib/notification-service';
 
 export async function POST(request: NextRequest) {
   try {
@@ -98,10 +99,50 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Send platform notifications
+    try {
+      const productName = (payment.prices as any)?.products?.name || 'Product';
+      const amount = (confirmedPayment as any)?.amount || payment.amount;
+      const currency = (confirmedPayment as any)?.currency || payment.currency;
+      const customerPhone = (payment as any).customer_phone;
+      const customerEmail = (payment as any).customer_email;
+
+      // Notify admin about confirmed payment
+      await notifyAdmin('payment.confirmed', {
+        reference_code: (confirmedPayment as any)?.reference_code,
+        amount,
+        currency,
+        customer_name: customerPhone,
+        customer_phone: customerPhone,
+        product_name: productName,
+      }, ['email']);
+
+      // Notify customer about confirmed payment
+      if (customerPhone) {
+        await notifyCustomer(
+          customerPhone,
+          customerEmail,
+          'payment.confirmed',
+          {
+            reference_code: (confirmedPayment as any)?.reference_code,
+            amount,
+            currency,
+            product_name: productName,
+            period_end: (subscription as any)?.current_period_end,
+          },
+          ['sms', 'whatsapp']
+        );
+      }
+    } catch (notifyError) {
+      console.error('Notification error:', notifyError);
+      // Don't fail the request if notifications fail
+    }
+
     return NextResponse.json({ 
       success: true, 
       message: 'Payment confirmed',
       webhooks_triggered: true,
+      notifications_sent: true,
     });
   } catch (error: any) {
     console.error('Payment confirmation error:', error);

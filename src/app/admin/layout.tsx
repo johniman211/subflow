@@ -14,7 +14,8 @@ import {
   Menu,
   X,
   Crown,
-  Calendar
+  Calendar,
+  Bell
 } from 'lucide-react';
 
 const navItems = [
@@ -23,6 +24,7 @@ const navItems = [
   { href: '/admin/subscribers', label: 'Subscribers', icon: Users },
   { href: '/admin/subscriptions', label: 'Subscriptions', icon: Calendar },
   { href: '/admin/payments', label: 'Payments', icon: CreditCard },
+  { href: '/admin/notifications', label: 'Notifications', icon: Bell },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
