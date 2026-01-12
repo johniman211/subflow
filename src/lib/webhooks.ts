@@ -1,6 +1,34 @@
 import { createServiceRoleClient } from '@/lib/supabase/server';
 import crypto from 'crypto';
 
+// Webhook event types
+export const WEBHOOK_EVENTS = {
+  PAYMENT_CREATED: 'payment.created',
+  PAYMENT_CONFIRMED: 'payment.confirmed',
+  PAYMENT_REJECTED: 'payment.rejected',
+  PAYMENT_EXPIRED: 'payment.expired',
+  SUBSCRIPTION_CREATED: 'subscription.created',
+  SUBSCRIPTION_RENEWED: 'subscription.renewed',
+  SUBSCRIPTION_EXPIRED: 'subscription.expired',
+  SUBSCRIPTION_CANCELLED: 'subscription.cancelled',
+  CUSTOMER_CREATED: 'customer.created',
+} as const;
+
+export type WebhookEventType = typeof WEBHOOK_EVENTS[keyof typeof WEBHOOK_EVENTS];
+
+// Trigger webhook for a specific event
+export async function triggerWebhook(
+  merchantId: string,
+  eventType: WebhookEventType,
+  data: any
+) {
+  try {
+    await deliverWebhook(merchantId, eventType, data);
+  } catch (error) {
+    console.error(`Failed to trigger webhook ${eventType}:`, error);
+  }
+}
+
 // Internal function to deliver webhooks - called after payment events
 export async function deliverWebhook(
   merchantId: string,

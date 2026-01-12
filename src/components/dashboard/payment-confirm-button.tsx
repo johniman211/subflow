@@ -20,13 +20,20 @@ export function PaymentConfirmButton({ paymentId }: PaymentConfirmButtonProps) {
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    const { error } = await supabase.rpc('confirm_payment', {
-      p_payment_id: paymentId,
-      p_confirmed_by: user?.id,
+    // Use API endpoint to confirm payment and trigger webhooks
+    const response = await fetch('/api/payments/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        paymentId,
+        confirmedBy: user?.id,
+      }),
     });
 
-    if (error) {
-      alert('Error confirming payment: ' + error.message);
+    const result = await response.json();
+
+    if (!response.ok) {
+      alert('Error confirming payment: ' + result.error);
       setLoading(false);
       return;
     }
