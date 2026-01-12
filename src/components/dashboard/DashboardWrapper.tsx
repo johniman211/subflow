@@ -2,6 +2,7 @@
 
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { BillingProvider } from '@/contexts/BillingContext';
+import { CurrencyProvider } from '@/contexts/CurrencyContext';
 import { UpgradeModal } from '@/components/billing/UpgradeModal';
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
@@ -23,9 +24,11 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
 export function DashboardWrapper({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <BillingProvider>
-        <DashboardContent>{children}</DashboardContent>
-      </BillingProvider>
+      <CurrencyProvider>
+        <BillingProvider>
+          <DashboardContent>{children}</DashboardContent>
+        </BillingProvider>
+      </CurrencyProvider>
     </ThemeProvider>
   );
 }

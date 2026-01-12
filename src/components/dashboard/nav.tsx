@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
@@ -58,6 +59,7 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { currency, setCurrency } = useCurrency();
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -163,30 +165,61 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
             </Link>
           </div>
 
-          {/* Back to Home + Theme Toggle */}
-          <div className="px-4 mb-6 flex items-center justify-between">
-            <Link 
-              href="/"
-              className={cn(
-                "flex items-center gap-2 px-3 py-2 text-sm hover:text-lemon-400 transition-colors",
-                theme === 'dark' ? 'text-dark-400' : 'text-gray-500'
-              )}
-            >
-              <Home className="h-4 w-4" />
-              Back to Home
-            </Link>
-            <button
-              onClick={toggleTheme}
-              className={cn(
-                "p-2 rounded-lg transition-colors",
-                theme === 'dark' 
-                  ? 'text-dark-400 hover:text-white hover:bg-dark-800' 
-                  : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
-              )}
-              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </button>
+          {/* Back to Home + Currency + Theme Toggle */}
+          <div className="px-4 mb-6 space-y-3">
+            <div className="flex items-center justify-between">
+              <Link 
+                href="/"
+                className={cn(
+                  "flex items-center gap-2 px-3 py-2 text-sm hover:text-lemon-400 transition-colors",
+                  theme === 'dark' ? 'text-dark-400' : 'text-gray-500'
+                )}
+              >
+                <Home className="h-4 w-4" />
+                Back to Home
+              </Link>
+              <button
+                onClick={toggleTheme}
+                className={cn(
+                  "p-2 rounded-lg transition-colors",
+                  theme === 'dark' 
+                    ? 'text-dark-400 hover:text-white hover:bg-dark-800' 
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                )}
+                title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
+            </div>
+            
+            {/* Currency Toggle */}
+            <div className={cn(
+              "flex items-center justify-between p-1 rounded-xl",
+              theme === 'dark' ? 'bg-dark-800' : 'bg-gray-100'
+            )}>
+              <button
+                onClick={() => setCurrency('SSP')}
+                className={cn(
+                  "flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all",
+                  currency === 'SSP' 
+                    ? 'bg-lemon-400 text-dark-900' 
+                    : theme === 'dark' ? 'text-dark-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
+                )}
+              >
+                SSP
+              </button>
+              <button
+                onClick={() => setCurrency('USD')}
+                className={cn(
+                  "flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all",
+                  currency === 'USD' 
+                    ? 'bg-lemon-400 text-dark-900' 
+                    : theme === 'dark' ? 'text-dark-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
+                )}
+              >
+                USD
+              </button>
+            </div>
           </div>
 
           {/* Navigation */}

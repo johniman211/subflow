@@ -15,9 +15,11 @@ import {
 } from 'lucide-react';
 import { UpgradeModal } from '@/components/billing/UpgradeModal';
 import { useBilling } from '@/contexts/BillingContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 export default function BillingPage() {
   const { plan, subscription, limits, trialDaysRemaining, setShowUpgradeModal, refreshBilling } = useBilling();
+  const { currency, formatPrice } = useCurrency();
   const [payments, setPayments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [plans, setPlans] = useState<any[]>([]);
@@ -191,10 +193,17 @@ export default function BillingPage() {
                   )}
                 </div>
                 <p className="text-2xl font-black text-gray-900 dark:text-white">
-                  {(p.price_monthly_ssp || 0).toLocaleString()} <span className="text-sm font-normal text-gray-500">SSP/mo</span>
+                  {currency === 'SSP' 
+                    ? `${(p.price_monthly_ssp || 0).toLocaleString()} SSP`
+                    : `$${p.price_monthly}`
+                  }
+                  <span className="text-sm font-normal text-gray-500">/mo</span>
                 </p>
                 <p className="text-sm text-gray-500 dark:text-dark-400">
-                  ${p.price_monthly} USD/mo
+                  {currency === 'SSP' 
+                    ? `$${p.price_monthly} USD/mo`
+                    : `${(p.price_monthly_ssp || 0).toLocaleString()} SSP/mo`
+                  }
                 </p>
                 <ul className="mt-3 space-y-1">
                   {p.features?.slice(0, 4).map((f: string, i: number) => (

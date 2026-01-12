@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { X, Check, Zap, Crown, Loader2, Upload, CreditCard, Smartphone, Building } from 'lucide-react';
 import { useBilling } from '@/contexts/BillingContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { createClient } from '@/lib/supabase/client';
 import { generateBillingReferenceCode, getAdminPaymentInfo } from '@/lib/billing';
 import { formatCurrency } from '@/lib/utils';
@@ -15,10 +16,10 @@ interface PaymentInfo {
 
 export function UpgradeModal() {
   const { showUpgradeModal, setShowUpgradeModal, upgradeReason, plan, refreshBilling } = useBilling();
+  const { currency, setCurrency } = useCurrency();
   const [step, setStep] = useState<'plans' | 'payment' | 'confirm' | 'success'>('plans');
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
-  const [currency, setCurrency] = useState<'SSP' | 'USD'>('SSP');
   const [plans, setPlans] = useState<any[]>([]);
   const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>('mtn_momo');
