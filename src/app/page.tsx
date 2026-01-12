@@ -479,9 +479,9 @@ export default function HomePage() {
             <div>
               <h4 className="text-white font-semibold mb-4">Developers</h4>
               <ul className="space-y-3 text-sm">
-                <li><Link href="/docs" className="text-dark-400 hover:text-lemon-400 transition-colors">Documentation</Link></li>
-                <li><Link href="/docs/api" className="text-dark-400 hover:text-lemon-400 transition-colors">API Reference</Link></li>
-                <li><Link href="/docs/webhooks" className="text-dark-400 hover:text-lemon-400 transition-colors">Webhooks</Link></li>
+                <li><Link href="/docs/integration" className="text-dark-400 hover:text-lemon-400 transition-colors">Integration Guide</Link></li>
+                <li><Link href="/docs/integration#api-integration" className="text-dark-400 hover:text-lemon-400 transition-colors">API Reference</Link></li>
+                <li><Link href="/docs/integration#webhooks" className="text-dark-400 hover:text-lemon-400 transition-colors">Webhooks</Link></li>
               </ul>
             </div>
             <div>

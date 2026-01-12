@@ -27,6 +27,8 @@ import {
   Moon,
   Crown,
   Wallet,
+  BookOpen,
+  ExternalLink,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -255,6 +257,24 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
               );
             })}
           </nav>
+
+          {/* Integration Guide Link */}
+          <div className="px-4 mb-4">
+            <Link
+              href="/docs/integration"
+              target="_blank"
+              className={cn(
+                "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all border",
+                theme === 'dark'
+                  ? 'bg-emerald-900/20 border-emerald-800 text-emerald-400 hover:bg-emerald-900/30'
+                  : 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100'
+              )}
+            >
+              <BookOpen className="h-5 w-5 mr-3" />
+              Integration Guide
+              <ExternalLink className="ml-auto h-4 w-4 opacity-50" />
+            </Link>
+          </div>
 
           {/* User Section */}
           <div className="px-4 mt-auto">
