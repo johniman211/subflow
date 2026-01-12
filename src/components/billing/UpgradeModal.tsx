@@ -18,6 +18,7 @@ export function UpgradeModal() {
   const [step, setStep] = useState<'plans' | 'payment' | 'confirm' | 'success'>('plans');
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [currency, setCurrency] = useState<'SSP' | 'USD'>('SSP');
   const [plans, setPlans] = useState<any[]>([]);
   const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string>('mtn_momo');
@@ -97,7 +98,14 @@ export function UpgradeModal() {
         }
       }
 
-      const amount = billingCycle === 'monthly' ? selectedPlan.price_monthly : selectedPlan.price_yearly;
+      // Determine amount based on selected currency and payment method
+      const useSSP = paymentMethod === 'mtn_momo' || paymentMethod === 'bank_ssp';
+      const amount = useSSP
+        ? (billingCycle === 'monthly' 
+            ? (selectedPlan.price_monthly_ssp || selectedPlan.price_monthly * 1500)
+            : (selectedPlan.price_yearly_ssp || selectedPlan.price_yearly * 1500))
+        : (billingCycle === 'monthly' ? selectedPlan.price_monthly : selectedPlan.price_yearly);
+      const paymentCurrency = useSSP ? 'SSP' : 'USD';
 
       const { error: paymentError } = await supabase
         .from('platform_payments')
@@ -105,7 +113,7 @@ export function UpgradeModal() {
           user_id: user.id,
           plan_id: selectedPlan.id,
           amount,
-          currency: selectedPlan.currency,
+          currency: paymentCurrency,
           payment_method: paymentMethod,
           reference_code: referenceCode,
           transaction_id: transactionId || null,
@@ -129,13 +137,16 @@ export function UpgradeModal() {
 
   const getPaymentInstructions = () => {
     if (!paymentInfo) return null;
-    const amount = billingCycle === 'monthly' ? selectedPlan?.price_monthly : selectedPlan?.price_yearly;
+    const amountUSD = billingCycle === 'monthly' ? selectedPlan?.price_monthly : selectedPlan?.price_yearly;
+    const amountSSP = billingCycle === 'monthly' 
+      ? (selectedPlan?.price_monthly_ssp || selectedPlan?.price_monthly * 1500)
+      : (selectedPlan?.price_yearly_ssp || selectedPlan?.price_yearly * 1500);
 
     switch (paymentMethod) {
       case 'mtn_momo':
         return paymentInfo.mtn_momo?.number ? (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
-            <p className="font-medium text-amber-900">Send {formatCurrency(amount, 'USD')} to:</p>
+            <p className="font-medium text-amber-900">Send {amountSSP.toLocaleString()} SSP to:</p>
             <p className="text-2xl font-bold text-amber-700 font-mono">{paymentInfo.mtn_momo.number}</p>
             <p className="text-sm text-amber-700">Name: {paymentInfo.mtn_momo.name}</p>
             <p className="text-xs text-amber-600 mt-2">Include reference: <span className="font-mono font-bold">{referenceCode}</span></p>
@@ -143,10 +154,22 @@ export function UpgradeModal() {
         ) : (
           <p className="text-red-500">MTN MoMo not configured. Please contact support.</p>
         );
+      case 'bank_ssp':
+        return paymentInfo.bank_ssp?.account_number ? (
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4 space-y-2">
+            <p className="font-medium text-green-900">Bank Transfer (SSP) - {amountSSP.toLocaleString()} SSP</p>
+            <p className="text-sm"><span className="text-green-600">Bank:</span> {paymentInfo.bank_ssp.bank_name}</p>
+            <p className="text-sm"><span className="text-green-600">Account:</span> <span className="font-mono">{paymentInfo.bank_ssp.account_number}</span></p>
+            <p className="text-sm"><span className="text-green-600">Name:</span> {paymentInfo.bank_ssp.account_name}</p>
+            <p className="text-xs text-green-600 mt-2">Reference: <span className="font-mono font-bold">{referenceCode}</span></p>
+          </div>
+        ) : (
+          <p className="text-red-500">SSP Bank not configured. Please contact support.</p>
+        );
       case 'bank_usd':
         return paymentInfo.bank_usd?.account_number ? (
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 space-y-2">
-            <p className="font-medium text-blue-900">Bank Transfer (USD) - {formatCurrency(amount, 'USD')}</p>
+            <p className="font-medium text-blue-900">Bank Transfer (USD) - {formatCurrency(amountUSD, 'USD')}</p>
             <p className="text-sm"><span className="text-blue-600">Bank:</span> {paymentInfo.bank_usd.bank_name}</p>
             <p className="text-sm"><span className="text-blue-600">Account:</span> <span className="font-mono">{paymentInfo.bank_usd.account_number}</span></p>
             <p className="text-sm"><span className="text-blue-600">Name:</span> {paymentInfo.bank_usd.account_name}</p>
@@ -189,9 +212,29 @@ export function UpgradeModal() {
             <div className="p-6">
               {step === 'plans' && (
                 <div className="space-y-6">
-                  {/* Billing Toggle */}
-                  <div className="flex justify-center">
-                    <div className="bg-gray-100 rounded-xl p-1 inline-flex">
+                  {/* Currency & Billing Toggle */}
+                  <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    {/* Currency Toggle */}
+                    <div className="bg-gray-100 rounded-xl p-1 inline-flex justify-center">
+                      <button
+                        onClick={() => setCurrency('SSP')}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                          currency === 'SSP' ? 'bg-white shadow text-gray-900' : 'text-gray-600'
+                        }`}
+                      >
+                        SSP
+                      </button>
+                      <button
+                        onClick={() => setCurrency('USD')}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                          currency === 'USD' ? 'bg-white shadow text-gray-900' : 'text-gray-600'
+                        }`}
+                      >
+                        USD
+                      </button>
+                    </div>
+                    {/* Billing Cycle Toggle */}
+                    <div className="bg-gray-100 rounded-xl p-1 inline-flex justify-center">
                       <button
                         onClick={() => setBillingCycle('monthly')}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -227,9 +270,22 @@ export function UpgradeModal() {
                   /* Plans Grid */
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {plans.map((p) => {
-                      const price = billingCycle === 'monthly' ? p.price_monthly : p.price_yearly;
+                      const priceUSD = billingCycle === 'monthly' ? p.price_monthly : p.price_yearly;
+                      const priceSSP = billingCycle === 'monthly' 
+                        ? (p.price_monthly_ssp || p.price_monthly * 1500) 
+                        : (p.price_yearly_ssp || p.price_yearly * 1500);
+                      const displayPrice = currency === 'SSP' ? priceSSP : priceUSD;
                       const isCurrentPlan = plan?.id === p.id;
                       const features = typeof p.features === 'string' ? JSON.parse(p.features) : p.features;
+
+                      const formatPlanPrice = () => {
+                        if (p.slug === 'free') return 'Free';
+                        if (p.slug === 'enterprise') return 'Custom';
+                        if (currency === 'SSP') {
+                          return `${displayPrice.toLocaleString()} SSP`;
+                        }
+                        return `$${displayPrice}`;
+                      };
 
                       return (
                         <div
@@ -259,15 +315,11 @@ export function UpgradeModal() {
                           <p className="text-sm text-gray-500 mt-1">{p.description}</p>
 
                           <div className="mt-4">
-                            {p.slug === 'enterprise' ? (
-                              <p className="text-3xl font-black text-gray-900">Custom</p>
-                            ) : (
-                              <>
-                                <span className="text-3xl font-black text-gray-900">
-                                  ${price}
-                                </span>
-                                <span className="text-gray-500">/{billingCycle === 'monthly' ? 'mo' : 'yr'}</span>
-                              </>
+                            <span className="text-2xl md:text-3xl font-black text-gray-900">
+                              {formatPlanPrice()}
+                            </span>
+                            {p.slug !== 'enterprise' && p.slug !== 'free' && (
+                              <span className="text-gray-500">/{billingCycle === 'monthly' ? 'mo' : 'yr'}</span>
                             )}
                           </div>
 
@@ -308,10 +360,16 @@ export function UpgradeModal() {
                   <div className="text-center">
                     <h3 className="text-lg font-bold text-gray-900">Complete Your Upgrade</h3>
                     <p className="text-gray-500">
-                      {selectedPlan.name} - {formatCurrency(
-                        billingCycle === 'monthly' ? selectedPlan.price_monthly : selectedPlan.price_yearly,
-                        'USD'
-                      )}/{billingCycle === 'monthly' ? 'month' : 'year'}
+                      {selectedPlan.name} - {currency === 'SSP' 
+                        ? `${(billingCycle === 'monthly' 
+                            ? (selectedPlan.price_monthly_ssp || selectedPlan.price_monthly * 1500)
+                            : (selectedPlan.price_yearly_ssp || selectedPlan.price_yearly * 1500)
+                          ).toLocaleString()} SSP`
+                        : formatCurrency(
+                            billingCycle === 'monthly' ? selectedPlan.price_monthly : selectedPlan.price_yearly,
+                            'USD'
+                          )
+                      }/{billingCycle === 'monthly' ? 'month' : 'year'}
                     </p>
                   </div>
 
@@ -330,7 +388,20 @@ export function UpgradeModal() {
                           <Smartphone className="h-5 w-5 text-white" />
                         </div>
                         <p className="font-semibold text-gray-900">MTN MoMo</p>
-                        <p className="text-xs text-gray-500">Mobile Money</p>
+                        <p className="text-xs text-gray-500">Mobile Money (SSP)</p>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPaymentMethod('bank_ssp')}
+                        className={`p-4 border-2 rounded-xl text-left transition-all ${
+                          paymentMethod === 'bank_ssp' ? 'border-amber-500 bg-amber-50' : 'border-gray-200'
+                        }`}
+                      >
+                        <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center mb-2">
+                          <Building className="h-5 w-5 text-white" />
+                        </div>
+                        <p className="font-semibold text-gray-900">Bank (SSP)</p>
+                        <p className="text-xs text-gray-500">Local Transfer</p>
                       </button>
                       <button
                         type="button"
@@ -342,8 +413,8 @@ export function UpgradeModal() {
                         <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mb-2">
                           <Building className="h-5 w-5 text-white" />
                         </div>
-                        <p className="font-semibold text-gray-900">Bank Transfer</p>
-                        <p className="text-xs text-gray-500">USD Account</p>
+                        <p className="font-semibold text-gray-900">Bank (USD)</p>
+                        <p className="text-xs text-gray-500">International</p>
                       </button>
                     </div>
                   </div>

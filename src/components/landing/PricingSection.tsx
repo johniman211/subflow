@@ -12,6 +12,9 @@ interface Plan {
   description: string;
   price_monthly: number;
   price_yearly: number;
+  price_monthly_ssp: number;
+  price_yearly_ssp: number;
+  currency: string;
   features: string[];
   is_featured: boolean;
   trial_days: number;
@@ -20,6 +23,7 @@ interface Plan {
 export function PricingSection() {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currency, setCurrency] = useState<'SSP' | 'USD'>('SSP');
 
   useEffect(() => {
     fetchPlans();
@@ -37,13 +41,29 @@ export function PricingSection() {
       const formattedPlans = data.map(p => ({
         ...p,
         features: typeof p.features === 'string' ? JSON.parse(p.features) : p.features || [],
+        price_monthly_ssp: p.price_monthly_ssp || p.price_monthly * 1500,
+        price_yearly_ssp: p.price_yearly_ssp || p.price_yearly * 1500,
       }));
       setPlans(formattedPlans);
     }
     setLoading(false);
   };
 
-  // Fallback plans if database is empty
+  const formatPrice = (plan: Plan) => {
+    if (plan.slug === 'enterprise' && plan.price_monthly === 0) {
+      return 'Custom';
+    }
+    if (plan.slug === 'free') {
+      return 'Free';
+    }
+    const price = currency === 'SSP' ? plan.price_monthly_ssp : plan.price_monthly;
+    if (currency === 'SSP') {
+      return `${price.toLocaleString()} SSP`;
+    }
+    return `$${price}`;
+  };
+
+  // Fallback plans if database is empty (SSP default: Pro = 50,000 SSP)
   const fallbackPlans: Plan[] = [
     {
       id: '1',
@@ -52,6 +72,9 @@ export function PricingSection() {
       description: 'Perfect for getting started',
       price_monthly: 0,
       price_yearly: 0,
+      price_monthly_ssp: 0,
+      price_yearly_ssp: 0,
+      currency: 'SSP',
       features: ['Up to 50 subscribers', 'Basic dashboard', 'Email support', 'Checkout links'],
       is_featured: false,
       trial_days: 0,
@@ -63,6 +86,9 @@ export function PricingSection() {
       description: 'For growing businesses',
       price_monthly: 29,
       price_yearly: 290,
+      price_monthly_ssp: 50000,
+      price_yearly_ssp: 500000,
+      currency: 'SSP',
       features: ['Unlimited subscribers', 'Advanced analytics', 'Priority support', 'API access', 'Webhooks', 'Custom branding'],
       is_featured: true,
       trial_days: 3,
@@ -74,6 +100,9 @@ export function PricingSection() {
       description: 'For large organizations',
       price_monthly: 0,
       price_yearly: 0,
+      price_monthly_ssp: 0,
+      price_yearly_ssp: 0,
+      currency: 'SSP',
       features: ['Everything in Pro', 'Dedicated support', 'SLA guarantee', 'Custom integrations', 'On-premise option'],
       is_featured: false,
       trial_days: 0,
@@ -108,7 +137,27 @@ export function PricingSection() {
           <h2 className="text-3xl md:text-5xl font-black mb-4">
             Start free. <span className="gradient-text">Upgrade when you grow.</span>
           </h2>
-          <p className="text-xl text-dark-400">Simple monthly pricing for merchants.</p>
+          <p className="text-xl text-dark-400 mb-8">Simple monthly pricing for merchants.</p>
+          
+          {/* Currency Toggle */}
+          <div className="inline-flex items-center gap-2 bg-dark-800 rounded-full p-1">
+            <button
+              onClick={() => setCurrency('SSP')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                currency === 'SSP' ? 'bg-lemon-400 text-dark-900' : 'text-dark-400 hover:text-white'
+              }`}
+            >
+              SSP
+            </button>
+            <button
+              onClick={() => setCurrency('USD')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                currency === 'USD' ? 'bg-lemon-400 text-dark-900' : 'text-dark-400 hover:text-white'
+              }`}
+            >
+              USD
+            </button>
+          </div>
         </div>
         
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -120,13 +169,9 @@ export function PricingSection() {
               <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
               <p className="text-dark-400 mb-6">{plan.description}</p>
               <div className="mb-6">
-                {plan.slug === 'enterprise' && plan.price_monthly === 0 ? (
-                  <span className="text-4xl font-black text-white">Custom</span>
-                ) : (
-                  <>
-                    <span className="text-4xl font-black text-white">${plan.price_monthly}</span>
-                    <span className="text-dark-400">/month</span>
-                  </>
+                <span className="text-3xl md:text-4xl font-black text-white">{formatPrice(plan)}</span>
+                {plan.slug !== 'enterprise' && plan.slug !== 'free' && (
+                  <span className="text-dark-400">/month</span>
                 )}
               </div>
               <ul className="space-y-3 mb-8">
