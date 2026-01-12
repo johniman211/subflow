@@ -297,7 +297,7 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
                 type="tel"
                 value={customerInfo.phone}
                 onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-                className="w-full pl-12 pr-4 py-3.5 bg-white border-2 border-slate-200 rounded-xl focus:border-slate-900 focus:ring-0 transition-colors"
+                className="w-full pl-12 pr-4 py-3.5 bg-white text-slate-900 border-2 border-slate-200 rounded-xl focus:border-slate-900 focus:ring-0 transition-colors placeholder:text-slate-400"
                 placeholder="+211 9XX XXX XXX"
                 required
               />
@@ -314,7 +314,7 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
                 type="email"
                 value={customerInfo.email}
                 onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
-                className="w-full pl-12 pr-4 py-3.5 bg-white border-2 border-slate-200 rounded-xl focus:border-slate-900 focus:ring-0 transition-colors"
+                className="w-full pl-12 pr-4 py-3.5 bg-white text-slate-900 border-2 border-slate-200 rounded-xl focus:border-slate-900 focus:ring-0 transition-colors placeholder:text-slate-400"
                 placeholder="you@example.com"
               />
             </div>
@@ -551,7 +551,7 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
               type="text"
               value={paymentProof.transactionId}
               onChange={(e) => setPaymentProof({ ...paymentProof, transactionId: e.target.value })}
-              className="w-full px-4 py-3.5 bg-white border-2 border-slate-200 rounded-xl focus:border-slate-900 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3.5 bg-white text-slate-900 border-2 border-slate-200 rounded-xl focus:border-slate-900 focus:ring-0 transition-colors placeholder:text-slate-400"
               placeholder={paymentMethod === 'mtn_momo' 
                 ? "e.g., You have received 100 SSP from..." 
                 : "e.g., Transfer reference number"
