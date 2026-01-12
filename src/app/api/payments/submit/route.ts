@@ -12,14 +12,19 @@ export async function POST(request: NextRequest) {
 
     const supabase = createServiceRoleClient();
 
-    // Update payment to matched status
+    // Only mark as "matched" if customer provides transaction proof
+    // Otherwise keep as "pending" but record that customer claims to have paid
+    const hasProof = transactionId || proofUrl;
+    const newStatus = hasProof ? 'matched' : 'pending';
+
+    // Update payment with proof details
     const { data, error } = await supabase
       .from('payments')
       .update({
         transaction_id: transactionId || null,
         proof_url: proofUrl || null,
-        status: 'matched',
-        matched_at: new Date().toISOString(),
+        status: newStatus,
+        matched_at: hasProof ? new Date().toISOString() : null,
       })
       .eq('reference_code', referenceCode)
       .eq('status', 'pending')

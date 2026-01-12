@@ -63,9 +63,9 @@ export function PaymentViewModal({ payment }: { payment: Payment }) {
             />
 
             {/* Modal */}
-            <div className="relative bg-white rounded-xl shadow-xl max-w-md w-full transform transition-all">
+            <div className="relative bg-white rounded-xl shadow-xl max-w-md w-full transform transition-all max-h-[90vh] flex flex-col">
               {/* Header */}
-              <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl">
+              <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold text-white">Payment Receipt</h2>
                   <button
@@ -78,7 +78,7 @@ export function PaymentViewModal({ payment }: { payment: Payment }) {
               </div>
 
               {/* Content */}
-              <div className="p-6 space-y-6">
+              <div className="p-6 space-y-6 overflow-y-auto flex-1">
                 {/* Reference Code */}
                 <div className="text-center pb-4 border-b border-dashed border-gray-300">
                   <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Reference Code</p>

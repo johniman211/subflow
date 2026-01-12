@@ -51,8 +51,8 @@ export default async function DashboardPage() {
                 <AlertTriangle className="h-6 w-6 text-warning-500" />
               </div>
               <div>
-                <h3 className="font-bold text-white mb-1">Configure Your Payment Methods</h3>
-                <p className="text-dark-300 text-sm">
+                <h3 className="font-bold text-gray-900 dark:text-white mb-1">Configure Your Payment Methods</h3>
+                <p className="text-gray-600 dark:text-dark-300 text-sm">
                   You haven&apos;t set up any payment methods yet. Add your MTN Mobile Money number or bank account details so customers know where to send payments.
                 </p>
               </div>
@@ -75,8 +75,8 @@ export default async function DashboardPage() {
             <Sparkles className="h-5 w-5 text-lemon-400" />
             <span className="text-sm text-lemon-400 font-medium">{getGreeting()}</span>
           </div>
-          <h1 className="text-3xl font-black text-white">{userName}!</h1>
-          <p className="text-dark-400 mt-1">Here&apos;s an overview of <span className="text-white font-medium">{businessName}</span></p>
+          <h1 className="text-3xl font-black text-gray-900 dark:text-white">{userName}!</h1>
+          <p className="text-gray-600 dark:text-dark-400 mt-1">Here&apos;s an overview of <span className="text-gray-900 dark:text-white font-medium">{businessName}</span></p>
         </div>
         <Link href="/dashboard/products/new" className="btn-primary">
           <Plus className="h-5 w-5 mr-2" />
@@ -94,8 +94,8 @@ export default async function DashboardPage() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-dark-400">{stat.name}</p>
-                <p className="text-3xl font-black text-white mt-1">{stat.value}</p>
+                <p className="text-sm text-gray-500 dark:text-dark-400">{stat.name}</p>
+                <p className="text-3xl font-black text-gray-900 dark:text-white mt-1">{stat.value}</p>
               </div>
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
                 stat.color === 'lemon' ? 'bg-lemon-400/10 group-hover:bg-lemon-400/20' :
@@ -115,7 +115,7 @@ export default async function DashboardPage() {
 
       {/* Quick Actions */}
       <div className="card p-6">
-        <h2 className="text-lg font-bold text-white mb-4">Quick Actions</h2>
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
           <Link href="/dashboard/products/new" className="btn-primary btn-sm">
             <Plus className="h-4 w-4 mr-2" />
@@ -135,25 +135,25 @@ export default async function DashboardPage() {
 
       {/* Recent Payments */}
       <div className="card overflow-hidden">
-        <div className="p-6 border-b border-dark-800">
+        <div className="p-6 border-b border-gray-200 dark:border-dark-800">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-white">Recent Payments</h2>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white">Recent Payments</h2>
             <Link href="/dashboard/payments" className="text-lemon-400 hover:text-lemon-300 text-sm font-medium flex items-center gap-1 transition-colors">
               View All
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
-        <div className="divide-y divide-dark-800">
+        <div className="divide-y divide-gray-200 dark:divide-dark-800">
           {recentPayments && recentPayments.length > 0 ? (
             recentPayments.map((payment: any) => (
-              <div key={payment.id} className="p-4 flex items-center justify-between hover:bg-dark-800/50 transition-colors">
+              <div key={payment.id} className="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-dark-800/50 transition-colors">
                 <div>
-                  <p className="font-medium text-white">{payment.customer_phone}</p>
-                  <p className="text-sm text-dark-400">{payment.reference_code}</p>
+                  <p className="font-medium text-gray-900 dark:text-white">{payment.customer_phone}</p>
+                  <p className="text-sm text-gray-500 dark:text-dark-400">{payment.reference_code}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-white">
+                  <p className="font-semibold text-gray-900 dark:text-white">
                     {formatCurrency(payment.amount, payment.currency)}
                   </p>
                   <span className={`badge ${
@@ -168,10 +168,10 @@ export default async function DashboardPage() {
             ))
           ) : (
             <div className="p-12 text-center">
-              <div className="w-16 h-16 bg-dark-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <CreditCard className="h-8 w-8 text-dark-500" />
+              <div className="w-16 h-16 bg-gray-100 dark:bg-dark-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <CreditCard className="h-8 w-8 text-gray-400 dark:text-dark-500" />
               </div>
-              <p className="text-dark-400 mb-4">No payments yet</p>
+              <p className="text-gray-500 dark:text-dark-400 mb-4">No payments yet</p>
               <Link href="/dashboard/products/new" className="btn-primary btn-sm">
                 Create Your First Product
               </Link>
