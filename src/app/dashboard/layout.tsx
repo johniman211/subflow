@@ -15,11 +15,29 @@ export default async function DashboardLayout({
     redirect('/auth/login');
   }
 
-  const { data: profile } = await supabase
+  // Try to get existing profile
+  let { data: profile } = await supabase
     .from('users')
     .select('*')
     .eq('id', user.id)
     .single();
+
+  // If no profile exists, create one from auth metadata
+  if (!profile) {
+    const metadata = user.user_metadata || {};
+    const { data: newProfile, error } = await supabase.from('users').insert({
+      id: user.id,
+      email: user.email!,
+      full_name: metadata.full_name || null,
+      business_name: metadata.business_name || null,
+      phone: metadata.phone || null,
+      role: 'merchant',
+    }).select().single();
+
+    if (!error && newProfile) {
+      profile = newProfile;
+    }
+  }
 
   return (
     <DashboardWrapper>

@@ -28,7 +28,9 @@ export default function RegisterPage() {
     setError('');
 
     const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
+    
+    // Sign up the user
+    const { data: authData, error: authError } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
       options: {
@@ -41,10 +43,27 @@ export default function RegisterPage() {
       },
     });
 
-    if (error) {
-      setError(error.message);
+    if (authError) {
+      setError(authError.message);
       setLoading(false);
       return;
+    }
+
+    // Create the user profile in the users table
+    if (authData.user) {
+      const { error: profileError } = await supabase.from('users').insert({
+        id: authData.user.id,
+        email: formData.email,
+        full_name: formData.fullName,
+        business_name: formData.businessName,
+        phone: formData.phone,
+        role: 'merchant',
+      });
+
+      if (profileError) {
+        console.error('Profile creation error:', profileError);
+        // Don't block registration if profile creation fails - it can be created later
+      }
     }
 
     router.push('/dashboard');
