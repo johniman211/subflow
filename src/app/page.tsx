@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Menu, XIcon, Package } from 'lucide-react';
 import { useState } from 'react';
+import { PricingSection } from '@/components/landing/PricingSection';
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -376,82 +377,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section id="pricing" className="section-darker">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <span className="badge-lemon mb-4">Pricing</span>
-              <h2 className="text-3xl md:text-5xl font-black mb-4">
-                Start free. <span className="gradient-text">Upgrade when you grow.</span>
-              </h2>
-              <p className="text-xl text-dark-400">Simple monthly pricing for merchants.</p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {/* Free Tier */}
-              <div className="pricing-card">
-                <h3 className="text-xl font-bold text-white mb-2">Starter</h3>
-                <p className="text-dark-400 mb-6">Perfect for getting started</p>
-                <div className="mb-6">
-                  <span className="text-4xl font-black text-white">$0</span>
-                  <span className="text-dark-400">/month</span>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {['Up to 50 subscribers', 'Basic dashboard', 'Email support', 'Checkout links'].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-dark-300">
-                      <Check className="h-5 w-5 text-lemon-400 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/auth/register" className="btn-secondary w-full">
-                  Get Started
-                </Link>
-              </div>
-              
-              {/* Pro Tier */}
-              <div className="pricing-card popular">
-                <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
-                <p className="text-dark-400 mb-6">For growing businesses</p>
-                <div className="mb-6">
-                  <span className="text-4xl font-black text-white">$29</span>
-                  <span className="text-dark-400">/month</span>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {['Unlimited subscribers', 'Advanced analytics', 'Priority support', 'API access', 'Webhooks', 'Custom branding'].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-dark-300">
-                      <Check className="h-5 w-5 text-lemon-400 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/auth/register" className="btn-primary w-full">
-                  Start Free Trial
-                </Link>
-              </div>
-              
-              {/* Enterprise */}
-              <div className="pricing-card">
-                <h3 className="text-xl font-bold text-white mb-2">Enterprise</h3>
-                <p className="text-dark-400 mb-6">For large organizations</p>
-                <div className="mb-6">
-                  <span className="text-4xl font-black text-white">Custom</span>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {['Everything in Pro', 'Dedicated support', 'SLA guarantee', 'Custom integrations', 'On-premise option'].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-dark-300">
-                      <Check className="h-5 w-5 text-lemon-400 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/contact" className="btn-secondary w-full">
-                  Contact Sales
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Pricing Section - Dynamic from Database */}
+        <PricingSection />
 
         {/* Testimonials */}
         <section className="section-dark">
