@@ -101,7 +101,7 @@ export default function HomePage() {
                         <div className="grid grid-cols-3 gap-2 mb-4">
                           <div className="bg-dark-800/50 rounded-lg p-2">
                             <p className="text-dark-400 text-[8px]">Revenue</p>
-                            <p className="text-lemon-400 font-bold text-sm">$12,459</p>
+                            <p className="text-lemon-400 font-bold text-sm">62.3M SSP</p>
                           </div>
                           <div className="bg-dark-800/50 rounded-lg p-2">
                             <p className="text-dark-400 text-[8px]">Subscribers</p>
@@ -127,8 +127,8 @@ export default function HomePage() {
                         {/* Recent Activity */}
                         <div className="space-y-1">
                           {[
-                            { name: 'John D.', amount: '$49', status: 'success' },
-                            { name: 'Sarah M.', amount: '$99', status: 'success' },
+                            { name: 'John D.', amount: '245K SSP', status: 'success' },
+                            { name: 'Sarah M.', amount: '495K SSP', status: 'success' },
                           ].map((item, i) => (
                             <div key={i} className="flex items-center justify-between bg-dark-800/30 rounded px-2 py-1">
                               <span className="text-dark-300 text-[8px]">{item.name}</span>
@@ -152,7 +152,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="text-[10px] text-dark-400">Payment Confirmed</p>
-                      <p className="text-xs font-semibold text-white">+$49.00</p>
+                      <p className="text-xs font-semibold text-white">+245K SSP</p>
                     </div>
                   </div>
                 </div>
