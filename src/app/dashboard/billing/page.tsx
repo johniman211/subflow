@@ -110,11 +110,11 @@ export default function BillingPage() {
       )}
 
       {/* Current Plan */}
-      <div className="bg-white dark:bg-dark-900 rounded-2xl border border-gray-200 dark:border-dark-800 p-6">
+      <div className="bg-white dark:bg-dark-800 rounded-2xl border border-gray-200 dark:border-dark-700 p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-              plan?.slug === 'pro' ? 'bg-amber-100' : 'bg-gray-100'
+              plan?.slug === 'pro' ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-gray-100 dark:bg-dark-700'
             }`}>
               <Crown className={`h-6 w-6 ${plan?.slug === 'pro' ? 'text-amber-600' : 'text-gray-400'}`} />
             </div>
@@ -172,7 +172,7 @@ export default function BillingPage() {
       </div>
 
       {/* Plans Comparison */}
-      <div className="bg-white dark:bg-dark-900 rounded-2xl border border-gray-200 dark:border-dark-800 p-6">
+      <div className="bg-white dark:bg-dark-800 rounded-2xl border border-gray-200 dark:border-dark-700 p-6">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Available Plans</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {plans.map((p) => {
@@ -180,10 +180,10 @@ export default function BillingPage() {
             return (
               <div
                 key={p.id}
-                className={`border-2 rounded-xl p-4 bg-white dark:bg-dark-800 ${
+                className={`border-2 rounded-xl p-4 ${
                   isCurrentPlan 
-                    ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20' 
-                    : 'border-gray-200 dark:border-dark-700'
+                    ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/30' 
+                    : 'border-gray-200 dark:border-dark-600 bg-white dark:bg-dark-700'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -228,8 +228,8 @@ export default function BillingPage() {
       </div>
 
       {/* Payment History */}
-      <div className="bg-white dark:bg-dark-900 rounded-2xl border border-gray-200 dark:border-dark-800">
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-dark-800">
+      <div className="bg-white dark:bg-dark-800 rounded-2xl border border-gray-200 dark:border-dark-700">
+        <div className="px-6 py-4 border-b border-gray-200 dark:border-dark-700">
           <h3 className="text-lg font-bold text-gray-900 dark:text-white">Payment History</h3>
         </div>
         {payments.length > 0 ? (
