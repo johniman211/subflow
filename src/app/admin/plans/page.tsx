@@ -12,6 +12,8 @@ interface Plan {
   description: string;
   price_monthly: number;
   price_yearly: number;
+  price_monthly_ssp: number;
+  price_yearly_ssp: number;
   currency: string;
   features: string[];
   limits: any;
@@ -62,7 +64,9 @@ export default function AdminPlans() {
       description: '',
       price_monthly: 0,
       price_yearly: 0,
-      currency: 'USD',
+      price_monthly_ssp: 0,
+      price_yearly_ssp: 0,
+      currency: 'SSP',
       features: [],
       limits: { max_subscribers: 50, api_access: false, webhooks: false },
       is_active: true,
@@ -84,6 +88,8 @@ export default function AdminPlans() {
       description: editingPlan.description,
       price_monthly: editingPlan.price_monthly,
       price_yearly: editingPlan.price_yearly,
+      price_monthly_ssp: editingPlan.price_monthly_ssp,
+      price_yearly_ssp: editingPlan.price_yearly_ssp,
       currency: editingPlan.currency,
       features: editingPlan.features,
       limits: editingPlan.limits,
@@ -197,12 +203,17 @@ export default function AdminPlans() {
             </div>
 
             <div className="mb-4">
-              <span className="text-3xl font-black text-gray-900">
-                ${plan.price_monthly}
-              </span>
-              <span className="text-gray-500">/mo</span>
-              {plan.price_yearly > 0 && (
-                <p className="text-sm text-gray-500">${plan.price_yearly}/year</p>
+              <div className="mb-1">
+                <span className="text-2xl font-black text-gray-900">
+                  {(plan.price_monthly_ssp || 0).toLocaleString()} SSP
+                </span>
+                <span className="text-gray-500">/mo</span>
+              </div>
+              <div className="text-sm text-gray-500">
+                ${plan.price_monthly} USD/mo
+              </div>
+              {plan.price_yearly_ssp > 0 && (
+                <p className="text-xs text-gray-400">{plan.price_yearly_ssp?.toLocaleString()} SSP/year</p>
               )}
             </div>
 
@@ -277,34 +288,68 @@ export default function AdminPlans() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Price ($)</label>
-                      <input
-                        type="number"
-                        value={editingPlan.price_monthly}
-                        onChange={(e) => setEditingPlan({ ...editingPlan, price_monthly: parseFloat(e.target.value) || 0 })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                      />
+                  {/* SSP Pricing */}
+                  <div className="bg-green-50 rounded-xl p-4">
+                    <h4 className="text-sm font-semibold text-green-800 mb-3">SSP Pricing (Primary)</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Price (SSP)</label>
+                        <input
+                          type="number"
+                          value={editingPlan.price_monthly_ssp || 0}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, price_monthly_ssp: parseFloat(e.target.value) || 0 })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                          placeholder="e.g. 50000"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Yearly Price (SSP)</label>
+                        <input
+                          type="number"
+                          value={editingPlan.price_yearly_ssp || 0}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, price_yearly_ssp: parseFloat(e.target.value) || 0 })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                          placeholder="e.g. 500000"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Yearly Price ($)</label>
-                      <input
-                        type="number"
-                        value={editingPlan.price_yearly}
-                        onChange={(e) => setEditingPlan({ ...editingPlan, price_yearly: parseFloat(e.target.value) || 0 })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                      />
+                  </div>
+
+                  {/* USD Pricing */}
+                  <div className="bg-blue-50 rounded-xl p-4">
+                    <h4 className="text-sm font-semibold text-blue-800 mb-3">USD Pricing (Alternative)</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Price (USD)</label>
+                        <input
+                          type="number"
+                          value={editingPlan.price_monthly}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, price_monthly: parseFloat(e.target.value) || 0 })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                          placeholder="e.g. 29"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Yearly Price (USD)</label>
+                        <input
+                          type="number"
+                          value={editingPlan.price_yearly}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, price_yearly: parseFloat(e.target.value) || 0 })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                          placeholder="e.g. 290"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Trial Days</label>
-                      <input
-                        type="number"
-                        value={editingPlan.trial_days}
-                        onChange={(e) => setEditingPlan({ ...editingPlan, trial_days: parseInt(e.target.value) || 0 })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                      />
-                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Trial Days</label>
+                    <input
+                      type="number"
+                      value={editingPlan.trial_days}
+                      onChange={(e) => setEditingPlan({ ...editingPlan, trial_days: parseInt(e.target.value) || 0 })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 max-w-[150px]"
+                    />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
