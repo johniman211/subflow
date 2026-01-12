@@ -25,6 +25,7 @@ export function UpgradeModal() {
   const [transactionId, setTransactionId] = useState('');
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [loadingPlans, setLoadingPlans] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -37,13 +38,19 @@ export function UpgradeModal() {
   }, [showUpgradeModal]);
 
   const fetchPlans = async () => {
+    setLoadingPlans(true);
     const supabase = createClient();
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('platform_plans')
       .select('*')
       .eq('is_active', true)
       .order('sort_order');
+    
+    if (error) {
+      console.error('Error fetching plans:', error);
+    }
     setPlans(data || []);
+    setLoadingPlans(false);
   };
 
   const fetchPaymentInfo = async () => {
@@ -204,7 +211,20 @@ export function UpgradeModal() {
                     </div>
                   </div>
 
-                  {/* Plans Grid */}
+                  {/* Loading State */}
+                  {loadingPlans ? (
+                    <div className="py-12 text-center">
+                      <Loader2 className="h-8 w-8 animate-spin text-amber-500 mx-auto mb-4" />
+                      <p className="text-gray-500">Loading plans...</p>
+                    </div>
+                  ) : plans.length === 0 ? (
+                    <div className="py-12 text-center">
+                      <Crown className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+                      <p className="text-gray-500 mb-2">No plans available</p>
+                      <p className="text-sm text-gray-400">Please contact support or try again later.</p>
+                    </div>
+                  ) : (
+                  /* Plans Grid */
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {plans.map((p) => {
                       const price = billingCycle === 'monthly' ? p.price_monthly : p.price_yearly;
@@ -279,6 +299,7 @@ export function UpgradeModal() {
                       );
                     })}
                   </div>
+                  )}
                 </div>
               )}
 
