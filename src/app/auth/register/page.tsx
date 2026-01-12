@@ -34,6 +34,7 @@ export default function RegisterPage() {
       email: formData.email,
       password: formData.password,
       options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
         data: {
           full_name: formData.fullName,
           business_name: formData.businessName,
@@ -50,9 +51,10 @@ export default function RegisterPage() {
     }
 
     // Create the user profile in the users table
-    if (authData.user) {
+    const userId = authData.user?.id;
+    if (userId) {
       const { error: profileError } = await supabase.from('users').insert({
-        id: authData.user.id,
+        id: userId,
         email: formData.email,
         full_name: formData.fullName,
         business_name: formData.businessName,
@@ -66,7 +68,14 @@ export default function RegisterPage() {
       }
     }
 
-    router.push('/dashboard');
+    // Check if email confirmation is required (no session means email not yet verified)
+    if (!authData.session) {
+      // Redirect to email verification page
+      router.push(`/auth/verify-email?email=${encodeURIComponent(formData.email)}`);
+    } else {
+      // User is already verified, go to dashboard
+      router.push('/dashboard');
+    }
   };
 
   return (
