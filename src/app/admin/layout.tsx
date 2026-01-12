@@ -13,13 +13,15 @@ import {
   LogOut,
   Menu,
   X,
-  Crown
+  Crown,
+  Calendar
 } from 'lucide-react';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/plans', label: 'Plans', icon: Package },
   { href: '/admin/subscribers', label: 'Subscribers', icon: Users },
+  { href: '/admin/subscriptions', label: 'Subscriptions', icon: Calendar },
   { href: '/admin/payments', label: 'Payments', icon: CreditCard },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];

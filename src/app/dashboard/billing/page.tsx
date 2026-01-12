@@ -109,6 +109,58 @@ export default function BillingPage() {
         </div>
       )}
 
+      {/* Subscription Expiry Warning */}
+      {subscription?.status === 'active' && subscription?.current_period_end && (() => {
+        const daysLeft = Math.ceil((new Date(subscription.current_period_end).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+        if (daysLeft <= 0) {
+          return (
+            <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl p-6 text-white">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <AlertTriangle className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg">Subscription Expired</h3>
+                    <p className="text-white/80">Your subscription has expired. Renew now to continue using premium features.</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowUpgradeModal(true)}
+                  className="px-4 py-2 bg-white text-red-600 font-medium rounded-xl hover:bg-white/90"
+                >
+                  Renew Now
+                </button>
+              </div>
+            </div>
+          );
+        }
+        if (daysLeft <= 7) {
+          return (
+            <div className={`bg-gradient-to-r ${daysLeft <= 3 ? 'from-red-500 to-red-600' : 'from-amber-500 to-amber-600'} rounded-2xl p-6 text-white`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <Clock className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg">Subscription Expiring Soon</h3>
+                    <p className="text-white/80">Your subscription expires in {daysLeft} day{daysLeft !== 1 ? 's' : ''}. Renew to avoid service interruption.</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowUpgradeModal(true)}
+                  className={`px-4 py-2 bg-white ${daysLeft <= 3 ? 'text-red-600' : 'text-amber-600'} font-medium rounded-xl hover:bg-white/90`}
+                >
+                  Renew Now
+                </button>
+              </div>
+            </div>
+          );
+        }
+        return null;
+      })()}
+
       {/* Current Plan */}
       <div className="bg-white dark:bg-dark-800 rounded-2xl border border-gray-200 dark:border-dark-700 p-6">
         <div className="flex items-center justify-between mb-6">
