@@ -88,7 +88,7 @@ export default function NewInvoicePage() {
       customer_phone: formData.customer_phone,
       customer_email: formData.customer_email || null,
       customer_name: formData.customer_name || null,
-      line_items: lineItems.filter((item) => item.description && item.unit_price > 0),
+      items: lineItems.filter((item) => item.description && item.unit_price > 0),
       subtotal,
       discount: 0,
       tax: 0,
