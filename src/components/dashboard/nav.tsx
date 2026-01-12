@@ -25,6 +25,8 @@ import {
   Home,
   Sun,
   Moon,
+  Crown,
+  Wallet,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -42,14 +44,16 @@ const navigation = [
   { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
   { name: 'API Keys', href: '/dashboard/api-keys', icon: Key },
   { name: 'Webhooks', href: '/dashboard/webhooks', icon: Webhook },
+  { name: 'Billing', href: '/dashboard/billing', icon: Wallet },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 
 interface DashboardNavProps {
   user: User | null;
+  isAdmin?: boolean;
 }
 
-export function DashboardNav({ user }: DashboardNavProps) {
+export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -222,6 +226,18 @@ export function DashboardNav({ user }: DashboardNavProps) {
           {/* User Section */}
           <div className="px-4 mt-auto">
             <div className={cn("border-t pt-4", theme === 'dark' ? 'border-dark-800' : 'border-gray-200')}>
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className={cn(
+                    "flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-xl transition-all mb-2",
+                    "bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700"
+                  )}
+                >
+                  <Crown className="h-5 w-5 mr-3" />
+                  Admin Panel
+                </Link>
+              )}
               <div className={cn(
                 "px-4 py-3 rounded-xl mb-2",
                 theme === 'dark' ? 'bg-dark-800/50' : 'bg-gray-100'

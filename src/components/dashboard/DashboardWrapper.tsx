@@ -1,6 +1,8 @@
 'use client';
 
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
+import { BillingProvider } from '@/contexts/BillingContext';
+import { UpgradeModal } from '@/components/billing/UpgradeModal';
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const { theme, mounted } = useTheme();
@@ -13,6 +15,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'dark dashboard-dark bg-dark-950 text-white' : 'dashboard-light bg-gray-50 text-gray-900'}`}>
       {children}
+      <UpgradeModal />
     </div>
   );
 }
@@ -20,7 +23,9 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
 export function DashboardWrapper({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <DashboardContent>{children}</DashboardContent>
+      <BillingProvider>
+        <DashboardContent>{children}</DashboardContent>
+      </BillingProvider>
     </ThemeProvider>
   );
 }
