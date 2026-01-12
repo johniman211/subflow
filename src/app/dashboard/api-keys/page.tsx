@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { generateApiKey, hashApiKey } from '@/lib/utils';
-import { Key, Plus, Trash2, Copy, Check, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Key, Plus, Trash2, Copy, Check, Eye, EyeOff, Loader2, Lock, Zap } from 'lucide-react';
+import { useBilling } from '@/contexts/BillingContext';
+import Link from 'next/link';
 
 interface ApiKey {
   id: string;
@@ -21,10 +23,17 @@ export default function ApiKeysPage() {
   const [newKeyName, setNewKeyName] = useState('');
   const [showNewKey, setShowNewKey] = useState<{ public: string; secret: string } | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const { plan, setShowUpgradeModal } = useBilling();
+
+  const hasApiAccess = plan?.limits?.api_access === true;
 
   useEffect(() => {
-    fetchApiKeys();
-  }, []);
+    if (hasApiAccess) {
+      fetchApiKeys();
+    } else {
+      setLoading(false);
+    }
+  }, [hasApiAccess]);
 
   const fetchApiKeys = async () => {
     const supabase = createClient();
@@ -80,11 +89,59 @@ export default function ApiKeysPage() {
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
+  // Show upgrade prompt for free plan users
+  if (!hasApiAccess) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">API Keys</h1>
+          <p className="text-gray-600 dark:text-dark-400 mt-1">Manage API keys for programmatic access</p>
+        </div>
+
+        <div className="card p-8 text-center">
+          <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <Lock className="h-8 w-8 text-amber-600" />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">API Access is a Pro Feature</h2>
+          <p className="text-gray-600 dark:text-dark-400 mb-6 max-w-md mx-auto">
+            Upgrade to Pro to get API access for integrating Losetify with your website or app. 
+            Free plan users can use checkout links for integration.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={() => setShowUpgradeModal(true)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 text-white font-medium rounded-xl hover:bg-amber-600"
+            >
+              <Zap className="h-5 w-5" />
+              Upgrade to Pro
+            </button>
+            <Link
+              href="/dashboard/products"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 dark:bg-dark-800 text-gray-700 dark:text-dark-300 font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-dark-700"
+            >
+              Use Checkout Links Instead
+            </Link>
+          </div>
+          
+          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-dark-700">
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-3">What you get with Pro API access:</h3>
+            <ul className="text-sm text-gray-600 dark:text-dark-400 space-y-2">
+              <li>✓ Create checkout sessions programmatically</li>
+              <li>✓ Verify customer subscriptions in your app</li>
+              <li>✓ List products and prices via API</li>
+              <li>✓ Webhook notifications for payment events</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">API Keys</h1>
-        <p className="text-gray-600 mt-1">Manage API keys for programmatic access</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">API Keys</h1>
+        <p className="text-gray-600 dark:text-dark-400 mt-1">Manage API keys for programmatic access</p>
       </div>
 
       {/* Create New Key */}

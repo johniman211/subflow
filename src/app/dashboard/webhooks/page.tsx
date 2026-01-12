@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { WEBHOOK_EVENTS } from '@/lib/constants';
-import { Webhook, Plus, Trash2, Loader2 } from 'lucide-react';
+import { Webhook, Plus, Trash2, Loader2, Lock, Zap } from 'lucide-react';
 import { nanoid } from 'nanoid';
+import { useBilling } from '@/contexts/BillingContext';
 
 interface WebhookConfig {
   id: string;
@@ -19,6 +20,9 @@ export default function WebhooksPage() {
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const { plan, setShowUpgradeModal } = useBilling();
+  
+  const hasWebhookAccess = plan?.limits?.webhooks === true;
   
   const [newWebhook, setNewWebhook] = useState({
     url: '',
@@ -26,8 +30,12 @@ export default function WebhooksPage() {
   });
 
   useEffect(() => {
-    fetchWebhooks();
-  }, []);
+    if (hasWebhookAccess) {
+      fetchWebhooks();
+    } else {
+      setLoading(false);
+    }
+  }, [hasWebhookAccess]);
 
   const fetchWebhooks = async () => {
     const supabase = createClient();
@@ -79,12 +87,52 @@ export default function WebhooksPage() {
     }));
   };
 
+  // Show upgrade prompt for free plan users
+  if (!hasWebhookAccess) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Webhooks</h1>
+          <p className="text-gray-600 dark:text-dark-400 mt-1">Receive real-time event notifications</p>
+        </div>
+
+        <div className="card p-8 text-center">
+          <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <Lock className="h-8 w-8 text-amber-600" />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Webhooks are a Pro Feature</h2>
+          <p className="text-gray-600 dark:text-dark-400 mb-6 max-w-md mx-auto">
+            Upgrade to Pro to receive real-time notifications when payments are made, 
+            subscriptions change, and more.
+          </p>
+          <button
+            onClick={() => setShowUpgradeModal(true)}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 text-white font-medium rounded-xl hover:bg-amber-600"
+          >
+            <Zap className="h-5 w-5" />
+            Upgrade to Pro
+          </button>
+          
+          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-dark-700">
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-3">What you get with Pro webhooks:</h3>
+            <ul className="text-sm text-gray-600 dark:text-dark-400 space-y-2">
+              <li>✓ Real-time payment notifications</li>
+              <li>✓ Subscription lifecycle events</li>
+              <li>✓ Automatic retry on failure</li>
+              <li>✓ Secure signature verification</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Webhooks</h1>
-          <p className="text-gray-600 mt-1">Receive real-time event notifications</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Webhooks</h1>
+          <p className="text-gray-600 dark:text-dark-400 mt-1">Receive real-time event notifications</p>
         </div>
         <button onClick={() => setShowForm(true)} className="btn-primary">
           <Plus className="h-5 w-5 mr-2" /> Add Webhook

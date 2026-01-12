@@ -2,6 +2,7 @@ import { createServiceRoleClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import { CheckoutForm } from '@/components/checkout/checkout-form';
 import { Shield, Lock } from 'lucide-react';
+import Link from 'next/link';
 
 interface CheckoutPageProps {
   params: { productId: string };
@@ -12,10 +13,25 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
 
   const { data: product } = await supabase
     .from('products')
-    .select('*, prices(*), users!products_merchant_id_fkey(business_name, mtn_momo_number, bank_name_ssp, bank_account_number_ssp, bank_account_name_ssp, bank_name_usd, bank_account_number_usd, bank_account_name_usd)')
+    .select('*, prices(*), users!products_merchant_id_fkey(id, business_name, mtn_momo_number, bank_name_ssp, bank_account_number_ssp, bank_account_name_ssp, bank_name_usd, bank_account_number_usd, bank_account_name_usd, platform_plan_id)')
     .eq('id', params.productId)
     .eq('is_active', true)
     .single();
+
+  // Check if merchant is on free plan (show branding)
+  let showBranding = true;
+  if (product?.users?.platform_plan_id) {
+    const { data: merchantPlan } = await supabase
+      .from('platform_plans')
+      .select('slug, limits')
+      .eq('id', product.users.platform_plan_id)
+      .single();
+    
+    // Hide branding only for Pro/Enterprise plans with custom_branding enabled
+    if (merchantPlan?.limits?.custom_branding === true) {
+      showBranding = false;
+    }
+  }
 
   if (!product) {
     notFound();
@@ -74,10 +90,12 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
               <Lock className="h-4 w-4" />
               <span>Secure checkout</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4" />
-              <span>Powered by Losetify</span>
-            </div>
+            {showBranding && (
+              <Link href="https://www.losetify.com" target="_blank" className="flex items-center gap-2 hover:text-white transition-colors">
+                <Shield className="h-4 w-4" />
+                <span>Powered by Losetify</span>
+              </Link>
+            )}
           </div>
         </div>
 
@@ -97,10 +115,12 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
                   <Lock className="h-3 w-3" />
                   <span>Secure checkout</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Shield className="h-3 w-3" />
-                  <span>Powered by Losetify</span>
-                </div>
+                {showBranding && (
+                  <Link href="https://www.losetify.com" target="_blank" className="flex items-center gap-1 hover:text-slate-600 transition-colors">
+                    <Shield className="h-3 w-3" />
+                    <span>Powered by Losetify</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
