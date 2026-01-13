@@ -22,64 +22,33 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     const supabase = createClient();
-
-    // Get total users
-    const { count: totalUsers } = await supabase
-      .from('users')
-      .select('*', { count: 'exact', head: true });
-
-    // Get active subscribers (users with paid plans)
-    const { data: freePlan } = await supabase
-      .from('platform_plans')
-      .select('id')
-      .eq('slug', 'free')
-      .single();
-
-    const { count: activeSubscribers } = await supabase
-      .from('platform_subscriptions')
-      .select('*', { count: 'exact', head: true })
-      .in('status', ['active', 'trialing']);
-
-    // Get monthly revenue (confirmed payments this month) - separated by currency
-    const startOfMonth = new Date();
-    startOfMonth.setDate(1);
-    startOfMonth.setHours(0, 0, 0, 0);
-
-    const { data: monthlyPayments } = await supabase
-      .from('platform_payments')
-      .select('amount, currency')
-      .eq('status', 'confirmed')
-      .gte('confirmed_at', startOfMonth.toISOString());
-
-    const monthlyRevenueSSP = monthlyPayments
-      ?.filter(p => p.currency === 'SSP')
-      .reduce((sum, p) => sum + p.amount, 0) || 0;
     
-    const monthlyRevenueUSD = monthlyPayments
-      ?.filter(p => p.currency === 'USD')
-      .reduce((sum, p) => sum + p.amount, 0) || 0;
+    // Get session for API auth
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      setLoading(false);
+      return;
+    }
 
-    // Get pending payments
-    const { count: pendingPayments } = await supabase
-      .from('platform_payments')
-      .select('*', { count: 'exact', head: true })
-      .in('status', ['pending', 'matched']);
+    try {
+      // Use API route to fetch stats (bypasses RLS)
+      const response = await fetch('/api/admin/stats', {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
 
-    // Get recent payments
-    const { data: recent } = await supabase
-      .from('platform_payments')
-      .select('*, users(full_name, email), platform_plans(name)')
-      .order('created_at', { ascending: false })
-      .limit(5);
-
-    setStats({
-      totalUsers: totalUsers || 0,
-      activeSubscribers: activeSubscribers || 0,
-      monthlyRevenueSSP,
-      monthlyRevenueUSD,
-      pendingPayments: pendingPayments || 0,
-    });
-    setRecentPayments(recent || []);
+      if (response.ok) {
+        const data = await response.json();
+        setStats(data.stats);
+        setRecentPayments(data.recentPayments || []);
+      } else {
+        console.error('Failed to fetch admin stats');
+      }
+    } catch (error) {
+      console.error('Error fetching admin stats:', error);
+    }
+    
     setLoading(false);
   };
 
