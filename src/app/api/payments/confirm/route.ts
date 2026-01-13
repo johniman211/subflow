@@ -1,8 +1,13 @@
-import { createClient } from '@/lib/supabase/client';
 import { createServiceRoleClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { triggerWebhook, WEBHOOK_EVENTS } from '@/lib/webhooks';
-import { notifyAdmin, notifyMerchant, notifyCustomer } from '@/lib/notification-service';
+import { 
+  notifyMerchantPaymentConfirmed,
+  notifyAdminPaymentConfirmed,
+  notifyCustomerPaymentConfirmed,
+  notifyMerchantNewSubscriber,
+  notifyMerchantSubscriptionRenewed,
+} from '@/lib/platform-notifications';
 
 export async function POST(request: NextRequest) {
   try {
@@ -102,36 +107,99 @@ export async function POST(request: NextRequest) {
     // Send platform notifications
     try {
       const productName = (payment.prices as any)?.products?.name || 'Product';
+      const priceName = (payment.prices as any)?.name || 'Subscription';
       const amount = (confirmedPayment as any)?.amount || payment.amount;
       const currency = (confirmedPayment as any)?.currency || payment.currency;
       const customerPhone = (payment as any).customer_phone;
       const customerEmail = (payment as any).customer_email;
+      const referenceCode = (confirmedPayment as any)?.reference_code;
+
+      // Get merchant info
+      const { data: merchant } = await supabase
+        .from('users')
+        .select('email, phone, business_name, full_name')
+        .eq('id', payment.merchant_id)
+        .single();
+
+      const merchantEmail = (merchant as any)?.email;
+      const merchantPhone = (merchant as any)?.phone;
+      const merchantName = (merchant as any)?.business_name || (merchant as any)?.full_name || 'Merchant';
+
+      // Get confirmer info
+      const { data: confirmer } = await supabase
+        .from('users')
+        .select('email, full_name')
+        .eq('id', confirmedBy)
+        .single();
+      const confirmerName = (confirmer as any)?.email || confirmedBy;
+
+      // Notify merchant about confirmed payment
+      if (merchantEmail) {
+        await notifyMerchantPaymentConfirmed({
+          merchantEmail,
+          merchantPhone,
+          merchantName,
+          customerPhone,
+          amount,
+          currency,
+          productName,
+          referenceCode,
+        });
+      }
 
       // Notify admin about confirmed payment
-      await notifyAdmin('payment.confirmed', {
-        reference_code: (confirmedPayment as any)?.reference_code,
+      await notifyAdminPaymentConfirmed({
+        merchantName,
+        customerPhone,
         amount,
         currency,
-        customer_name: customerPhone,
-        customer_phone: customerPhone,
-        product_name: productName,
-      }, ['email']);
+        productName,
+        referenceCode,
+        confirmedBy: confirmerName,
+      });
 
       // Notify customer about confirmed payment
       if (customerPhone) {
-        await notifyCustomer(
+        await notifyCustomerPaymentConfirmed({
           customerPhone,
           customerEmail,
-          'payment.confirmed',
-          {
-            reference_code: (confirmedPayment as any)?.reference_code,
+          amount,
+          currency,
+          productName,
+          merchantName,
+          referenceCode,
+          expiryDate: (subscription as any)?.current_period_end,
+        });
+      }
+
+      // If subscription was created, notify merchant about new subscriber
+      if (subscription) {
+        const isNew = new Date((subscription as any).created_at).getTime() > Date.now() - 60000;
+        
+        if (isNew && merchantEmail) {
+          await notifyMerchantNewSubscriber({
+            merchantEmail,
+            merchantPhone,
+            merchantName,
+            customerPhone,
+            customerEmail,
+            productName,
+            priceName,
             amount,
             currency,
-            product_name: productName,
-            period_end: (subscription as any)?.current_period_end,
-          },
-          ['sms', 'whatsapp']
-        );
+          });
+        } else if (merchantEmail) {
+          await notifyMerchantSubscriptionRenewed({
+            merchantEmail,
+            merchantPhone,
+            merchantName,
+            customerPhone,
+            productName,
+            amount,
+            currency,
+            newExpiryDate: (subscription as any).current_period_end,
+          });
+        }
       }
     } catch (notifyError) {
       console.error('Notification error:', notifyError);
