@@ -11,7 +11,7 @@ const twilioClient = process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_T
 // Configuration
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Losetify <notifications@losetify.com>';
 const FROM_PHONE = process.env.TWILIO_FROM_NUMBER || '';
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@losetify.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'johnnyafrica211@gmail.com';
 const ADMIN_PHONE = process.env.ADMIN_PHONE || '';
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.losetify.com';
 
