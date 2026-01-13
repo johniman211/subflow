@@ -18,26 +18,33 @@ export default function AdminSubscribers() {
 
   const fetchData = async () => {
     const supabase = createClient();
-
-    // Fetch plans
-    const { data: plansData } = await supabase
-      .from('platform_plans')
-      .select('*')
-      .order('sort_order');
-    setPlans(plansData || []);
-
-    // Fetch users with their subscriptions
-    let query = supabase
-      .from('users')
-      .select('*, platform_subscriptions(*, platform_plans(*)), platform_plans(*)')
-      .order('created_at', { ascending: false });
-
-    if (planFilter !== 'all') {
-      query = query.eq('platform_plan_id', planFilter);
+    
+    // Get session for API auth
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      setLoading(false);
+      return;
     }
 
-    const { data } = await query;
-    setSubscribers(data || []);
+    try {
+      // Use API route to fetch all users (bypasses RLS)
+      const response = await fetch(`/api/admin/users?plan=${planFilter}`, {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSubscribers(data.users || []);
+        setPlans(data.plans || []);
+      } else {
+        console.error('Failed to fetch users');
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+    
     setLoading(false);
   };
 
