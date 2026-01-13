@@ -7,7 +7,7 @@ import { formatCurrency, generateReferenceCode } from '@/lib/utils';
 import { BILLING_CYCLES_MAP, PAYMENT_METHODS } from '@/lib/constants';
 import { 
   Phone, Mail, Smartphone, Building, Copy, Check, Upload, Loader2,
-  ChevronLeft, CreditCard, Clock, CheckCircle2, ArrowRight, Sparkles
+  ChevronLeft, CreditCard, Clock, CheckCircle2, ArrowRight, Sparkles, Tag, X
 } from 'lucide-react';
 import type { Price } from '@/types/database';
 
@@ -39,6 +39,12 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
     proofFile: null as File | null,
   });
 
+  // Coupon state
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [couponError, setCouponError] = useState('');
+
   // Auto-advance to details if only one price
   if (prices.length === 1 && step === 'select' && selectedPrice) {
     setStep('details');
@@ -46,7 +52,84 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
 
   const handleSelectPrice = (price: Price) => {
     setSelectedPrice(price);
+    setAppliedCoupon(null); // Reset coupon when changing price
+    setCouponCode('');
+    setCouponError('');
     setStep('details');
+  };
+
+  // Apply coupon code
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim() || !selectedPrice) return;
+    
+    setCouponLoading(true);
+    setCouponError('');
+    setAppliedCoupon(null);
+
+    const supabase = createClient();
+    
+    // Look up the coupon
+    const { data: coupon, error } = await supabase
+      .from('coupons')
+      .select('*')
+      .eq('code', couponCode.toUpperCase().trim())
+      .eq('merchant_id', product.merchant_id)
+      .eq('is_active', true)
+      .single();
+
+    if (error || !coupon) {
+      setCouponError('Invalid coupon code');
+      setCouponLoading(false);
+      return;
+    }
+
+    // Check if coupon is expired
+    if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) {
+      setCouponError('This coupon has expired');
+      setCouponLoading(false);
+      return;
+    }
+
+    // Check usage limit
+    if (coupon.max_uses && coupon.used_count >= coupon.max_uses) {
+      setCouponError('This coupon has reached its usage limit');
+      setCouponLoading(false);
+      return;
+    }
+
+    // Check minimum amount
+    if (coupon.min_amount && selectedPrice.amount < coupon.min_amount) {
+      setCouponError(`Minimum order amount is ${formatCurrency(coupon.min_amount, selectedPrice.currency)}`);
+      setCouponLoading(false);
+      return;
+    }
+
+    // Check if coupon applies to this product/price
+    if (coupon.product_ids && coupon.product_ids.length > 0 && !coupon.product_ids.includes(product.id)) {
+      setCouponError('This coupon is not valid for this product');
+      setCouponLoading(false);
+      return;
+    }
+
+    setAppliedCoupon(coupon);
+    setCouponLoading(false);
+  };
+
+  // Calculate discounted amount
+  const getDiscountedAmount = () => {
+    if (!selectedPrice || !appliedCoupon) return selectedPrice?.amount || 0;
+    
+    if (appliedCoupon.discount_type === 'percentage') {
+      const discount = (selectedPrice.amount * appliedCoupon.discount_value) / 100;
+      return Math.max(0, selectedPrice.amount - discount);
+    } else {
+      return Math.max(0, selectedPrice.amount - appliedCoupon.discount_value);
+    }
+  };
+
+  const getDiscountAmount = () => {
+    if (!selectedPrice || !appliedCoupon) return 0;
+    return selectedPrice.amount - getDiscountedAmount();
   };
 
   const handleCustomerDetails = async (e: React.FormEvent) => {
@@ -63,16 +146,21 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
     const expiresAt = new Date();
     expiresAt.setHours(expiresAt.getHours() + 24);
 
+    const finalAmount = getDiscountedAmount();
+    
     const { error: paymentError } = await supabase.from('payments').insert({
       merchant_id: product.merchant_id,
       price_id: selectedPrice!.id,
       customer_phone: customerInfo.phone,
       customer_email: customerInfo.email || null,
       reference_code: refCode,
-      amount: selectedPrice!.amount,
+      amount: finalAmount,
       currency: selectedPrice!.currency,
       payment_method: paymentMethod,
       expires_at: expiresAt.toISOString(),
+      coupon_id: appliedCoupon?.id || null,
+      original_amount: selectedPrice!.amount,
+      discount_amount: getDiscountAmount(),
     });
 
     if (paymentError) {
@@ -261,9 +349,20 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
               <p className="font-semibold text-slate-900">{selectedPrice?.name}</p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-slate-900">
-                {formatCurrency(selectedPrice!.amount, selectedPrice!.currency)}
-              </p>
+              {appliedCoupon ? (
+                <>
+                  <p className="text-sm text-slate-400 line-through">
+                    {formatCurrency(selectedPrice!.amount, selectedPrice!.currency)}
+                  </p>
+                  <p className="text-2xl font-bold text-green-600">
+                    {formatCurrency(getDiscountedAmount(), selectedPrice!.currency)}
+                  </p>
+                </>
+              ) : (
+                <p className="text-2xl font-bold text-slate-900">
+                  {formatCurrency(selectedPrice!.amount, selectedPrice!.currency)}
+                </p>
+              )}
               {selectedPrice?.billing_cycle !== 'one_time' && (
                 <p className="text-sm text-slate-500">
                   per {selectedPrice?.billing_cycle === 'monthly' ? 'month' : 'year'}
@@ -271,6 +370,28 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
               )}
             </div>
           </div>
+          
+          {/* Applied Coupon Badge */}
+          {appliedCoupon && (
+            <div className="mt-3 flex items-center justify-between p-2 bg-green-50 border border-green-200 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Tag className="h-4 w-4 text-green-600" />
+                <span className="text-sm font-medium text-green-700">
+                  {appliedCoupon.code} - {appliedCoupon.discount_type === 'percentage' 
+                    ? `${appliedCoupon.discount_value}% off` 
+                    : `${formatCurrency(appliedCoupon.discount_value, selectedPrice!.currency)} off`}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => { setAppliedCoupon(null); setCouponCode(''); }}
+                className="p-1 hover:bg-green-100 rounded transition-colors"
+              >
+                <X className="h-4 w-4 text-green-600" />
+              </button>
+            </div>
+          )}
+          
           {prices.length > 1 && (
             <button 
               onClick={() => setStep('select')} 
@@ -281,6 +402,36 @@ export function CheckoutForm({ product, prices, merchant }: CheckoutFormProps) {
             </button>
           )}
         </div>
+
+        {/* Coupon Code Input */}
+        {!appliedCoupon && (
+          <div className="p-4 bg-white border border-slate-200 rounded-xl">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Tag className="h-4 w-4 inline mr-1" />
+              Have a coupon code?
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={couponCode}
+                onChange={(e) => { setCouponCode(e.target.value.toUpperCase()); setCouponError(''); }}
+                className="flex-1 px-4 py-2.5 bg-white text-slate-900 border-2 border-slate-200 rounded-lg focus:border-slate-900 focus:ring-0 transition-colors placeholder:text-slate-400 uppercase"
+                placeholder="Enter code"
+              />
+              <button
+                type="button"
+                onClick={handleApplyCoupon}
+                disabled={couponLoading || !couponCode.trim()}
+                className="px-4 py-2.5 bg-slate-900 text-white font-medium rounded-lg hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {couponLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Apply'}
+              </button>
+            </div>
+            {couponError && (
+              <p className="text-sm text-red-500 mt-2">{couponError}</p>
+            )}
+          </div>
+        )}
 
         <form onSubmit={handleCustomerDetails} className="space-y-5">
           {error && (

@@ -9,7 +9,8 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({
     totalUsers: 0,
     activeSubscribers: 0,
-    monthlyRevenue: 0,
+    monthlyRevenueSSP: 0,
+    monthlyRevenueUSD: 0,
     pendingPayments: 0,
   });
   const [recentPayments, setRecentPayments] = useState<any[]>([]);
@@ -39,18 +40,24 @@ export default function AdminDashboard() {
       .select('*', { count: 'exact', head: true })
       .in('status', ['active', 'trialing']);
 
-    // Get monthly revenue (confirmed payments this month)
+    // Get monthly revenue (confirmed payments this month) - separated by currency
     const startOfMonth = new Date();
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
 
     const { data: monthlyPayments } = await supabase
       .from('platform_payments')
-      .select('amount')
+      .select('amount, currency')
       .eq('status', 'confirmed')
       .gte('confirmed_at', startOfMonth.toISOString());
 
-    const monthlyRevenue = monthlyPayments?.reduce((sum, p) => sum + p.amount, 0) || 0;
+    const monthlyRevenueSSP = monthlyPayments
+      ?.filter(p => p.currency === 'SSP')
+      .reduce((sum, p) => sum + p.amount, 0) || 0;
+    
+    const monthlyRevenueUSD = monthlyPayments
+      ?.filter(p => p.currency === 'USD')
+      .reduce((sum, p) => sum + p.amount, 0) || 0;
 
     // Get pending payments
     const { count: pendingPayments } = await supabase
@@ -68,7 +75,8 @@ export default function AdminDashboard() {
     setStats({
       totalUsers: totalUsers || 0,
       activeSubscribers: activeSubscribers || 0,
-      monthlyRevenue,
+      monthlyRevenueSSP,
+      monthlyRevenueUSD,
       pendingPayments: pendingPayments || 0,
     });
     setRecentPayments(recent || []);
@@ -89,10 +97,16 @@ export default function AdminDashboard() {
       color: 'bg-green-500'
     },
     { 
-      label: 'Monthly Revenue', 
-      value: formatCurrency(stats.monthlyRevenue, 'USD'), 
+      label: 'Revenue (SSP)', 
+      value: formatCurrency(stats.monthlyRevenueSSP, 'SSP'), 
       icon: DollarSign,
       color: 'bg-amber-500'
+    },
+    { 
+      label: 'Revenue (USD)', 
+      value: formatCurrency(stats.monthlyRevenueUSD, 'USD'), 
+      icon: DollarSign,
+      color: 'bg-emerald-500'
     },
     { 
       label: 'Pending Payments', 
