@@ -1,5 +1,5 @@
--- Platform Billing Schema for Losetify SaaS
--- This handles billing for the platform itself (users paying to use Losetify)
+-- Platform Billing Schema for Payssd SaaS
+-- This handles billing for the platform itself (users paying to use Payssd)
 
 -- Admin Settings table - stores platform admin's payment info
 CREATE TABLE IF NOT EXISTS admin_settings (
@@ -79,7 +79,7 @@ VALUES
     0,
     0,
     'USD',
-    '["Up to 50 subscribers", "Basic dashboard", "Email support", "Checkout links only", "Powered by Losetify branding"]',
+    '["Up to 50 subscribers", "Basic dashboard", "Email support", "Checkout links only", "Powered by Payssd branding"]',
     '{"max_subscribers": 50, "api_access": false, "webhooks": false, "custom_branding": false, "analytics": "basic", "show_branding": true}',
     true,
     false,
@@ -122,7 +122,7 @@ VALUES
   ('payment_info', '{
     "mtn_momo": {
       "number": "",
-      "name": "Losetify"
+      "name": "Payssd"
     },
     "bank_ssp": {
       "bank_name": "",
@@ -136,8 +136,8 @@ VALUES
     }
   }'),
   ('platform_settings', '{
-    "platform_name": "Losetify",
-    "support_email": "support@losetify.com",
+    "platform_name": "Payssd",
+    "support_email": "support@payssd.com",
     "trial_enabled": true,
     "trial_days": 3
   }')

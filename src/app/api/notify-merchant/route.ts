@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
             </center>
           </div>
           <div class="footer">
-            <p>Losetify - Subscription Management Platform</p>
+            <p>Payssd - Subscription Management Platform</p>
           </div>
         </div>
       </body>
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Losetify <notifications@resend.dev>',
+          from: 'Payssd <notifications@resend.dev>',
           to: [merchant.email],
           subject: emailSubject,
           html: emailHtml,

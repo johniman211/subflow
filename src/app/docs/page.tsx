@@ -6,11 +6,11 @@ import { ArrowLeft, Copy, Check, Code, Globe, Webhook, Key, CreditCard, Users, T
 
 const codeExamples = {
   javascript: {
-    checkout: `// Initialize Losetify
-const losetify = new Losetify('pk_live_your_public_key');
+    checkout: `// Initialize Payssd
+const payssd = new Payssd('pk_live_your_public_key');
 
 // Open checkout modal
-losetify.checkout({
+payssd.checkout({
   priceId: 'price_abc123',
   customerPhone: '+211912345678',
   customerEmail: 'customer@example.com',
@@ -23,7 +23,7 @@ losetify.checkout({
   }
 });`,
     accessCheck: `// Check subscription access (Server-side only)
-const response = await fetch('https://losetify.com/api/v1/access/check', {
+const response = await fetch('https://payssd.com/api/v1/access/check', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer sk_live_your_secret_key',
@@ -49,7 +49,7 @@ if (has_access) {
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-  CURLOPT_URL => "https://losetify.com/api/v1/access/check",
+  CURLOPT_URL => "https://payssd.com/api/v1/access/check",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_POST => true,
   CURLOPT_HTTPHEADER => [
@@ -74,8 +74,8 @@ if ($result['has_access']) {
     webhook: `<?php
 // Verify webhook signature
 $payload = file_get_contents('php://input');
-$signature = $_SERVER['HTTP_X_LOSETIFY_SIGNATURE'];
-$timestamp = $_SERVER['HTTP_X_LOSETIFY_TIMESTAMP'];
+$signature = $_SERVER['HTTP_X_PAYSSD_SIGNATURE'];
+$timestamp = $_SERVER['HTTP_X_PAYSSD_TIMESTAMP'];
 
 $expected = hash_hmac('sha256', $timestamp . '.' . $payload, $webhook_secret);
 
@@ -100,37 +100,37 @@ if (hash_equals($expected, $signature)) {
   wordpress: {
     plugin: `<?php
 /**
- * Plugin Name: Losetify Integration
- * Description: Accept payments via Losetify
+ * Plugin Name: Payssd Integration
+ * Description: Accept payments via Payssd
  */
 
-// Add Losetify SDK to your theme
-function losetify_enqueue_scripts() {
+// Add Payssd SDK to your theme
+function payssd_enqueue_scripts() {
     wp_enqueue_script(
-        'losetify-sdk',
-        'https://losetify.com/sdk/losetify.js',
+        'payssd-sdk',
+        'https://payssd.com/sdk/payssd.js',
         [],
         '1.0.0',
         true
     );
 }
-add_action('wp_enqueue_scripts', 'losetify_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'payssd_enqueue_scripts');
 
 // Shortcode for checkout button
-function losetify_checkout_button($atts) {
+function payssd_checkout_button($atts) {
     $atts = shortcode_atts([
         'price_id' => '',
         'text' => 'Subscribe Now',
     ], $atts);
     
     return sprintf(
-        '<button onclick="openLosetifyCheckout(\'%s\')">%s</button>
+        '<button onclick="openPayssdCheckout(\'%s\')">%s</button>
         <script>
-        function openLosetifyCheckout(priceId) {
+        function openPayssdCheckout(priceId) {
             const phone = prompt("Enter your phone number:");
             if (phone) {
-                const losetify = new Losetify("pk_live_your_key");
-                losetify.checkout({
+                const payssd = new Payssd("pk_live_your_key");
+                payssd.checkout({
                     priceId: priceId,
                     customerPhone: phone,
                     onSuccess: () => location.reload()
@@ -142,13 +142,13 @@ function losetify_checkout_button($atts) {
         esc_html($atts['text'])
     );
 }
-add_shortcode('losetify_checkout', 'losetify_checkout_button');
+add_shortcode('payssd_checkout', 'payssd_checkout_button');
 
 // Check access before showing content
-function losetify_check_access($product_id, $phone) {
-    $response = wp_remote_post('https://losetify.com/api/v1/access/check', [
+function payssd_check_access($product_id, $phone) {
+    $response = wp_remote_post('https://payssd.com/api/v1/access/check', [
         'headers' => [
-            'Authorization' => 'Bearer ' . LOSETIFY_SECRET_KEY,
+            'Authorization' => 'Bearer ' . PAYSSD_SECRET_KEY,
             'Content-Type' => 'application/json',
         ],
         'body' => json_encode([
@@ -203,7 +203,7 @@ export default function DocsPage() {
             <Link href="/" className="text-gray-600 hover:text-gray-900">
               <ArrowLeft className="h-5 w-5" />
             </Link>
-            <h1 className="text-xl font-bold text-gray-900">Losetify API Documentation</h1>
+            <h1 className="text-xl font-bold text-gray-900">Payssd API Documentation</h1>
           </div>
           <Link href="/dashboard/api-keys" className="btn-primary btn-sm">
             Get API Keys
@@ -248,7 +248,7 @@ export default function DocsPage() {
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Start</h2>
                   <p className="text-gray-600 mb-6">
-                    Integrate Losetify payments into your website in minutes. Accept MTN Mobile Money 
+                    Integrate Payssd payments into your website in minutes. Accept MTN Mobile Money 
                     and Bank Transfers from customers in South Sudan.
                   </p>
                 </div>
@@ -270,7 +270,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="sdk-script"
                     language="html"
-                    code={`<script src="https://losetify.com/sdk/losetify.js"></script>`}
+                    code={`<script src="https://payssd.com/sdk/payssd.js"></script>`}
                   />
                 </div>
 
@@ -322,7 +322,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="auth-header"
                     language="bash"
-                    code={`curl -X POST https://losetify.com/api/v1/access/check \\
+                    code={`curl -X POST https://payssd.com/api/v1/access/check \\
   -H "Authorization: Bearer sk_live_your_secret_key" \\
   -H "Content-Type: application/json" \\
   -d '{"product_id": "...", "customer_phone": "..."}'`}
@@ -465,7 +465,7 @@ export default function DocsPage() {
                 <div className="card p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Plugin Code</h3>
                   <p className="text-gray-600">
-                    Create a new file <code className="bg-gray-100 px-2 py-1 rounded">wp-content/plugins/losetify/losetify.php</code>:
+                    Create a new file <code className="bg-gray-100 px-2 py-1 rounded">wp-content/plugins/payssd/payssd.php</code>:
                   </p>
                   <CodeBlock
                     id="wordpress-plugin"
@@ -480,7 +480,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="wordpress-shortcode"
                     language="html"
-                    code={`[losetify_checkout price_id="price_abc123" text="Subscribe Now"]`}
+                    code={`[payssd_checkout price_id="price_abc123" text="Subscribe Now"]`}
                   />
                 </div>
               </div>
@@ -495,7 +495,7 @@ export default function DocsPage() {
                   <CodeBlock
                     id="sdk-install"
                     language="html"
-                    code={`<script src="https://losetify.com/sdk/losetify.js"></script>`}
+                    code={`<script src="https://payssd.com/sdk/payssd.js"></script>`}
                   />
                 </div>
 
@@ -504,10 +504,10 @@ export default function DocsPage() {
                   <CodeBlock
                     id="sdk-modal"
                     language="javascript"
-                    code={`const losetify = new Losetify('pk_live_your_public_key');
+                    code={`const payssd = new Payssd('pk_live_your_public_key');
 
 // Open checkout in a modal
-losetify.checkout({
+payssd.checkout({
   priceId: 'price_abc123',
   customerPhone: '+211912345678',
   customerEmail: 'customer@example.com', // optional
@@ -531,10 +531,10 @@ losetify.checkout({
                   <CodeBlock
                     id="sdk-redirect"
                     language="javascript"
-                    code={`const losetify = new Losetify('pk_live_your_public_key');
+                    code={`const payssd = new Payssd('pk_live_your_public_key');
 
 // Redirect to hosted checkout page
-losetify.checkout({
+payssd.checkout({
   priceId: 'price_abc123',
   customerPhone: '+211912345678',
   mode: 'redirect',

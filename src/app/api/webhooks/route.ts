@@ -43,7 +43,7 @@ export async function POST(request: Request) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Losetify-Signature': signature,
+            'X-Payssd-Signature': signature,
           },
           body: JSON.stringify(payload),
         });

@@ -81,9 +81,9 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
         <div className="flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-lemon-400 rounded-lg flex items-center justify-center">
-              <span className="text-dark-900 font-black">L</span>
+              <span className="text-dark-900 font-black">P</span>
             </div>
-            <span className={cn("font-bold", theme === 'dark' ? 'text-white' : 'text-gray-900')}>Losetify</span>
+            <span className={cn("font-bold", theme === 'dark' ? 'text-white' : 'text-gray-900')}>Payssd</span>
           </Link>
           <div className="flex items-center gap-2">
             {user && <NotificationBell userId={user.id} />}
@@ -164,9 +164,9 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
           <div className="flex items-center flex-shrink-0 px-6 mb-2">
             <Link href="/dashboard" className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center shadow-lemon">
-                <span className="text-dark-900 font-black text-xl">L</span>
+                <span className="text-dark-900 font-black text-xl">P</span>
               </div>
-              <span className={cn("text-xl font-bold", theme === 'dark' ? 'text-white' : 'text-gray-900')}>Losetify</span>
+              <span className={cn("text-xl font-bold", theme === 'dark' ? 'text-white' : 'text-gray-900')}>Payssd</span>
             </Link>
           </div>
 

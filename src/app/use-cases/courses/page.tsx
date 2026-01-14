@@ -9,7 +9,7 @@ export default function CoursesUseCasePage() {
       icon={BookOpen}
       subtitle="Courses & Digital Products"
       title="Sell Courses and Digital Products Without Manual Work"
-      description="Stop chasing payments and sending files manually. Losetify helps you sell courses and digital products with automatic access control."
+      description="Stop chasing payments and sending files manually. Payssd helps you sell courses and digital products with automatic access control."
       ctaText="Start Selling Courses"
       
       problemTitle="The problem"
@@ -21,7 +21,7 @@ export default function CoursesUseCasePage() {
       ]}
       
       solutionTitle="The solution"
-      solutionDescription="Losetify automates the entire flow."
+      solutionDescription="Payssd automates the entire flow."
       solutionSubtext="Students pay you directly. Access is unlocked automatically and removed when it expires."
       
       offerTitle="What you can sell"
@@ -47,7 +47,7 @@ export default function CoursesUseCasePage() {
         }
       ]}
       
-      whyTitle="Why educators use Losetify"
+      whyTitle="Why educators use Payssd"
       features={[
         { text: "No manual follow-up" },
         { text: "No technical setup" },

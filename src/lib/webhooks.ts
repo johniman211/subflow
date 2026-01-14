@@ -66,9 +66,9 @@ export async function deliverWebhook(
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Losetify-Signature': signature,
-          'X-Losetify-Timestamp': timestamp.toString(),
-          'X-Losetify-Event': eventType,
+          'X-Payssd-Signature': signature,
+          'X-Payssd-Timestamp': timestamp.toString(),
+          'X-Payssd-Event': eventType,
         },
         body: JSON.stringify({
           event: eventType,

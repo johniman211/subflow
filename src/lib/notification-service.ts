@@ -532,7 +532,7 @@ export async function notifyAdmin(
   const supabase = createServiceRoleClient();
   
   // Get admin email from settings or env
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@losetify.com';
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@payssd.com';
   const adminPhone = process.env.ADMIN_PHONE;
 
   return sendPlatformNotification({

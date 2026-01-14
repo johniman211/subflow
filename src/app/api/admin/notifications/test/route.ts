@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get admin email for test
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@losetify.com';
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@payssd.com';
     const adminPhone = process.env.ADMIN_PHONE || '+211912345678';
 
     // Create notification service and test
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       recipient_phone: adminPhone,
       channels: [provider.channel as 'email' | 'sms' | 'whatsapp'],
       data: {
-        message: `This is a test notification from Losetify. Provider: ${provider.name}. Time: ${new Date().toISOString()}`,
+        message: `This is a test notification from Payssd. Provider: ${provider.name}. Time: ${new Date().toISOString()}`,
       },
     };
 

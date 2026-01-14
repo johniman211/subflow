@@ -1,4 +1,4 @@
-export const APP_NAME = 'Losetify';
+export const APP_NAME = 'Payssd';
 export const APP_DESCRIPTION = 'Subscription Management Platform for South Sudan & East Africa';
 
 export const SUPPORTED_CURRENCIES = ['SSP', 'USD'] as const;

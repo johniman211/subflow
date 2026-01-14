@@ -88,9 +88,9 @@ export function UseCaseLayout({
           <nav className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center shadow-lemon">
-                <span className="text-dark-900 font-black text-xl">L</span>
+                <span className="text-dark-900 font-black text-xl">P</span>
               </div>
-              <span className="text-xl font-bold text-white">Losetify</span>
+              <span className="text-xl font-bold text-white">Payssd</span>
             </Link>
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/#features" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Features</Link>
@@ -300,7 +300,7 @@ export function UseCaseLayout({
                   Built for trust
                 </h2>
                 <p className="text-dark-300 text-lg mb-2">
-                  Losetify never holds your money.
+                  Payssd never holds your money.
                 </p>
                 <p className="text-dark-400">
                   You stay in full control of revenue and customers.
@@ -318,7 +318,7 @@ export function UseCaseLayout({
                 Ready to get started?
               </h2>
               <p className="text-dark-300 text-lg mb-8">
-                Join businesses already using Losetify to manage payments and access.
+                Join businesses already using Payssd to manage payments and access.
               </p>
               <Link 
                 href={ctaHref}
@@ -338,9 +338,9 @@ export function UseCaseLayout({
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-lemon-400 rounded-lg flex items-center justify-center">
-                <span className="text-dark-900 font-black">L</span>
+                <span className="text-dark-900 font-black">P</span>
               </div>
-              <span className="text-white font-bold">Losetify</span>
+              <span className="text-white font-bold">Payssd</span>
             </div>
             <div className="flex items-center gap-6 text-sm text-dark-400">
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
@@ -348,7 +348,7 @@ export function UseCaseLayout({
               <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
             </div>
             <p className="text-dark-500 text-sm">
-              © {new Date().getFullYear()} Losetify. All rights reserved.
+              © {new Date().getFullYear()} Payssd. All rights reserved.
             </p>
           </div>
         </div>

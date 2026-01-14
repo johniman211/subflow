@@ -110,7 +110,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   <Crown className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="font-bold text-white">Losetify</p>
+                  <p className="font-bold text-white">Payssd</p>
                   <p className="text-xs text-gray-400">Admin Panel</p>
                 </div>
               </div>

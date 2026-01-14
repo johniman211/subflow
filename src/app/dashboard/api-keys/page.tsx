@@ -104,7 +104,7 @@ export default function ApiKeysPage() {
           </div>
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">API Access is a Pro Feature</h2>
           <p className="text-gray-600 dark:text-dark-400 mb-6 max-w-md mx-auto">
-            Upgrade to Pro to get API access for integrating Losetify with your website or app. 
+            Upgrade to Pro to get API access for integrating Payssd with your website or app. 
             Free plan users can use checkout links for integration.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

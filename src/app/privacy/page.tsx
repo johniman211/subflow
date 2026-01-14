@@ -8,9 +8,9 @@ export default function PrivacyPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-xl">L</span>
+                <span className="text-white font-bold text-xl">P</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">Losetify</span>
+              <span className="text-xl font-bold text-gray-900">Payssd</span>
             </Link>
             <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
               Sign In
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         <div className="prose prose-lg text-gray-600 max-w-none">
           <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">1. Introduction</h2>
           <p>
-            Losetify ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy 
+            Payssd ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy 
             explains how we collect, use, disclose, and safeguard your information when you use our 
             subscription management platform.
           </p>
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
             If you have questions about this Privacy Policy, please contact us at:
           </p>
           <ul className="list-none pl-0 space-y-1 mt-4">
-            <li><strong>Email:</strong> privacy@losetify.com</li>
+            <li><strong>Email:</strong> privacy@payssd.com</li>
             <li><strong>Address:</strong> Juba, South Sudan</li>
           </ul>
         </div>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
 
       <footer className="bg-gray-100 py-8 mt-16">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </footer>
     </div>

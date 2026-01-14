@@ -23,8 +23,8 @@ export default function MediaUseCasePage() {
       ]}
       
       solutionTitle="The solution"
-      solutionDescription="Losetify enables reader-supported journalism."
-      solutionSubtext="Readers pay you directly. Losetify manages who can access premium content."
+      solutionDescription="Payssd enables reader-supported journalism."
+      solutionSubtext="Readers pay you directly. Payssd manages who can access premium content."
       
       offerTitle="Monetization options"
       offerItems={[
@@ -49,7 +49,7 @@ export default function MediaUseCasePage() {
         }
       ]}
       
-      whyTitle="Why publishers choose Losetify"
+      whyTitle="Why publishers choose Payssd"
       features={[
         { text: "No revenue sharing" },
         { text: "No platform dependency" },

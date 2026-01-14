@@ -67,7 +67,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
                 </span>
               </div>
               <span className="text-white/80 font-medium">
-                {product.users?.business_name || 'Losetify'}
+                {product.users?.business_name || 'Payssd'}
               </span>
             </div>
 
@@ -91,9 +91,9 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
               <span>Secure checkout</span>
             </div>
             {showBranding && (
-              <Link href="https://www.losetify.com" target="_blank" className="flex items-center gap-2 hover:text-white transition-colors">
+              <Link href="https://www.payssd.com" target="_blank" className="flex items-center gap-2 hover:text-white transition-colors">
                 <Shield className="h-4 w-4" />
-                <span>Powered by Losetify</span>
+                <span>Powered by Payssd</span>
               </Link>
             )}
           </div>
@@ -116,9 +116,9 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
                   <span>Secure checkout</span>
                 </div>
                 {showBranding && (
-                  <Link href="https://www.losetify.com" target="_blank" className="flex items-center gap-1 hover:text-slate-600 transition-colors">
+                  <Link href="https://www.payssd.com" target="_blank" className="flex items-center gap-1 hover:text-slate-600 transition-colors">
                     <Shield className="h-3 w-3" />
-                    <span>Powered by Losetify</span>
+                    <span>Powered by Payssd</span>
                   </Link>
                 )}
               </div>

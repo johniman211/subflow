@@ -118,7 +118,7 @@ async function sendRenewalReminder(subscription: any) {
         productName: subscription.product_name,
         daysLeft,
         renewUrl,
-        merchantName: subscription.merchant_name || 'Losetify',
+        merchantName: subscription.merchant_name || 'Payssd',
       });
     } catch (e) {
       console.warn('WhatsApp reminder failed:', e);
@@ -134,7 +134,7 @@ async function sendRenewalReminder(subscription: any) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Losetify <notifications@resend.dev>',
+        from: 'Payssd <notifications@resend.dev>',
         to: [subscription.customer_email],
         subject: `⏰ Your ${subscription.product_name} subscription expires in ${daysLeft} days`,
         html: `
@@ -179,7 +179,7 @@ async function sendExpirationNotice(subscription: any) {
       await whatsappService.sendSubscriptionExpired(subscription.customer_phone, {
         productName: subscription.product_name,
         renewUrl,
-        merchantName: subscription.merchant_name || 'Losetify',
+        merchantName: subscription.merchant_name || 'Payssd',
       });
     } catch (e) {
       console.warn('WhatsApp expiration notice failed:', e);
@@ -195,7 +195,7 @@ async function sendExpirationNotice(subscription: any) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Losetify <notifications@resend.dev>',
+        from: 'Payssd <notifications@resend.dev>',
         to: [subscription.customer_email],
         subject: `❌ Your ${subscription.product_name} subscription has expired`,
         html: `

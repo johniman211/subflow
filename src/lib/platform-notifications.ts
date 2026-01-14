@@ -9,11 +9,11 @@ const twilioClient = process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_T
   : null;
 
 // Configuration
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Losetify <notifications@losetify.com>';
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Payssd <notifications@payssd.com>';
 const FROM_PHONE = process.env.TWILIO_FROM_NUMBER || '';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'johnnyafrica211@gmail.com';
 const ADMIN_PHONE = process.env.ADMIN_PHONE || '';
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.losetify.com';
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.payssd.com';
 
 // ============================================
 // EMAIL SENDING (Resend)
@@ -162,7 +162,7 @@ export async function notifyMerchantPaymentPending({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #1a1a2e;">New Payment Received!</h2>
@@ -187,7 +187,7 @@ export async function notifyMerchantPaymentPending({
           </p>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </div>
     `,
@@ -208,7 +208,7 @@ export async function notifyMerchantPaymentPending({
   if (merchantPhone) {
     const smsResult = await sendSMS({
       to: merchantPhone,
-      body: `[Losetify] New payment: ${formattedAmount} for ${productName}. Ref: ${referenceCode}. Customer: ${customerPhone}. Please confirm in your dashboard.`,
+      body: `[Payssd] New payment: ${formattedAmount} for ${productName}. Ref: ${referenceCode}. Customer: ${customerPhone}. Please confirm in your dashboard.`,
     });
 
     await logNotification({
@@ -252,7 +252,7 @@ export async function notifyMerchantPaymentConfirmed({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #22c55e;">Payment Confirmed! ✅</h2>
@@ -274,7 +274,7 @@ export async function notifyMerchantPaymentConfirmed({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </div>
     `,
@@ -295,7 +295,7 @@ export async function notifyMerchantPaymentConfirmed({
   if (merchantPhone) {
     const smsResult = await sendSMS({
       to: merchantPhone,
-      body: `[Losetify] Payment confirmed! ${formattedAmount} for ${productName}. Ref: ${referenceCode}. Customer subscription is now active.`,
+      body: `[Payssd] Payment confirmed! ${formattedAmount} for ${productName}. Ref: ${referenceCode}. Customer subscription is now active.`,
     });
 
     await logNotification({
@@ -341,7 +341,7 @@ export async function notifyMerchantPaymentRejected({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #ef4444;">Payment Rejected ❌</h2>
@@ -364,7 +364,7 @@ export async function notifyMerchantPaymentRejected({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </div>
     `,
@@ -413,7 +413,7 @@ export async function notifyMerchantNewSubscriber({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #1a1a2e;">New Subscriber! 🎉</h2>
@@ -435,7 +435,7 @@ export async function notifyMerchantNewSubscriber({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </div>
     `,
@@ -456,7 +456,7 @@ export async function notifyMerchantNewSubscriber({
   if (merchantPhone) {
     const smsResult = await sendSMS({
       to: merchantPhone,
-      body: `[Losetify] 🎉 New subscriber! ${customerPhone} subscribed to ${productName} (${priceName}) for ${formattedAmount}.`,
+      body: `[Payssd] 🎉 New subscriber! ${customerPhone} subscribed to ${productName} (${priceName}) for ${formattedAmount}.`,
     });
 
     await logNotification({
@@ -496,7 +496,7 @@ export async function notifyMerchantSubscriptionExpiring({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #f59e0b;">Subscription Expiring Soon ⚠️</h2>
@@ -519,7 +519,7 @@ export async function notifyMerchantSubscriptionExpiring({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </div>
     `,
@@ -558,7 +558,7 @@ export async function notifyMerchantSubscriptionExpired({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #ef4444;">Subscription Expired 🔴</h2>
@@ -580,7 +580,7 @@ export async function notifyMerchantSubscriptionExpired({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </div>
     `,
@@ -601,7 +601,7 @@ export async function notifyMerchantSubscriptionExpired({
   if (merchantPhone) {
     const smsResult = await sendSMS({
       to: merchantPhone,
-      body: `[Losetify] Subscription expired: ${customerPhone}'s subscription to ${productName} has expired.`,
+      body: `[Payssd] Subscription expired: ${customerPhone}'s subscription to ${productName} has expired.`,
     });
 
     await logNotification({
@@ -645,7 +645,7 @@ export async function notifyMerchantSubscriptionRenewed({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #22c55e;">Subscription Renewed! 🔄</h2>
@@ -666,7 +666,7 @@ export async function notifyMerchantSubscriptionRenewed({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </div>
     `,
@@ -687,7 +687,7 @@ export async function notifyMerchantSubscriptionRenewed({
   if (merchantPhone) {
     const smsResult = await sendSMS({
       to: merchantPhone,
-      body: `[Losetify] 🔄 Subscription renewed! ${customerPhone} renewed ${productName} for ${formattedAmount}. New expiry: ${new Date(newExpiryDate).toLocaleDateString()}.`,
+      body: `[Payssd] 🔄 Subscription renewed! ${customerPhone} renewed ${productName} for ${formattedAmount}. New expiry: ${new Date(newExpiryDate).toLocaleDateString()}.`,
     });
 
     await logNotification({
@@ -722,7 +722,7 @@ export async function notifyAdminNewSignup({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify Admin</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd Admin</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #1a1a2e;">New User Signup! 🆕</h2>
@@ -742,7 +742,7 @@ export async function notifyAdminNewSignup({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify Admin</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd Admin</p>
         </div>
       </div>
     `,
@@ -784,7 +784,7 @@ export async function notifyAdminPaymentPending({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify Admin</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd Admin</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #f59e0b;">Payment Awaiting Confirmation ⏳</h2>
@@ -805,7 +805,7 @@ export async function notifyAdminPaymentPending({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify Admin</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd Admin</p>
         </div>
       </div>
     `,
@@ -849,7 +849,7 @@ export async function notifyAdminPaymentConfirmed({
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-          <h1 style="color: #d4ff00; margin: 0;">Losetify Admin</h1>
+          <h1 style="color: #d4ff00; margin: 0;">Payssd Admin</h1>
         </div>
         <div style="padding: 30px; background: #f9f9f9;">
           <h2 style="color: #22c55e;">Payment Confirmed ✅</h2>
@@ -872,7 +872,7 @@ export async function notifyAdminPaymentConfirmed({
           </a>
         </div>
         <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify Admin</p>
+          <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd Admin</p>
         </div>
       </div>
     `,
@@ -940,7 +940,7 @@ export async function notifyCustomerPaymentConfirmed({
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #1a1a2e; padding: 20px; text-align: center;">
-            <h1 style="color: #d4ff00; margin: 0;">Losetify</h1>
+            <h1 style="color: #d4ff00; margin: 0;">Payssd</h1>
           </div>
           <div style="padding: 30px; background: #f9f9f9;">
             <h2 style="color: #22c55e;">Payment Confirmed! ✅</h2>
@@ -959,7 +959,7 @@ export async function notifyCustomerPaymentConfirmed({
             <p style="color: #666;">Thank you for your purchase!</p>
           </div>
           <div style="background: #1a1a2e; padding: 15px; text-align: center;">
-            <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Losetify. All rights reserved.</p>
+            <p style="color: #888; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} Payssd. All rights reserved.</p>
           </div>
         </div>
       `,

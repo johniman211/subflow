@@ -53,7 +53,7 @@ export default function VerifyEmailPage() {
           <h1 className="text-2xl font-bold text-white mb-2">Check your email</h1>
           <p className="text-dark-400 mb-6">
             We've sent a verification link to your email address. 
-            Please click the link to verify your account and start using Losetify.
+            Please click the link to verify your account and start using Payssd.
           </p>
 
           {error && (

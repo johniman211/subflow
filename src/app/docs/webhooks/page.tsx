@@ -11,7 +11,7 @@ export default function WebhooksDocsPage() {
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-xl">S</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">Losetify</span>
+              <span className="text-xl font-bold text-gray-900">Payssd</span>
             </Link>
             <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
               Sign In
@@ -34,7 +34,7 @@ export default function WebhooksDocsPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
             <div className="bg-white rounded-xl p-6 border">
               <p className="text-gray-600 mb-4">
-                Webhooks allow you to receive HTTP POST requests to your server whenever specific events occur in Losetify.
+                Webhooks allow you to receive HTTP POST requests to your server whenever specific events occur in Payssd.
                 This is useful for automating workflows, syncing data, and triggering actions in your application.
               </p>
               <p className="text-gray-600">
@@ -125,7 +125,7 @@ export default function WebhooksDocsPage() {
                 Each webhook request includes a signature header for verification:
               </p>
               <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm mb-4">
-{`X-Losetify-Signature: sha256=abc123...`}
+{`X-Payssd-Signature: sha256=abc123...`}
               </pre>
               <p className="text-gray-600">
                 Verify by computing HMAC-SHA256 of the raw body using your webhook secret.

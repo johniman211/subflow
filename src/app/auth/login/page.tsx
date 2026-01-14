@@ -46,9 +46,9 @@ export default function LoginPage() {
         <div className="relative z-10 flex flex-col justify-center px-16">
           <Link href="/" className="inline-flex items-center space-x-3 mb-12">
             <div className="w-12 h-12 bg-lemon-400 rounded-xl flex items-center justify-center shadow-lemon">
-              <span className="text-dark-900 font-black text-2xl">L</span>
+              <span className="text-dark-900 font-black text-2xl">P</span>
             </div>
-            <span className="text-2xl font-bold text-white">Losetify</span>
+            <span className="text-2xl font-bold text-white">Payssd</span>
           </Link>
           
           <h1 className="text-4xl font-black text-white mb-4">
@@ -83,9 +83,9 @@ export default function LoginPage() {
           <div className="lg:hidden text-center mb-8">
             <Link href="/" className="inline-flex items-center space-x-3">
               <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center">
-                <span className="text-dark-900 font-black text-xl">L</span>
+                <span className="text-dark-900 font-black text-xl">P</span>
               </div>
-              <span className="text-xl font-bold text-white">Losetify</span>
+              <span className="text-xl font-bold text-white">Payssd</span>
             </Link>
           </div>
 

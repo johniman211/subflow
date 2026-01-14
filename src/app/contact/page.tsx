@@ -9,9 +9,9 @@ export default function ContactPage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-xl">L</span>
+                <span className="text-white font-bold text-xl">P</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">Losetify</span>
+              <span className="text-xl font-bold text-gray-900">Payssd</span>
             </Link>
             <div className="flex items-center space-x-4">
               <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
@@ -43,7 +43,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Email</h3>
-                    <p className="text-gray-600">support@losetify.com</p>
+                    <p className="text-gray-600">support@payssd.com</p>
                     <p className="text-sm text-gray-500">We'll respond within 24 hours</p>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export default function ContactPage() {
 
       <footer className="bg-gray-100 py-8">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} Losetify. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Payssd. All rights reserved.</p>
         </div>
       </footer>
     </div>

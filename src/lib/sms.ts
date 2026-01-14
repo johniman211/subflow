@@ -20,7 +20,7 @@ class AfricasTalkingProvider implements SMSProvider {
   constructor() {
     this.apiKey = process.env.AT_API_KEY || '';
     this.username = process.env.AT_USERNAME || '';
-    this.senderId = process.env.AT_SENDER_ID || 'Losetify';
+    this.senderId = process.env.AT_SENDER_ID || 'Payssd';
   }
 
   async send(to: string, message: string): Promise<SMSResult> {
@@ -168,7 +168,7 @@ class SMSService {
     referenceCode: string;
     expiresIn: string;
   }): Promise<SMSResult> {
-    const message = `Reminder: Your payment of ${data.amount} for ${data.productName} is pending. Ref: ${data.referenceCode}. Complete within ${data.expiresIn}. - Losetify`;
+    const message = `Reminder: Your payment of ${data.amount} for ${data.productName} is pending. Ref: ${data.referenceCode}. Complete within ${data.expiresIn}. - Payssd`;
     return this.send(phone, message);
   }
 

@@ -21,8 +21,8 @@ export default function CreatorsUseCasePage() {
       ]}
       
       solutionTitle="The solution"
-      solutionDescription="Losetify professionalizes creator monetization."
-      solutionSubtext="Fans pay you directly. Losetify manages access automatically."
+      solutionDescription="Payssd professionalizes creator monetization."
+      solutionSubtext="Fans pay you directly. Payssd manages access automatically."
       
       offerTitle="What you can offer"
       offerItems={[
@@ -47,7 +47,7 @@ export default function CreatorsUseCasePage() {
         }
       ]}
       
-      whyTitle="Why creators use Losetify"
+      whyTitle="Why creators use Payssd"
       features={[
         { text: "No platform restrictions" },
         { text: "No fund holding" },

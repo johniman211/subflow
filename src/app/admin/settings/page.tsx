@@ -130,7 +130,7 @@ export default function AdminSettings() {
                   mtn_momo: { ...paymentSettings.mtn_momo, name: e.target.value }
                 })}
                 className="w-full px-4 py-3 bg-white dark:bg-dark-900 text-gray-900 dark:text-white border border-gray-300 dark:border-dark-600 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
-                placeholder="Losetify"
+                placeholder="Payssd"
               />
             </div>
           </div>

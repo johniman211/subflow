@@ -9,15 +9,15 @@ export default function SaaSUseCasePage() {
       icon={Code}
       subtitle="SaaS & Software"
       title="Sell Software Subscriptions Without Payment APIs"
-      description="Launch and manage paid software in South Sudan without complex payment integrations. Losetify helps you charge users and automatically control access — while payments go directly to you."
+      description="Launch and manage paid software in South Sudan without complex payment integrations. Payssd helps you charge users and automatically control access — while payments go directly to you."
       ctaText="Start Selling Software"
       
       problemTitle="The problem"
       problemDescription="Selling software subscriptions locally is hard. Payment APIs are unavailable, manual confirmations waste time, and access control becomes messy."
       
       solutionTitle="The solution"
-      solutionDescription="Losetify separates payments from access control."
-      solutionSubtext="Your users pay you directly using Mobile Money or bank transfer. Losetify tracks payments and automatically unlocks or locks access."
+      solutionDescription="Payssd separates payments from access control."
+      solutionSubtext="Your users pay you directly using Mobile Money or bank transfer. Payssd tracks payments and automatically unlocks or locks access."
       
       steps={[
         {
@@ -34,7 +34,7 @@ export default function SaaSUseCasePage() {
         }
       ]}
       
-      whyTitle="Why SaaS teams choose Losetify"
+      whyTitle="Why SaaS teams choose Payssd"
       features={[
         { text: "No payment APIs required" },
         { text: "No wallets or fund holding" },

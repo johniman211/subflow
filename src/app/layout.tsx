@@ -6,7 +6,7 @@ import { Providers } from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Losetify - Subscription Management Platform',
+  title: 'Payssd - Subscription Management Platform',
   description: 'Subscription Management SaaS Platform for South Sudan',
   icons: {
     icon: '/favicon.svg',

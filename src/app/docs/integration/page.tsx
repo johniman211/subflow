@@ -59,9 +59,9 @@ export default function IntegrationGuidePage() {
             <div className="h-6 w-px bg-slate-200" />
             <Link href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">L</span>
+                <span className="text-white font-bold text-sm">P</span>
               </div>
-              <span className="font-bold text-slate-900">Losetify</span>
+              <span className="font-bold text-slate-900">Payssd</span>
             </Link>
           </div>
           <Link 
@@ -80,7 +80,7 @@ export default function IntegrationGuidePage() {
             Integration Guide
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Everything you need to accept payments on your website with Losetify. 
+            Everything you need to accept payments on your website with Payssd. 
             Choose the integration method that works best for you.
           </p>
         </div>
@@ -172,12 +172,12 @@ export default function IntegrationGuidePage() {
           <div className="bg-slate-50 rounded-xl p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Payment Link Format:</h3>
             <CodeBlock 
-              code={`https://www.losetify.com/pay/your-business-name/product-name
+              code={`https://www.payssd.com/pay/your-business-name/product-name
 
 # Examples:
-https://www.losetify.com/pay/juba-fitness/monthly-membership
-https://www.losetify.com/pay/tech-academy/web-development-course
-https://www.losetify.com/pay/my-store/premium-subscription`}
+https://www.payssd.com/pay/juba-fitness/monthly-membership
+https://www.payssd.com/pay/tech-academy/web-development-course
+https://www.payssd.com/pay/my-store/premium-subscription`}
               language="text"
               id="payment-link"
             />
@@ -187,12 +187,12 @@ https://www.losetify.com/pay/my-store/premium-subscription`}
             <h3 className="font-semibold text-slate-900 mb-4">Add to your website:</h3>
             <CodeBlock 
               code={`<!-- Simple link -->
-<a href="https://www.losetify.com/pay/your-business/your-product">
+<a href="https://www.payssd.com/pay/your-business/your-product">
   Subscribe Now
 </a>
 
 <!-- Styled button -->
-<a href="https://www.losetify.com/pay/your-business/your-product" 
+<a href="https://www.payssd.com/pay/your-business/your-product" 
    style="display: inline-block; padding: 12px 24px; background: #10b981; 
           color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
   Subscribe - 50,000 SSP/month
@@ -223,7 +223,7 @@ https://www.losetify.com/pay/my-store/premium-subscription`}
           <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Step 1: Add the SDK script</h3>
             <CodeBlock 
-              code={`<script src="https://www.losetify.com/embed.js"></script>`}
+              code={`<script src="https://www.payssd.com/embed.js"></script>`}
               language="html"
               id="sdk-script"
             />
@@ -238,7 +238,7 @@ https://www.losetify.com/pay/my-store/premium-subscription`}
 
 <script>
 function openCheckout() {
-  Losetify.checkout({
+  Payssd.checkout({
     productId: 'your-product-id',  // Get this from your dashboard
     
     // Called when customer submits payment
@@ -267,7 +267,7 @@ function openCheckout() {
 <div id="payment-form"></div>
 
 <script>
-Losetify.embed({
+Payssd.embed({
   container: '#payment-form',
   productId: 'your-product-id',
   height: '650px',  // Optional: customize height
@@ -287,12 +287,12 @@ Losetify.embed({
             <p className="text-slate-600 text-sm mb-4">Simplest method - no JavaScript coding needed.</p>
             <CodeBlock 
               code={`<!-- Just add data attributes to any button or link -->
-<button data-losetify-product="your-product-id">
+<button data-payssd-product="your-product-id">
   Pay Now
 </button>
 
 <!-- Works on any element -->
-<a href="#" data-losetify-product="your-product-id">
+<a href="#" data-payssd-product="your-product-id">
   Subscribe - 50,000 SSP/month
 </a>`}
               language="html"
@@ -308,7 +308,7 @@ Losetify.embed({
 <div id="pay-button"></div>
 
 <script>
-Losetify.button({
+Payssd.button({
   container: '#pay-button',
   productId: 'your-product-id',
   text: 'Subscribe - 50,000 SSP/month',
@@ -354,7 +354,7 @@ Losetify.button({
           <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Base URL</h3>
             <CodeBlock 
-              code={`https://www.losetify.com/api/v1`}
+              code={`https://www.payssd.com/api/v1`}
               language="text"
               id="base-url"
             />
@@ -391,7 +391,7 @@ Losetify.button({
   "data": {
     "checkout_session": {
       "id": "pay_xxxxx",
-      "url": "https://www.losetify.com/checkout/...",
+      "url": "https://www.payssd.com/checkout/...",
       "reference_code": "ABC123",
       "amount": 50000,
       "currency": "SSP",
@@ -485,15 +485,15 @@ Losetify.button({
           <div className="bg-white rounded-xl border border-slate-200 p-6">
             <h3 className="font-semibold text-slate-900 mb-4">Example: Node.js Integration</h3>
             <CodeBlock 
-              code={`const LOSETIFY_API_KEY = 'sk_live_your_api_key';
-const BASE_URL = 'https://www.losetify.com/api/v1';
+              code={`const PAYSSD_API_KEY = 'sk_live_your_api_key';
+const BASE_URL = 'https://www.payssd.com/api/v1';
 
 // Create checkout session
 async function createCheckout(priceId, customerPhone) {
   const response = await fetch(\`\${BASE_URL}/checkout/create\`, {
     method: 'POST',
     headers: {
-      'Authorization': \`Bearer \${LOSETIFY_API_KEY}\`,
+      'Authorization': \`Bearer \${PAYSSD_API_KEY}\`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -510,7 +510,7 @@ async function checkAccess(productId, customerPhone) {
   const response = await fetch(\`\${BASE_URL}/access/check\`, {
     method: 'POST',
     headers: {
-      'Authorization': \`Bearer \${LOSETIFY_API_KEY}\`,
+      'Authorization': \`Bearer \${PAYSSD_API_KEY}\`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -610,9 +610,9 @@ async function checkAccess(productId, customerPhone) {
             <h3 className="font-semibold text-slate-900 mb-4">Webhook Headers</h3>
             <p className="text-slate-600 text-sm mb-4">Each webhook includes these headers for verification:</p>
             <CodeBlock 
-              code={`X-Losetify-Signature: sha256_hash_of_payload
-X-Losetify-Timestamp: 1704981600000
-X-Losetify-Event: payment.confirmed`}
+              code={`X-Payssd-Signature: sha256_hash_of_payload
+X-Payssd-Timestamp: 1704981600000
+X-Payssd-Event: payment.confirmed`}
               language="text"
               id="webhook-headers"
             />
@@ -625,10 +625,10 @@ X-Losetify-Event: payment.confirmed`}
 const crypto = require('crypto');
 const app = express();
 
-app.post('/webhooks/losetify', express.json(), (req, res) => {
-  const signature = req.headers['x-losetify-signature'];
-  const timestamp = req.headers['x-losetify-timestamp'];
-  const event = req.headers['x-losetify-event'];
+app.post('/webhooks/payssd', express.json(), (req, res) => {
+  const signature = req.headers['x-payssd-signature'];
+  const timestamp = req.headers['x-payssd-timestamp'];
+  const event = req.headers['x-payssd-event'];
   
   // Verify signature (optional but recommended)
   const expectedSignature = crypto
@@ -739,7 +739,7 @@ app.post('/webhooks/losetify', express.json(), (req, res) => {
       <footer className="py-8 px-4 bg-slate-900">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-slate-400 text-sm">
-            © {new Date().getFullYear()} Losetify. All rights reserved.
+            © {new Date().getFullYear()} Payssd. All rights reserved.
           </p>
         </div>
       </footer>
