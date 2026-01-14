@@ -1,12 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Menu, XIcon, Package } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Menu, XIcon, Package, BookOpen, Newspaper } from 'lucide-react';
 import { useState } from 'react';
 import { PricingSection } from '@/components/landing/PricingSection';
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [useCasesOpen, setUseCasesOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-dark-950 text-white overflow-hidden">
@@ -33,6 +34,72 @@ export default function HomePage() {
             <div className="hidden md:flex items-center space-x-8">
               <Link href="#features" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Features</Link>
               <Link href="#how-it-works" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">How It Works</Link>
+              
+              {/* Use Cases Dropdown */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setUseCasesOpen(true)}
+                onMouseLeave={() => setUseCasesOpen(false)}
+              >
+                <button className="flex items-center gap-1 text-dark-300 hover:text-white text-sm font-medium transition-colors">
+                  Use Cases
+                  <ChevronRight className={`h-4 w-4 transition-transform ${useCasesOpen ? 'rotate-90' : ''}`} />
+                </button>
+                
+                {useCasesOpen && (
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-dark-900 border border-dark-700 rounded-xl shadow-xl overflow-hidden z-50">
+                    <Link 
+                      href="/use-cases/saas" 
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-800 transition-colors"
+                    >
+                      <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
+                        <Code className="h-4 w-4 text-lemon-400" />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">SaaS & Software</p>
+                        <p className="text-dark-400 text-xs">Subscription software</p>
+                      </div>
+                    </Link>
+                    <Link 
+                      href="/use-cases/courses" 
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-800 transition-colors"
+                    >
+                      <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
+                        <BookOpen className="h-4 w-4 text-lemon-400" />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">Courses & Digital Products</p>
+                        <p className="text-dark-400 text-xs">Online education</p>
+                      </div>
+                    </Link>
+                    <Link 
+                      href="/use-cases/media" 
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-800 transition-colors"
+                    >
+                      <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
+                        <Newspaper className="h-4 w-4 text-lemon-400" />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">Media & Publishers</p>
+                        <p className="text-dark-400 text-xs">Content monetization</p>
+                      </div>
+                    </Link>
+                    <Link 
+                      href="/use-cases/creators" 
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-800 transition-colors"
+                    >
+                      <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
+                        <Users className="h-4 w-4 text-lemon-400" />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-medium">Creators & Public Figures</p>
+                        <p className="text-dark-400 text-xs">Audience monetization</p>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </div>
+              
               <Link href="#pricing" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Pricing</Link>
               <Link href="/docs" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Docs</Link>
             </div>
@@ -58,6 +125,28 @@ export default function HomePage() {
               <div className="flex flex-col space-y-4">
                 <Link href="#features" className="text-dark-300 hover:text-white text-sm font-medium">Features</Link>
                 <Link href="#how-it-works" className="text-dark-300 hover:text-white text-sm font-medium">How It Works</Link>
+                
+                {/* Use Cases - Mobile */}
+                <div className="space-y-2">
+                  <p className="text-dark-500 text-xs font-semibold uppercase tracking-wider">Use Cases</p>
+                  <Link href="/use-cases/saas" className="flex items-center gap-2 text-dark-300 hover:text-white text-sm font-medium pl-2">
+                    <Code className="h-4 w-4 text-lemon-400" />
+                    SaaS & Software
+                  </Link>
+                  <Link href="/use-cases/courses" className="flex items-center gap-2 text-dark-300 hover:text-white text-sm font-medium pl-2">
+                    <BookOpen className="h-4 w-4 text-lemon-400" />
+                    Courses & Digital Products
+                  </Link>
+                  <Link href="/use-cases/media" className="flex items-center gap-2 text-dark-300 hover:text-white text-sm font-medium pl-2">
+                    <Newspaper className="h-4 w-4 text-lemon-400" />
+                    Media & Publishers
+                  </Link>
+                  <Link href="/use-cases/creators" className="flex items-center gap-2 text-dark-300 hover:text-white text-sm font-medium pl-2">
+                    <Users className="h-4 w-4 text-lemon-400" />
+                    Creators & Public Figures
+                  </Link>
+                </div>
+                
                 <Link href="#pricing" className="text-dark-300 hover:text-white text-sm font-medium">Pricing</Link>
                 <Link href="/docs" className="text-dark-300 hover:text-white text-sm font-medium">Docs</Link>
                 <hr className="border-dark-800" />
