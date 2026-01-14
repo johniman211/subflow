@@ -1,7 +1,6 @@
 import { UseCaseLayout } from '@/components/use-case-layout';
 import { Users } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
 
 export default function CreatorsUseCasePage() {
   return (

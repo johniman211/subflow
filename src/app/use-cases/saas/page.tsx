@@ -1,7 +1,6 @@
 import { UseCaseLayout } from '@/components/use-case-layout';
 import { Code } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
 
 export default function SaaSUseCasePage() {
   return (
