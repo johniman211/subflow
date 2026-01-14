@@ -1,6 +1,8 @@
 import { UseCaseLayout } from '@/components/use-case-layout';
 import { Newspaper } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default function MediaUseCasePage() {
   return (
     <UseCaseLayout
