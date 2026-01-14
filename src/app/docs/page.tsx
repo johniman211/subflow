@@ -195,15 +195,29 @@ export default function DocsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark-950 text-white">
+      {/* Noise Overlay */}
+      <div className="noise-overlay" />
+      
+      {/* Background Gradient Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-lemon-400/20 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute top-1/2 -left-40 w-80 h-80 bg-grape-500/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
+      </div>
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="sticky top-0 z-50 bg-dark-950/80 backdrop-blur-xl border-b border-dark-800">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-gray-600 hover:text-gray-900">
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-[#F7C500] rounded-full flex items-center justify-center shadow-lemon">
+                <span className="text-[#333] font-black text-xs italic">PAY</span>
+              </div>
+              <span className="text-xl font-black text-white italic">SSD</span>
+            </Link>
+            <Link href="/" className="text-dark-400 hover:text-white hidden">
               <ArrowLeft className="h-5 w-5" />
             </Link>
-            <h1 className="text-xl font-bold text-gray-900">Payssd API Documentation</h1>
+            <h1 className="text-xl font-bold text-white">Payssd API Documentation</h1>
           </div>
           <Link href="/dashboard/api-keys" className="btn-primary btn-sm">
             Get API Keys
@@ -230,8 +244,8 @@ export default function DocsPage() {
                   onClick={() => setActiveTab(item.id)}
                   className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-colors ${
                     activeTab === item.id
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      ? 'bg-lemon-400/20 text-lemon-400'
+                      : 'text-dark-400 hover:bg-dark-800'
                   }`}
                 >
                   <item.icon className="h-4 w-4" />
@@ -246,14 +260,14 @@ export default function DocsPage() {
             {activeTab === 'quickstart' && (
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Start</h2>
-                  <p className="text-gray-600 mb-6">
+                  <h2 className="text-2xl font-bold text-white mb-4">Quick Start</h2>
+                  <p className="text-dark-300 mb-6">
                     Integrate Payssd payments into your website in minutes. Accept MTN Mobile Money 
                     and Bank Transfers from customers in South Sudan.
                   </p>
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">1. Get your API Keys</h3>
                   <p className="text-gray-600">
                     Go to your <Link href="/dashboard/api-keys" className="text-primary-600 hover:underline">API Keys</Link> page 
@@ -265,7 +279,7 @@ export default function DocsPage() {
                   </ul>
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">2. Add the SDK to your website</h3>
                   <CodeBlock
                     id="sdk-script"
@@ -274,7 +288,7 @@ export default function DocsPage() {
                   />
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">3. Create a checkout button</h3>
                   <CodeBlock
                     id="checkout-button"
@@ -283,7 +297,7 @@ export default function DocsPage() {
                   />
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">4. Verify access on your server</h3>
                   <CodeBlock
                     id="access-check"
@@ -298,7 +312,7 @@ export default function DocsPage() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Authentication</h2>
                 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">API Key Types</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 bg-blue-50 rounded-lg">
@@ -316,7 +330,7 @@ export default function DocsPage() {
                   </div>
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Using the Secret Key</h3>
                   <p className="text-gray-600">Include your secret key in the Authorization header:</p>
                   <CodeBlock
@@ -335,7 +349,7 @@ export default function DocsPage() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Checkout API</h2>
                 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">POST /api/v1/checkout/create</h3>
                   <p className="text-gray-600">Create a new checkout session.</p>
                   
@@ -379,7 +393,7 @@ export default function DocsPage() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Access Check API</h2>
                 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">POST /api/v1/access/check</h3>
                   <p className="text-gray-600">Check if a customer has active access to a product.</p>
                   
@@ -415,7 +429,7 @@ export default function DocsPage() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Webhooks</h2>
                 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Available Events</h3>
                   <div className="grid grid-cols-2 gap-2 text-sm">
                     {[
@@ -428,7 +442,7 @@ export default function DocsPage() {
                   </div>
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Webhook Payload</h3>
                   <CodeBlock
                     id="webhook-payload"
@@ -447,7 +461,7 @@ export default function DocsPage() {
                   />
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Verify Signature (PHP)</h3>
                   <CodeBlock
                     id="webhook-verify"
@@ -462,7 +476,7 @@ export default function DocsPage() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">WordPress Integration</h2>
                 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Plugin Code</h3>
                   <p className="text-gray-600">
                     Create a new file <code className="bg-gray-100 px-2 py-1 rounded">wp-content/plugins/payssd/payssd.php</code>:
@@ -474,7 +488,7 @@ export default function DocsPage() {
                   />
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Usage</h3>
                   <p className="text-gray-600">Add a checkout button using shortcode:</p>
                   <CodeBlock
@@ -490,7 +504,7 @@ export default function DocsPage() {
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">JavaScript SDK</h2>
                 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Installation</h3>
                   <CodeBlock
                     id="sdk-install"
@@ -499,7 +513,7 @@ export default function DocsPage() {
                   />
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Modal Checkout</h3>
                   <CodeBlock
                     id="sdk-modal"
@@ -526,7 +540,7 @@ payssd.checkout({
                   />
                 </div>
 
-                <div className="card p-6 space-y-4">
+                <div className="bg-dark-900/50 border border-dark-800 rounded-xl p-6 space-y-4">
                   <h3 className="text-lg font-semibold">Redirect Checkout</h3>
                   <CodeBlock
                     id="sdk-redirect"
@@ -548,6 +562,26 @@ payssd.checkout({
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-dark-900 border-t border-dark-800 py-12 relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-[#F7C500] rounded-full flex items-center justify-center">
+                <span className="text-[#333] font-black text-[10px] italic">PAY</span>
+              </div>
+              <span className="text-white font-black italic">SSD</span>
+            </div>
+            <div className="flex items-center gap-6 text-sm text-dark-400">
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
+            </div>
+            <p className="text-dark-500 text-sm">© {new Date().getFullYear()} Payssd. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

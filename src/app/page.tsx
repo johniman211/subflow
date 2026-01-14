@@ -320,7 +320,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4">
             <p className="text-center text-dark-400 mb-8">Trusted partners & integrations</p>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-              {['MTN MoMo', 'Equity Bank', 'PaySSD', 'TechStartup', 'Digicash'].map((brand, i) => (
+              {['MTN MoMo', 'Equity Bank', 'Mgurush', 'TechStartup', 'Digicash'].map((brand, i) => (
                 <span key={i} className="text-xl font-bold text-dark-300 opacity-70 hover:opacity-100 transition-opacity">{brand}</span>
               ))}
             </div>

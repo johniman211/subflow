@@ -30,56 +30,62 @@ export default function IntegrationGuidePage() {
 
   const CodeBlock = ({ code, language, id }: { code: string; language: string; id: string }) => (
     <div className="relative group">
-      <pre className="bg-slate-900 text-slate-100 rounded-lg p-4 overflow-x-auto text-sm">
+      <pre className="bg-dark-950 text-lemon-400 rounded-lg p-4 overflow-x-auto text-sm border border-dark-800">
         <code>{code}</code>
       </pre>
       <button
         onClick={() => copyToClipboard(code, id)}
-        className="absolute top-2 right-2 p-2 bg-slate-700 hover:bg-slate-600 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute top-2 right-2 p-2 bg-dark-800 hover:bg-dark-700 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
       >
         {copiedCode === id ? (
-          <Check className="h-4 w-4 text-green-400" />
+          <Check className="h-4 w-4 text-lemon-400" />
         ) : (
-          <Copy className="h-4 w-4 text-slate-300" />
+          <Copy className="h-4 w-4 text-dark-300" />
         )}
       </button>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-dark-950 text-white overflow-hidden">
+      {/* Noise Overlay */}
+      <div className="noise-overlay" />
+      
+      {/* Background Gradient Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-lemon-400/20 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute top-1/2 -left-40 w-80 h-80 bg-grape-500/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
+      </div>
+
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+      <header className="sticky top-0 z-50 bg-dark-950/80 backdrop-blur-xl border-b border-dark-800">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2 text-slate-600 hover:text-slate-900">
-              <ArrowLeft className="h-4 w-4" />
-              <span className="text-sm">Back to Home</span>
-            </Link>
-            <div className="h-6 w-px bg-slate-200" />
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">P</span>
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-[#F7C500] rounded-full flex items-center justify-center shadow-lemon">
+                <span className="text-[#333] font-black text-xs italic">PAY</span>
               </div>
-              <span className="font-bold text-slate-900">Payssd</span>
+              <span className="text-xl font-black text-white italic">SSD</span>
             </Link>
           </div>
-          <Link 
-            href="/auth/register" 
-            className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700"
-          >
-            Get Started
-          </Link>
+          <div className="flex items-center space-x-4">
+            <Link href="/auth/login" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">
+              Sign In
+            </Link>
+            <Link href="/auth/register" className="btn-primary btn-sm">
+              Get Started Free
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* Hero */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Integration Guide
           </h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+          <p className="text-xl text-dark-300 max-w-2xl mx-auto">
             Everything you need to accept payments on your website with Payssd. 
             Choose the integration method that works best for you.
           </p>
@@ -90,18 +96,18 @@ export default function IntegrationGuidePage() {
       <section className="py-8 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
-            <a href="#payment-links" className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-emerald-300 transition-all group">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-emerald-200 transition-colors">
-                <Link2 className="h-6 w-6 text-emerald-600" />
+            <a href="#payment-links" className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 hover:shadow-lg hover:border-lemon-400/50 transition-all group">
+              <div className="w-12 h-12 bg-lemon-400/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-lemon-400/30 transition-colors">
+                <Link2 className="h-6 w-6 text-lemon-400" />
               </div>
               <h3 className="font-semibold text-slate-900 mb-2">Payment Links</h3>
               <p className="text-slate-600 text-sm mb-3">Share a link to accept payments. No coding required.</p>
-              <span className="text-emerald-600 text-sm font-medium flex items-center gap-1">
+              <span className="text-lemon-400 text-sm font-medium flex items-center gap-1">
                 Easiest <ChevronRight className="h-4 w-4" />
               </span>
             </a>
             
-            <a href="#embed-widget" className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-emerald-300 transition-all group">
+            <a href="#embed-widget" className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 hover:shadow-lg hover:border-lemon-400/50 transition-all group">
               <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
                 <Code className="h-6 w-6 text-blue-600" />
               </div>
@@ -112,7 +118,7 @@ export default function IntegrationGuidePage() {
               </span>
             </a>
             
-            <a href="#api-integration" className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:border-emerald-300 transition-all group">
+            <a href="#api-integration" className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 hover:shadow-lg hover:border-lemon-400/50 transition-all group">
               <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-purple-200 transition-colors">
                 <Terminal className="h-6 w-6 text-purple-600" />
               </div>
@@ -130,11 +136,11 @@ export default function IntegrationGuidePage() {
       <section id="payment-links" className="py-16 px-4 scroll-mt-20">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
-              <Link2 className="h-5 w-5 text-emerald-600" />
+            <div className="w-10 h-10 bg-lemon-400/20 rounded-lg flex items-center justify-center">
+              <Link2 className="h-5 w-5 text-lemon-400" />
             </div>
             <h2 className="text-2xl font-bold text-slate-900">1. Payment Links</h2>
-            <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded-full">Easiest</span>
+            <span className="px-2 py-1 bg-lemon-400/20 text-emerald-700 text-xs font-medium rounded-full">Easiest</span>
           </div>
           
           <p className="text-slate-600 mb-8">
@@ -142,25 +148,25 @@ export default function IntegrationGuidePage() {
             anywhere - your website, WhatsApp, social media, or email.
           </p>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">How it works:</h3>
             <ol className="space-y-4">
               <li className="flex gap-3">
-                <span className="w-6 h-6 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0">1</span>
+                <span className="w-6 h-6 bg-lemon-400/20 text-emerald-700 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0">1</span>
                 <div>
                   <p className="font-medium text-slate-900">Create a product in your dashboard</p>
                   <p className="text-slate-600 text-sm">Go to Dashboard → Products → New Product</p>
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="w-6 h-6 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0">2</span>
+                <span className="w-6 h-6 bg-lemon-400/20 text-emerald-700 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0">2</span>
                 <div>
                   <p className="font-medium text-slate-900">Copy your payment link</p>
                   <p className="text-slate-600 text-sm">Each product gets a unique payment URL</p>
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="w-6 h-6 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0">3</span>
+                <span className="w-6 h-6 bg-lemon-400/20 text-emerald-700 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0">3</span>
                 <div>
                   <p className="font-medium text-slate-900">Share the link with customers</p>
                   <p className="text-slate-600 text-sm">Put it on your website, send via WhatsApp, post on social media</p>
@@ -169,7 +175,7 @@ export default function IntegrationGuidePage() {
             </ol>
           </div>
 
-          <div className="bg-slate-50 rounded-xl p-6 mb-6">
+          <div className="bg-dark-800/50 rounded-xl p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Payment Link Format:</h3>
             <CodeBlock 
               code={`https://www.payssd.com/pay/your-business-name/product-name
@@ -183,7 +189,7 @@ https://www.payssd.com/pay/my-store/premium-subscription`}
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6">
             <h3 className="font-semibold text-slate-900 mb-4">Add to your website:</h3>
             <CodeBlock 
               code={`<!-- Simple link -->
@@ -205,7 +211,7 @@ https://www.payssd.com/pay/my-store/premium-subscription`}
       </section>
 
       {/* Embed Widget Section */}
-      <section id="embed-widget" className="py-16 px-4 bg-slate-50 scroll-mt-20">
+      <section id="embed-widget" className="py-16 px-4 bg-dark-800/50 scroll-mt-20">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -220,7 +226,7 @@ https://www.payssd.com/pay/my-store/premium-subscription`}
             Customers can complete payments without leaving your site.
           </p>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Step 1: Add the SDK script</h3>
             <CodeBlock 
               code={`<script src="https://www.payssd.com/embed.js"></script>`}
@@ -229,7 +235,7 @@ https://www.payssd.com/pay/my-store/premium-subscription`}
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Option A: Modal Popup (Recommended)</h3>
             <p className="text-slate-600 text-sm mb-4">Opens checkout in a popup modal over your page.</p>
             <CodeBlock 
@@ -259,7 +265,7 @@ function openCheckout() {
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Option B: Inline Embed</h3>
             <p className="text-slate-600 text-sm mb-4">Embed checkout form directly into your page.</p>
             <CodeBlock 
@@ -282,7 +288,7 @@ Payssd.embed({
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Option C: Auto-Initialize with Data Attributes</h3>
             <p className="text-slate-600 text-sm mb-4">Simplest method - no JavaScript coding needed.</p>
             <CodeBlock 
@@ -300,7 +306,7 @@ Payssd.embed({
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6">
             <h3 className="font-semibold text-slate-900 mb-4">Option D: Styled Button</h3>
             <p className="text-slate-600 text-sm mb-4">Create a pre-styled payment button.</p>
             <CodeBlock 
@@ -351,7 +357,7 @@ Payssd.button({
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Base URL</h3>
             <CodeBlock 
               code={`https://www.payssd.com/api/v1`}
@@ -360,7 +366,7 @@ Payssd.button({
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Authentication</h3>
             <p className="text-slate-600 text-sm mb-4">Include your API key in the Authorization header:</p>
             <CodeBlock 
@@ -370,7 +376,7 @@ Payssd.button({
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Create Checkout Session</h3>
             <p className="text-slate-600 text-sm mb-4">Create a payment session and get checkout URL or payment details.</p>
             <CodeBlock 
@@ -410,7 +416,7 @@ Payssd.button({
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Check Customer Access</h3>
             <p className="text-slate-600 text-sm mb-4">Verify if a customer has an active subscription.</p>
             <CodeBlock 
@@ -441,7 +447,7 @@ Payssd.button({
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">List Subscriptions</h3>
             <p className="text-slate-600 text-sm mb-4">Get all subscriptions for your account.</p>
             <CodeBlock 
@@ -482,7 +488,7 @@ Payssd.button({
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6">
             <h3 className="font-semibold text-slate-900 mb-4">Example: Node.js Integration</h3>
             <CodeBlock 
               code={`const PAYSSD_API_KEY = 'sk_live_your_api_key';
@@ -530,7 +536,7 @@ async function checkAccess(productId, customerPhone) {
       </section>
 
       {/* Webhooks Section */}
-      <section id="webhooks" className="py-16 px-4 bg-slate-50 scroll-mt-20">
+      <section id="webhooks" className="py-16 px-4 bg-dark-800/50 scroll-mt-20">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
@@ -544,37 +550,37 @@ async function checkAccess(productId, customerPhone) {
             Configure webhooks in Dashboard → Webhooks.
           </p>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Available Events</h3>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-slate-50 rounded-lg">
-                <p className="font-mono text-sm text-emerald-600 mb-1">payment.created</p>
+              <div className="p-4 bg-dark-800/50 rounded-lg">
+                <p className="font-mono text-sm text-lemon-400 mb-1">payment.created</p>
                 <p className="text-slate-600 text-sm">Customer submits a payment</p>
               </div>
-              <div className="p-4 bg-slate-50 rounded-lg">
-                <p className="font-mono text-sm text-emerald-600 mb-1">payment.confirmed</p>
+              <div className="p-4 bg-dark-800/50 rounded-lg">
+                <p className="font-mono text-sm text-lemon-400 mb-1">payment.confirmed</p>
                 <p className="text-slate-600 text-sm">Payment is confirmed by merchant</p>
               </div>
-              <div className="p-4 bg-slate-50 rounded-lg">
-                <p className="font-mono text-sm text-emerald-600 mb-1">subscription.created</p>
+              <div className="p-4 bg-dark-800/50 rounded-lg">
+                <p className="font-mono text-sm text-lemon-400 mb-1">subscription.created</p>
                 <p className="text-slate-600 text-sm">New subscription activated</p>
               </div>
-              <div className="p-4 bg-slate-50 rounded-lg">
-                <p className="font-mono text-sm text-emerald-600 mb-1">subscription.renewed</p>
+              <div className="p-4 bg-dark-800/50 rounded-lg">
+                <p className="font-mono text-sm text-lemon-400 mb-1">subscription.renewed</p>
                 <p className="text-slate-600 text-sm">Subscription period extended</p>
               </div>
-              <div className="p-4 bg-slate-50 rounded-lg">
-                <p className="font-mono text-sm text-emerald-600 mb-1">subscription.expired</p>
+              <div className="p-4 bg-dark-800/50 rounded-lg">
+                <p className="font-mono text-sm text-lemon-400 mb-1">subscription.expired</p>
                 <p className="text-slate-600 text-sm">Subscription has expired</p>
               </div>
-              <div className="p-4 bg-slate-50 rounded-lg">
-                <p className="font-mono text-sm text-emerald-600 mb-1">subscription.cancelled</p>
+              <div className="p-4 bg-dark-800/50 rounded-lg">
+                <p className="font-mono text-sm text-lemon-400 mb-1">subscription.cancelled</p>
                 <p className="text-slate-600 text-sm">Subscription was cancelled</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Webhook Payload</h3>
             <CodeBlock 
               code={`{
@@ -606,7 +612,7 @@ async function checkAccess(productId, customerPhone) {
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6 mb-6">
             <h3 className="font-semibold text-slate-900 mb-4">Webhook Headers</h3>
             <p className="text-slate-600 text-sm mb-4">Each webhook includes these headers for verification:</p>
             <CodeBlock 
@@ -618,7 +624,7 @@ X-Payssd-Event: payment.confirmed`}
             />
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="bg-dark-900/50 rounded-xl border border-dark-800 p-6">
             <h3 className="font-semibold text-slate-900 mb-4">Example: Express.js Webhook Handler</h3>
             <CodeBlock 
               code={`const express = require('express');
@@ -714,33 +720,46 @@ app.post('/webhooks/payssd', express.json(), (req, res) => {
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-4 bg-emerald-600">
+      <section className="py-16 px-4 relative">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to Start?</h2>
-          <p className="text-emerald-100 mb-8">Create your account and start accepting payments in minutes.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/auth/register"
-              className="px-8 py-3 bg-white text-emerald-600 rounded-xl font-semibold hover:bg-emerald-50 transition-colors"
-            >
-              Create Free Account
-            </Link>
-            <Link 
-              href="/dashboard"
-              className="px-8 py-3 bg-emerald-700 text-white rounded-xl font-semibold hover:bg-emerald-800 transition-colors"
-            >
-              Go to Dashboard
-            </Link>
+          <div className="bg-gradient-to-br from-lemon-400/10 to-grape-500/10 border border-lemon-400/20 rounded-3xl p-8 md:p-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Ready to Start?</h2>
+            <p className="text-dark-300 mb-8">Create your account and start accepting payments in minutes.</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href="/auth/register"
+                className="btn-primary btn-lg"
+              >
+                Create Free Account
+              </Link>
+              <Link 
+                href="/dashboard"
+                className="px-8 py-3 bg-dark-800 text-white rounded-xl font-semibold hover:bg-dark-700 transition-colors"
+              >
+                Go to Dashboard
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 bg-slate-900">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-slate-400 text-sm">
-            © {new Date().getFullYear()} Payssd. All rights reserved.
-          </p>
+      <footer className="bg-dark-900 border-t border-dark-800 py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-[#F7C500] rounded-full flex items-center justify-center">
+                <span className="text-[#333] font-black text-[10px] italic">PAY</span>
+              </div>
+              <span className="text-white font-black italic">SSD</span>
+            </div>
+            <div className="flex items-center gap-6 text-sm text-dark-400">
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
+            </div>
+            <p className="text-dark-500 text-sm">© {new Date().getFullYear()} Payssd. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>
