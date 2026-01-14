@@ -1,3 +1,5 @@
+'use client';
+
 import { UseCaseLayout } from '@/components/use-case-layout';
 import { Newspaper } from 'lucide-react';
 
