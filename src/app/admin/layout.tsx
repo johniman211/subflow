@@ -17,6 +17,7 @@ import {
   Calendar,
   Bell
 } from 'lucide-react';
+import { NotificationBell } from '@/components/dashboard/notification-bell';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
@@ -31,6 +32,7 @@ const navItems = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -52,11 +54,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       .eq('id', user.id)
       .single();
 
-    if (!profile?.is_platform_admin) {
+    if (!(profile as any)?.is_platform_admin) {
       router.push('/dashboard');
       return;
     }
 
+    setUserId(user.id);
     setIsAdmin(true);
   };
 
@@ -85,9 +88,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
             <span className="font-bold text-gray-900">Admin Panel</span>
           </div>
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2">
-            {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center gap-2">
+            {userId && <NotificationBell userId={userId} />}
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2">
+              {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -98,14 +104,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="px-6 py-6 border-b border-gray-800">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center">
-                <Crown className="h-5 w-5 text-white" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center">
+                  <Crown className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="font-bold text-white">Losetify</p>
+                  <p className="text-xs text-gray-400">Admin Panel</p>
+                </div>
               </div>
-              <div>
-                <p className="font-bold text-white">Losetify</p>
-                <p className="text-xs text-gray-400">Admin Panel</p>
-              </div>
+              {userId && <NotificationBell userId={userId} />}
             </div>
           </div>
 

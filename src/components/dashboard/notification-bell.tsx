@@ -200,12 +200,15 @@ export function NotificationBell({ userId }: NotificationBellProps) {
         )}
       </button>
 
-      {/* Dropdown */}
+      {/* Dropdown - Fixed position to avoid sidebar clipping */}
       {isOpen && (
-        <div className={cn(
-          "absolute right-0 mt-2 w-80 sm:w-96 rounded-xl shadow-lg border z-50 overflow-hidden",
-          theme === 'dark' ? 'bg-dark-900 border-dark-700' : 'bg-white border-gray-200'
-        )}>
+        <div 
+          className={cn(
+            "fixed left-4 lg:left-auto lg:absolute lg:right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[400px] rounded-xl shadow-2xl border overflow-hidden",
+            theme === 'dark' ? 'bg-dark-900 border-dark-700' : 'bg-white border-gray-200'
+          )}
+          style={{ zIndex: 9999 }}
+        >
           {/* Header */}
           <div className={cn(
             "flex items-center justify-between px-4 py-3 border-b",
