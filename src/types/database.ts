@@ -509,3 +509,15 @@ export interface SubscriptionWithDetails extends Subscription {
   price: Price;
   payment: Payment;
 }
+
+export interface Notification {
+  id: string;
+  user_id: string;
+  type: string;
+  title: string;
+  body: string | null;
+  link: string | null;
+  metadata: any;
+  read_at: string | null;
+  created_at: string;
+}

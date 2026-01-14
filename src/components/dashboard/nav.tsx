@@ -29,7 +29,9 @@ import {
   Wallet,
   BookOpen,
   ExternalLink,
+  Bell,
 } from 'lucide-react';
+import { NotificationBell } from './notification-bell';
 import { useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
@@ -84,6 +86,7 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
             <span className={cn("font-bold", theme === 'dark' ? 'text-white' : 'text-gray-900')}>Losetify</span>
           </Link>
           <div className="flex items-center gap-2">
+            {user && <NotificationBell userId={user.id} />}
             <button
               onClick={toggleTheme}
               className={cn(
@@ -180,18 +183,21 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
                 <Home className="h-4 w-4" />
                 Back to Home
               </Link>
-              <button
-                onClick={toggleTheme}
-                className={cn(
-                  "p-2 rounded-lg transition-colors",
-                  theme === 'dark' 
-                    ? 'text-dark-400 hover:text-white hover:bg-dark-800' 
-                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
-                )}
-                title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </button>
+              <div className="flex items-center gap-1">
+                {user && <NotificationBell userId={user.id} />}
+                <button
+                  onClick={toggleTheme}
+                  className={cn(
+                    "p-2 rounded-lg transition-colors",
+                    theme === 'dark' 
+                      ? 'text-dark-400 hover:text-white hover:bg-dark-800' 
+                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                  )}
+                  title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                </button>
+              </div>
             </div>
             
             {/* Currency Toggle */}
