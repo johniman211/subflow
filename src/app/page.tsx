@@ -26,10 +26,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center shadow-lemon">
-                <span className="text-dark-900 font-black text-xl">P</span>
+              <div className="w-10 h-10 bg-[#F7C500] rounded-full flex items-center justify-center shadow-lemon">
+                <span className="text-[#333] font-black text-xs italic">PAY</span>
               </div>
-              <span className="text-xl font-bold text-white">Payssd</span>
+              <span className="text-xl font-black text-white italic">SSD</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <Link href="#features" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Features</Link>
@@ -539,10 +539,10 @@ export default function HomePage() {
           <div className="grid md:grid-cols-5 gap-8 mb-12">
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center">
-                  <span className="text-dark-900 font-black text-xl">P</span>
+                <div className="w-10 h-10 bg-[#F7C500] rounded-full flex items-center justify-center">
+                  <span className="text-[#333] font-black text-xs italic">PAY</span>
                 </div>
-                <span className="text-xl font-bold text-white">Payssd</span>
+                <span className="text-xl font-black text-white italic">SSD</span>
               </div>
               <p className="text-dark-400 text-sm mb-6 max-w-xs">
                 The all-in-one subscription and payment platform built for Africa's digital economy.

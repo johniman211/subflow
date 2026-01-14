@@ -90,10 +90,10 @@ export default function RegisterPage() {
         
         <div className="relative z-10 flex flex-col justify-center px-16">
           <Link href="/" className="inline-flex items-center space-x-3 mb-12">
-            <div className="w-12 h-12 bg-lemon-400 rounded-xl flex items-center justify-center shadow-lemon">
-              <span className="text-dark-900 font-black text-2xl">P</span>
+            <div className="w-12 h-12 bg-[#F7C500] rounded-full flex items-center justify-center shadow-lemon">
+              <span className="text-[#333] font-black text-sm italic">PAY</span>
             </div>
-            <span className="text-2xl font-bold text-white">Payssd</span>
+            <span className="text-2xl font-black text-white italic">SSD</span>
           </Link>
           
           <h1 className="text-4xl font-black text-white mb-4">

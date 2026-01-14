@@ -163,10 +163,10 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
           {/* Logo */}
           <div className="flex items-center flex-shrink-0 px-6 mb-2">
             <Link href="/dashboard" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-lemon-400 rounded-xl flex items-center justify-center shadow-lemon">
-                <span className="text-dark-900 font-black text-xl">P</span>
+              <div className="w-10 h-10 bg-[#F7C500] rounded-full flex items-center justify-center shadow-lemon">
+                <span className="text-[#333] font-black text-xs italic">PAY</span>
               </div>
-              <span className={cn("text-xl font-bold", theme === 'dark' ? 'text-white' : 'text-gray-900')}>Payssd</span>
+              <span className={cn("text-xl font-black italic", theme === 'dark' ? 'text-white' : 'text-gray-900')}>SSD</span>
             </Link>
           </div>
 
