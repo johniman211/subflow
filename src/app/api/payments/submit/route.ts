@@ -4,6 +4,7 @@ import {
   notifyMerchantPaymentPending,
   notifyAdminPaymentPending,
 } from '@/lib/platform-notifications';
+import { notifyPaymentReceived } from '@/lib/in-app-notifications';
 
 export async function POST(request: NextRequest) {
   try {
@@ -88,6 +89,15 @@ export async function POST(request: NextRequest) {
         // Notify admin about pending payment
         await notifyAdminPaymentPending({
           merchantName,
+          customerPhone,
+          amount,
+          currency,
+          productName,
+          referenceCode,
+        });
+
+        // Send in-app notification to merchant
+        await notifyPaymentReceived((paymentDetails as any).merchant_id, {
           customerPhone,
           amount,
           currency,

@@ -8,6 +8,11 @@ import {
   notifyMerchantNewSubscriber,
   notifyMerchantSubscriptionRenewed,
 } from '@/lib/platform-notifications';
+import {
+  notifyPaymentConfirmed as inAppPaymentConfirmed,
+  notifyNewSubscriber as inAppNewSubscriber,
+  notifySubscriptionRenewed as inAppSubscriptionRenewed,
+} from '@/lib/in-app-notifications';
 
 export async function POST(request: NextRequest) {
   try {
@@ -197,6 +202,33 @@ export async function POST(request: NextRequest) {
             productName,
             amount,
             currency,
+            newExpiryDate: (subscription as any).current_period_end,
+          });
+        }
+      }
+
+      // Send in-app notifications to merchant
+      await inAppPaymentConfirmed(payment.merchant_id, {
+        customerPhone,
+        amount,
+        currency,
+        productName,
+        referenceCode,
+      });
+
+      if (subscription) {
+        const isNew = new Date((subscription as any).created_at).getTime() > Date.now() - 60000;
+        
+        if (isNew) {
+          await inAppNewSubscriber(payment.merchant_id, {
+            customerPhone,
+            productName,
+            priceName,
+          });
+        } else {
+          await inAppSubscriptionRenewed(payment.merchant_id, {
+            customerPhone,
+            productName,
             newExpiryDate: (subscription as any).current_period_end,
           });
         }
