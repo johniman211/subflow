@@ -149,7 +149,7 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
                   : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
               )}
             >
-              <Video className="h-5 w-5 mr-3" />
+              <BookOpen className="h-5 w-5 mr-3" />
               Creator Studio
             </Link>
             <hr className={theme === 'dark' ? 'border-dark-800' : 'border-gray-200'} />
