@@ -12,5 +12,5 @@ export async function updateSession(request: NextRequest) {
   const supabase = createMiddlewareClient<Database>({ req: request, res: response });
   await supabase.auth.getSession();
 
-  return { response, supabase };
+  return { response };
 }
