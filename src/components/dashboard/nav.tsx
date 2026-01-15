@@ -38,6 +38,7 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Creator Studio', href: '/creator', icon: BookOpen },
   { name: 'Products', href: '/dashboard/products', icon: Package },
   { name: 'Payments', href: '/dashboard/payments', icon: CreditCard },
   { name: 'Subscriptions', href: '/dashboard/subscriptions', icon: Users },
