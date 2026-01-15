@@ -256,41 +256,63 @@ export default function NewVideoPage() {
             <label className={cn("block font-medium mb-2", theme === 'dark' ? 'text-white' : 'text-gray-900')}>
               Video URL
             </label>
-            <input
-              type="url"
-              placeholder="Paste YouTube, Facebook, Instagram, or TikTok video URL..."
-              value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
-              className={cn(
-                "w-full px-4 py-3 rounded-lg border",
-                theme === 'dark' 
-                  ? 'bg-dark-900 border-dark-600 text-white placeholder:text-dark-500' 
-                  : 'bg-gray-50 border-gray-300'
-              )}
-            />
             
-            {videoUrl && !videoInfo && (
-              <div className="flex items-center gap-2 mt-3 text-amber-500">
-                <AlertCircle className="h-4 w-4" />
-                <span className="text-sm">Could not recognize video URL. Supported: YouTube, Facebook, Instagram, TikTok</span>
+            {!videoInfo ? (
+              <>
+                <input
+                  type="url"
+                  placeholder="Paste YouTube, Facebook, Instagram, or TikTok video URL..."
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  className={cn(
+                    "w-full px-4 py-3 rounded-lg border",
+                    theme === 'dark' 
+                      ? 'bg-dark-900 border-dark-600 text-white placeholder:text-dark-500' 
+                      : 'bg-gray-50 border-gray-300'
+                  )}
+                />
+                
+                {videoUrl && !videoInfo && (
+                  <div className="flex items-center gap-2 mt-3 text-amber-500">
+                    <AlertCircle className="h-4 w-4" />
+                    <span className="text-sm">Could not recognize video URL. Supported: YouTube, Facebook, Instagram, TikTok</span>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-4 mt-4">
+                  <span className={cn("text-sm", theme === 'dark' ? 'text-dark-400' : 'text-gray-500')}>Supported:</span>
+                  <div className="flex items-center gap-3">
+                    <Youtube className="h-5 w-5 text-red-500" />
+                    <Facebook className="h-5 w-5 text-blue-500" />
+                    <Instagram className="h-5 w-5 text-pink-500" />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center justify-between p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                    <Video className="h-5 w-5 text-green-500" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-green-500 capitalize">{videoInfo.platform} Video Linked</p>
+                    <p className={cn("text-sm", theme === 'dark' ? 'text-dark-400' : 'text-gray-500')}>
+                      Original URL hidden for security
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { setVideoUrl(''); setVideoInfo(null); }}
+                  className={cn(
+                    "px-3 py-1 rounded-lg text-sm",
+                    theme === 'dark' ? 'bg-dark-700 text-white hover:bg-dark-600' : 'bg-gray-200 hover:bg-gray-300'
+                  )}
+                >
+                  Change
+                </button>
               </div>
             )}
-
-            {videoInfo && (
-              <div className="flex items-center gap-2 mt-3 text-green-500">
-                <Video className="h-4 w-4" />
-                <span className="text-sm capitalize">{videoInfo.platform} video detected</span>
-              </div>
-            )}
-
-            <div className="flex items-center gap-4 mt-4">
-              <span className={cn("text-sm", theme === 'dark' ? 'text-dark-400' : 'text-gray-500')}>Supported:</span>
-              <div className="flex items-center gap-3">
-                <Youtube className="h-5 w-5 text-red-500" />
-                <Facebook className="h-5 w-5 text-blue-500" />
-                <Instagram className="h-5 w-5 text-pink-500" />
-              </div>
-            </div>
           </div>
 
           {/* Preview */}
