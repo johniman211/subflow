@@ -28,16 +28,33 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    // Check if user is a creator
+    // Check if user is a creator (check both is_creator flag AND existing creator profile for backward compatibility)
     const { data: profile } = await supabase
       .from('users')
       .select('is_creator')
       .eq('id', session.user.id)
       .single();
 
-    if (!profile?.is_creator) {
+    // Also check if user has an existing creator profile (for users created before is_creator flag)
+    const { data: creatorProfile } = await supabase
+      .from('creators')
+      .select('id')
+      .eq('user_id', session.user.id)
+      .single();
+
+    const isCreator = profile?.is_creator === true || creatorProfile !== null;
+
+    if (!isCreator) {
       // Not a creator - redirect to onboard
       return NextResponse.redirect(new URL('/creator/onboard', request.url));
+    }
+
+    // If user has creator profile but is_creator flag not set, update it
+    if (creatorProfile && !profile?.is_creator) {
+      await supabase
+        .from('users')
+        .update({ is_creator: true })
+        .eq('id', session.user.id);
     }
   }
   

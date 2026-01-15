@@ -26,18 +26,22 @@ export default async function CreatorLayout({
     redirect('/auth/login?next=/creator');
   }
 
-  // Check if user has creator role
-  const isCreator = (profile as any).is_creator === true;
+  // Get creator profile
+  const { data: creator } = await supabase
+    .from('creators')
+    .select('*')
+    .eq('user_id', user.id)
+    .single();
 
-  // Get creator profile if user is a creator
-  let creator = null;
-  if (isCreator) {
-    const { data } = await supabase
-      .from('creators')
-      .select('*')
-      .eq('user_id', user.id)
-      .single();
-    creator = data;
+  // Check if user has creator role (check both is_creator flag AND existing creator profile for backward compatibility)
+  let isCreator = (profile as any).is_creator === true || creator !== null;
+
+  // Auto-fix the is_creator flag if user has creator profile but flag not set
+  if (creator && !(profile as any).is_creator) {
+    await supabase
+      .from('users')
+      .update({ is_creator: true })
+      .eq('id', user.id);
   }
 
   return (

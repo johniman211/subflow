@@ -40,7 +40,27 @@ export default async function DashboardLayout({
   }
 
   const isAdmin = profile?.is_platform_admin || false;
-  const isCreator = (profile as any)?.is_creator || false;
+  
+  // Check if user is a creator (check both is_creator flag AND existing creator profile for backward compatibility)
+  let isCreator = (profile as any)?.is_creator || false;
+  
+  if (!isCreator && user) {
+    // Check if user has an existing creator profile (for users created before is_creator flag)
+    const { data: creatorProfile } = await supabase
+      .from('creators')
+      .select('id')
+      .eq('user_id', user.id)
+      .single();
+    
+    if (creatorProfile) {
+      isCreator = true;
+      // Auto-fix the is_creator flag
+      await supabase
+        .from('users')
+        .update({ is_creator: true })
+        .eq('id', user.id);
+    }
+  }
 
   return (
     <DashboardWrapper>
