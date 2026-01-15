@@ -26,14 +26,34 @@ export default async function VideoWatchPage({
 
   if (!creator) notFound();
 
-  const { data: content } = await supabase
-    .from('content_items')
-    .select('*')
-    .eq('creator_id', creator.id)
-    .eq('id', id)
-    .eq('status', 'published')
-    .eq('content_type', 'video')
-    .single();
+  // Check if id is a UUID or slug
+  const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
+  // Try to find content by UUID first, then by slug
+  let content;
+  if (isUUID) {
+    const { data } = await supabase
+      .from('content_items')
+      .select('*')
+      .eq('creator_id', creator.id)
+      .eq('id', id)
+      .eq('status', 'published')
+      .eq('content_type', 'video')
+      .single();
+    content = data;
+  }
+  
+  if (!content) {
+    const { data } = await supabase
+      .from('content_items')
+      .select('*')
+      .eq('creator_id', creator.id)
+      .eq('slug', id)
+      .eq('status', 'published')
+      .eq('content_type', 'video')
+      .single();
+    content = data;
+  }
 
   if (!content) notFound();
 
