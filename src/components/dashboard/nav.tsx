@@ -138,6 +138,20 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
               );
             })}
             <hr className={theme === 'dark' ? 'border-dark-800' : 'border-gray-200'} />
+            <Link
+              href="/creator"
+              onClick={() => setMobileMenuOpen(false)}
+              className={cn(
+                "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all",
+                theme === 'dark'
+                  ? 'bg-purple-900/20 text-purple-400 hover:bg-purple-900/30'
+                  : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
+              )}
+            >
+              <Video className="h-5 w-5 mr-3" />
+              Creator Studio
+            </Link>
+            <hr className={theme === 'dark' ? 'border-dark-800' : 'border-gray-200'} />
             <button
               onClick={handleSignOut}
               className={cn(
