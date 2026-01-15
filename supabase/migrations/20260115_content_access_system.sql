@@ -9,7 +9,7 @@ ALTER TABLE content_items
 ADD COLUMN visibility content_visibility NOT NULL DEFAULT 'premium';
 
 -- Update existing records: is_free = true -> 'free', else 'premium'
-UPDATE content_items SET visibility = CASE WHEN is_free THEN 'free' ELSE 'premium' END;
+UPDATE content_items SET visibility = CASE WHEN is_free THEN 'free'::content_visibility ELSE 'premium'::content_visibility END;
 
 -- Content Views table for detailed tracking
 CREATE TABLE content_views (
