@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import { FileText, Video, Download, Lock, ExternalLink } from 'lucide-react';
+import { FileText, Video, Download, Lock, ExternalLink, Eye, Calendar, Play, ArrowRight, MessageSquare, Users } from 'lucide-react';
 
 interface ContentItem {
   id: string;
@@ -10,8 +10,11 @@ interface ContentItem {
   description: string;
   content_type: 'blog_post' | 'video' | 'file';
   is_free: boolean;
+  visibility: string;
   view_count: number;
   published_at: string;
+  video_thumbnail_url?: string;
+  video_platform?: string;
 }
 
 export default async function CreatorProfilePage({
@@ -40,17 +43,39 @@ export default async function CreatorProfilePage({
     .eq('status', 'published')
     .order('published_at', { ascending: false });
 
-  const contentTypeIcons = {
-    blog_post: FileText,
-    video: Video,
-    file: Download,
+  const contentTypeConfig = {
+    blog_post: {
+      icon: FileText,
+      color: 'from-blue-500 to-blue-600',
+      bgColor: 'bg-blue-500/10',
+      textColor: 'text-blue-400',
+      label: 'Article',
+    },
+    video: {
+      icon: Play,
+      color: 'from-red-500 to-pink-500',
+      bgColor: 'bg-red-500/10',
+      textColor: 'text-red-400',
+      label: 'Video',
+    },
+    file: {
+      icon: Download,
+      color: 'from-emerald-500 to-teal-500',
+      bgColor: 'bg-emerald-500/10',
+      textColor: 'text-emerald-400',
+      label: 'Download',
+    },
   };
 
-  const contentTypeColors = {
-    blog_post: 'text-blue-400 bg-blue-500/20',
-    video: 'text-red-400 bg-red-500/20',
-    file: 'text-green-400 bg-green-500/20',
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
+
+  // Count content by type
+  const videoCount = content?.filter((c: ContentItem) => c.content_type === 'video').length || 0;
+  const articleCount = content?.filter((c: ContentItem) => c.content_type === 'blog_post').length || 0;
+  const downloadCount = content?.filter((c: ContentItem) => c.content_type === 'file').length || 0;
 
   const getContentUrl = (item: ContentItem) => {
     switch (item.content_type) {
@@ -103,43 +128,137 @@ export default async function CreatorProfilePage({
           )}
         </div>
 
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white">Content</h2>
+        {/* Stats Bar */}
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="bg-dark-900/50 border border-dark-800 rounded-2xl p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <Play className="h-4 w-4 text-red-400" />
+              <span className="text-2xl font-bold text-white">{videoCount}</span>
+            </div>
+            <p className="text-dark-400 text-sm">Videos</p>
+          </div>
+          <div className="bg-dark-900/50 border border-dark-800 rounded-2xl p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <FileText className="h-4 w-4 text-blue-400" />
+              <span className="text-2xl font-bold text-white">{articleCount}</span>
+            </div>
+            <p className="text-dark-400 text-sm">Articles</p>
+          </div>
+          <div className="bg-dark-900/50 border border-dark-800 rounded-2xl p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <Download className="h-4 w-4 text-emerald-400" />
+              <span className="text-2xl font-bold text-white">{downloadCount}</span>
+            </div>
+            <p className="text-dark-400 text-sm">Downloads</p>
+          </div>
+        </div>
+
+        {/* Community Link */}
+        <Link
+          href={`/c/${username}/community`}
+          className="flex items-center justify-between p-5 mb-8 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl hover:border-purple-500/40 transition-all group"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+              <MessageSquare className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-white group-hover:text-purple-400 transition-colors">Community</h3>
+              <p className="text-dark-400 text-sm">Join the discussion with other members</p>
+            </div>
+          </div>
+          <ArrowRight className="h-5 w-5 text-purple-400 group-hover:translate-x-1 transition-transform" />
+        </Link>
+
+        {/* Content Section */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-bold text-white">Content</h2>
+            <span className="text-dark-400 text-sm">{content?.length || 0} items</span>
+          </div>
           
           {(!content || content.length === 0) ? (
-            <div className="text-center py-16 bg-dark-900/50 rounded-xl border border-dark-800">
-              <FileText className="h-12 w-12 text-dark-500 mx-auto mb-4" />
-              <p className="text-dark-400">No content yet</p>
+            <div className="text-center py-16 bg-dark-900/50 rounded-2xl border border-dark-800">
+              <div className="w-16 h-16 bg-dark-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <FileText className="h-8 w-8 text-dark-500" />
+              </div>
+              <p className="text-dark-400 font-medium">No content yet</p>
+              <p className="text-dark-500 text-sm mt-1">Check back soon for new content</p>
             </div>
           ) : (
             <div className="grid gap-4">
               {content.map((item: ContentItem) => {
-                const Icon = contentTypeIcons[item.content_type] || FileText;
-                const colorClass = contentTypeColors[item.content_type] || 'text-gray-400 bg-gray-500/20';
+                const config = contentTypeConfig[item.content_type] || contentTypeConfig.blog_post;
+                const Icon = config.icon;
+                const isPremium = !item.is_free && item.visibility !== 'free';
                 
                 return (
                   <Link
                     key={item.id}
                     href={getContentUrl(item)}
-                    className="flex items-center gap-4 p-4 bg-dark-900/50 border border-dark-800 rounded-xl hover:border-purple-500/50 transition-colors group"
+                    className="group relative bg-dark-900/50 border border-dark-800 rounded-2xl overflow-hidden hover:border-purple-500/30 hover:bg-dark-900/80 transition-all duration-300"
                   >
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorClass}`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-medium text-white truncate group-hover:text-purple-400 transition-colors">
-                          {item.title}
-                        </h3>
-                        {!item.is_free && (
-                          <Lock className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                    <div className="flex items-stretch">
+                      {/* Thumbnail/Icon Area */}
+                      <div className={`relative w-24 sm:w-32 flex-shrink-0 bg-gradient-to-br ${config.color} flex items-center justify-center`}>
+                        <Icon className="h-8 w-8 text-white/90" />
+                        {isPremium && (
+                          <div className="absolute top-2 left-2 w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                            <Lock className="h-3 w-3 text-white" />
+                          </div>
                         )}
                       </div>
-                      <p className="text-sm text-dark-400 truncate">
-                        {item.description || 'No description'}
-                      </p>
+                      
+                      {/* Content */}
+                      <div className="flex-1 p-4 sm:p-5 min-w-0">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            {/* Type Badge */}
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium ${config.bgColor} ${config.textColor}`}>
+                                {config.label}
+                              </span>
+                              {isPremium && (
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-amber-500/10 text-amber-400">
+                                  Premium
+                                </span>
+                              )}
+                            </div>
+                            
+                            {/* Title */}
+                            <h3 className="font-semibold text-white group-hover:text-purple-400 transition-colors line-clamp-1 mb-1">
+                              {item.title}
+                            </h3>
+                            
+                            {/* Description */}
+                            {item.description && (
+                              <p className="text-dark-400 text-sm line-clamp-2 mb-3">
+                                {item.description}
+                              </p>
+                            )}
+                            
+                            {/* Meta */}
+                            <div className="flex items-center gap-4 text-dark-500 text-xs">
+                              <span className="flex items-center gap-1">
+                                <Eye className="h-3.5 w-3.5" />
+                                {item.view_count} views
+                              </span>
+                              {item.published_at && (
+                                <span className="flex items-center gap-1">
+                                  <Calendar className="h-3.5 w-3.5" />
+                                  {formatDate(item.published_at)}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          
+                          {/* Arrow */}
+                          <div className="hidden sm:flex items-center justify-center w-10 h-10 rounded-xl bg-dark-800 group-hover:bg-purple-500/20 transition-colors">
+                            <ArrowRight className="h-5 w-5 text-dark-400 group-hover:text-purple-400 group-hover:translate-x-0.5 transition-all" />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <ExternalLink className="h-5 w-5 text-dark-500 group-hover:text-purple-400 transition-colors" />
                   </Link>
                 );
               })}

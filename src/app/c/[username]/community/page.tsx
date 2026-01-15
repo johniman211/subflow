@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import { Lock, ArrowLeft, MessageSquare, Heart, Pin, Calendar } from 'lucide-react';
+import { Lock, ArrowLeft, MessageSquare, Heart, Pin, Calendar, ExternalLink } from 'lucide-react';
 import { ShareButton } from '@/components/creator/share-button';
 import { AuthWall } from '@/components/creator/auth-wall';
 import { PaywallModal } from '@/components/creator/paywall-modal';
+import { PostShareButton } from '@/components/creator/post-share-button';
+import { CommunityPostCard } from '@/components/creator/community-post-card';
 
 export default async function CommunityPage({
   params,
@@ -161,49 +163,12 @@ export default async function CommunityPage({
               </div>
             ) : (
               posts.map((post) => (
-                <div
+                <CommunityPostCard
                   key={post.id}
-                  className="bg-dark-900/50 border border-dark-800 rounded-2xl p-6"
-                >
-                  {post.is_pinned && (
-                    <div className="flex items-center gap-1 text-amber-400 text-xs font-medium mb-3">
-                      <Pin className="h-3 w-3" />
-                      Pinned
-                    </div>
-                  )}
-                  
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">
-                        {post.is_creator_post ? creator.display_name?.charAt(0) : post.author_name?.charAt(0) || '?'}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white">
-                        {post.is_creator_post ? creator.display_name : post.author_name || 'Member'}
-                        {post.is_creator_post && (
-                          <span className="ml-2 text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded">Creator</span>
-                        )}
-                      </p>
-                      <p className="text-dark-500 text-sm">
-                        {new Date(post.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  {post.title && (
-                    <h3 className="text-lg font-semibold text-white mb-2">{post.title}</h3>
-                  )}
-                  
-                  <p className="text-dark-200 whitespace-pre-wrap">{post.body}</p>
-
-                  <div className="flex items-center gap-4 mt-4 pt-4 border-t border-dark-800">
-                    <span className="flex items-center gap-1 text-dark-400 text-sm">
-                      <Heart className="h-4 w-4" />
-                      {post.like_count}
-                    </span>
-                  </div>
-                </div>
+                  post={post}
+                  creator={creator}
+                  username={username}
+                />
               ))
             )}
           </div>
