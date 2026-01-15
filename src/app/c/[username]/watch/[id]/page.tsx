@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import { Lock, ArrowLeft, Calendar, Eye } from 'lucide-react';
+import { Lock, ArrowLeft, Calendar, Eye, Play, Video } from 'lucide-react';
 import { PaywallModal } from '@/components/creator/paywall-modal';
 import { ContentWatermark } from '@/components/creator/content-watermark';
 import { ShareButton } from '@/components/creator/share-button';
@@ -77,6 +77,17 @@ export default async function VideoWatchPage({
 
   const shareUrl = `https://payssd.com/c/${username}/watch/${id}`;
 
+  // Fetch related videos from the same creator
+  const { data: relatedVideos } = await supabase
+    .from('content_items')
+    .select('id, title, description, video_platform, is_free, view_count, published_at')
+    .eq('creator_id', creator.id)
+    .eq('content_type', 'video')
+    .eq('status', 'published')
+    .neq('id', id)
+    .order('published_at', { ascending: false })
+    .limit(10);
+
   const getEmbedUrl = () => {
     switch (content.video_platform) {
       case 'youtube':
@@ -148,6 +159,50 @@ export default async function VideoWatchPage({
             </div>
             <PaywallModal creatorName={creator.display_name} creatorUsername={username} contentTitle={content.title} contentType="video" products={products} />
           </>
+        )}
+
+        {/* Related Videos Section */}
+        {relatedVideos && relatedVideos.length > 0 && (
+          <div className="mt-12 pt-8 border-t border-dark-800">
+            <h2 className="text-xl font-bold text-white mb-6">More from {creator.display_name}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {relatedVideos.map((video: any) => (
+                <Link
+                  key={video.id}
+                  href={`/c/${username}/watch/${video.id}${customerPhone ? `?phone=${customerPhone}` : ''}`}
+                  className="group block bg-dark-900/50 border border-dark-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all"
+                >
+                  <div className="relative aspect-video bg-dark-800 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20" />
+                    <Video className="h-12 w-12 text-dark-500" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/50">
+                      <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                        <Play className="h-6 w-6 text-white ml-1" />
+                      </div>
+                    </div>
+                    {!video.is_free && (
+                      <div className="absolute top-2 right-2 px-2 py-1 bg-amber-500/90 rounded text-xs font-medium text-white flex items-center gap-1">
+                        <Lock className="h-3 w-3" />
+                        Premium
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-medium text-white line-clamp-2 group-hover:text-purple-400 transition-colors mb-2">
+                      {video.title}
+                    </h3>
+                    <div className="flex items-center gap-3 text-xs text-dark-400">
+                      <span className="flex items-center gap-1">
+                        <Eye className="h-3 w-3" />
+                        {video.view_count} views
+                      </span>
+                      <span className="capitalize">{video.video_platform}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 
