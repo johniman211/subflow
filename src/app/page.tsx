@@ -413,16 +413,16 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* How It Works */}
-        <section id="how-it-works" className={cn("py-20", theme === 'dark' ? 'bg-dark-900' : 'bg-white')}>
+        {/* How It Works - Always dark */}
+        <section id="how-it-works" className="py-20 bg-dark-900">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <span className="badge-grape mb-4">How It Works</span>
-              <h2 className={cn("text-3xl md:text-5xl font-black mb-4", theme === 'dark' ? 'text-white' : 'text-gray-900')}>
+              <h2 className="text-3xl md:text-5xl font-black mb-4 text-white">
                 Three steps to{' '}
                 <span className="gradient-text-purple">start selling</span>
               </h2>
-              <p className={cn("text-xl", theme === 'dark' ? 'text-dark-400' : 'text-gray-600')}>That's it. Simple.</p>
+              <p className="text-xl text-dark-400">That's it. Simple.</p>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
@@ -432,17 +432,14 @@ export default function HomePage() {
                 { num: '03', title: 'Access Unlocks', desc: 'You confirm payment → we activate access automatically.' },
               ].map((step, i) => (
                 <div key={i} className="relative">
-                  <div className={cn(
-                    "p-8 h-full rounded-2xl border hover:border-lemon-400/30 transition-all duration-300 group",
-                    theme === 'dark' ? 'bg-dark-800/50 border-dark-700' : 'bg-gray-50 border-gray-200'
-                  )}>
-                    <span className={cn("text-6xl font-black transition-colors", theme === 'dark' ? 'text-dark-800 group-hover:text-lemon-400/20' : 'text-gray-200 group-hover:text-lemon-400/30')}>{step.num}</span>
-                    <h3 className={cn("text-xl font-bold mt-4 mb-3", theme === 'dark' ? 'text-white' : 'text-gray-900')}>{step.title}</h3>
-                    <p className={cn(theme === 'dark' ? 'text-dark-400' : 'text-gray-600')}>{step.desc}</p>
+                  <div className="p-8 h-full rounded-2xl border bg-dark-800/50 border-dark-700 hover:border-lemon-400/30 transition-all duration-300 group">
+                    <span className="text-6xl font-black text-dark-700 group-hover:text-lemon-400/20 transition-colors">{step.num}</span>
+                    <h3 className="text-xl font-bold mt-4 mb-3 text-white">{step.title}</h3>
+                    <p className="text-dark-400">{step.desc}</p>
                   </div>
                   {i < 2 && (
                     <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                      <ChevronRight className={cn("h-8 w-8", theme === 'dark' ? 'text-dark-700' : 'text-gray-300')} />
+                      <ChevronRight className="h-8 w-8 text-dark-700" />
                     </div>
                   )}
                 </div>
@@ -451,7 +448,7 @@ export default function HomePage() {
 
             {/* For Creators */}
             <div className="max-w-5xl mx-auto">
-              <h3 className="text-2xl font-bold text-grape-500 text-center mb-8">For Creators</h3>
+              <h3 className="text-2xl font-bold text-grape-400 text-center mb-8">For Creators</h3>
               <div className="grid md:grid-cols-3 gap-8">
                 {[
                   { num: '01', title: 'Publish Content', desc: 'Create videos, blog posts, files, or community posts inside Creator Studio.' },
@@ -459,17 +456,14 @@ export default function HomePage() {
                   { num: '03', title: 'Access Unlocks', desc: 'Paid users unlock content. Others see a paywall.' },
                 ].map((step, i) => (
                   <div key={i} className="relative">
-                    <div className={cn(
-                      "p-8 h-full rounded-2xl border hover:border-grape-500/30 transition-all duration-300 group",
-                      theme === 'dark' ? 'bg-dark-800/50 border-grape-500/20' : 'bg-grape-50 border-grape-200'
-                    )}>
-                      <span className={cn("text-6xl font-black transition-colors", theme === 'dark' ? 'text-dark-800 group-hover:text-grape-500/20' : 'text-grape-100 group-hover:text-grape-200')}>{step.num}</span>
-                      <h3 className={cn("text-xl font-bold mt-4 mb-3", theme === 'dark' ? 'text-white' : 'text-gray-900')}>{step.title}</h3>
-                      <p className={cn(theme === 'dark' ? 'text-dark-400' : 'text-gray-600')}>{step.desc}</p>
+                    <div className="p-8 h-full rounded-2xl border bg-dark-800/50 border-grape-500/20 hover:border-grape-500/30 transition-all duration-300 group">
+                      <span className="text-6xl font-black text-dark-700 group-hover:text-grape-500/20 transition-colors">{step.num}</span>
+                      <h3 className="text-xl font-bold mt-4 mb-3 text-white">{step.title}</h3>
+                      <p className="text-dark-400">{step.desc}</p>
                     </div>
                     {i < 2 && (
                       <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                        <ChevronRight className={cn("h-8 w-8", theme === 'dark' ? 'text-dark-700' : 'text-gray-300')} />
+                        <ChevronRight className="h-8 w-8 text-dark-700" />
                       </div>
                     )}
                   </div>
@@ -570,18 +564,18 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className={cn("py-20 relative overflow-hidden", theme === 'dark' ? 'bg-dark-900' : 'bg-gray-50')}>
+        {/* CTA Section - Always dark */}
+        <section className="py-20 relative overflow-hidden bg-dark-900">
           <div className="absolute inset-0 bg-gradient-to-r from-lemon-400/10 via-transparent to-grape-500/10" />
           <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className={cn("text-3xl md:text-5xl font-black mb-6", theme === 'dark' ? 'text-white' : 'text-gray-900')}>
+              <h2 className="text-3xl md:text-5xl font-black mb-6 text-white">
                 Start Selling <span className="gradient-text">Today</span>
               </h2>
-              <p className={cn("text-xl mb-6", theme === 'dark' ? 'text-dark-300' : 'text-gray-600')}>
+              <p className="text-xl mb-6 text-dark-300">
                 Sell software, subscriptions, digital products — or monetize your content.
               </p>
-              <div className={cn("flex flex-wrap justify-center gap-4 mb-8", theme === 'dark' ? 'text-dark-400' : 'text-gray-500')}>
+              <div className="flex flex-wrap justify-center gap-4 mb-8 text-dark-400">
                 <span>No setup fees.</span>
                 <span>•</span>
                 <span>No money held.</span>
@@ -597,7 +591,7 @@ export default function HomePage() {
                   Talk to Sales
                 </Link>
               </div>
-              <p className={cn("mt-6 text-sm", theme === 'dark' ? 'text-dark-500' : 'text-gray-500')}>No credit card required • Free forever plan available</p>
+              <p className="mt-6 text-sm text-dark-500">No credit card required • Free forever plan available</p>
             </div>
           </div>
         </section>
