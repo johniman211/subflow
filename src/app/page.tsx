@@ -229,65 +229,47 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* NEW - Creator Studio Section */}
-        <section id="creator-studio" className={cn(
-          "py-20 relative overflow-hidden",
-          theme === 'dark' ? 'bg-dark-900' : 'bg-gray-50'
-        )}>
+        {/* NEW - Creator Studio Section - Always dark */}
+        <section id="creator-studio" className="py-20 relative overflow-hidden bg-dark-900">
           <div className="absolute inset-0 bg-gradient-to-br from-grape-500/10 via-transparent to-lemon-400/10" />
           <div className="container mx-auto px-4 relative">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 bg-grape-500/20 border border-grape-500/30 text-grape-500 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <div className="inline-flex items-center gap-2 bg-grape-500/20 border border-grape-500/30 text-grape-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
                 <Sparkles className="h-4 w-4" />
                 <span>NEW — Creator Studio</span>
               </div>
-              <h2 className={cn(
-                "text-3xl md:text-5xl font-black mb-4",
-                theme === 'dark' ? 'text-white' : 'text-gray-900'
-              )}>
+              <h2 className="text-3xl md:text-5xl font-black mb-4 text-white">
                 Monetize Any Content with{' '}
                 <span className="gradient-text-purple">PaySSD</span>
               </h2>
-              <p className={cn(
-                "text-xl max-w-3xl mx-auto",
-                theme === 'dark' ? 'text-dark-400' : 'text-gray-600'
-              )}>
+              <p className="text-xl max-w-3xl mx-auto text-dark-400">
                 Creator Studio is a separate dashboard inside PaySSD that lets creators sell access to content using the same trusted PaySSD subscription system.
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
-              <div className={cn(
-                "p-6 text-center rounded-2xl border",
-                theme === 'dark' ? 'bg-dark-800/50 border-dark-700' : 'bg-white border-gray-200 shadow-sm'
-              )}>
+              <div className="p-6 text-center rounded-2xl border bg-dark-800/50 border-dark-700">
                 <div className="w-14 h-14 bg-grape-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Video className="h-7 w-7 text-grape-500" />
+                  <Video className="h-7 w-7 text-grape-400" />
                 </div>
-                <h3 className={cn("text-lg font-bold mb-2", theme === 'dark' ? 'text-white' : 'text-gray-900')}>Creators publish content</h3>
+                <h3 className="text-lg font-bold mb-2 text-white">Creators publish content</h3>
               </div>
-              <div className={cn(
-                "p-6 text-center rounded-2xl border",
-                theme === 'dark' ? 'bg-dark-800/50 border-dark-700' : 'bg-white border-gray-200 shadow-sm'
-              )}>
+              <div className="p-6 text-center rounded-2xl border bg-dark-800/50 border-dark-700">
                 <div className="w-14 h-14 bg-lemon-400/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <CreditCard className="h-7 w-7 text-lemon-500" />
+                  <CreditCard className="h-7 w-7 text-lemon-400" />
                 </div>
-                <h3 className={cn("text-lg font-bold mb-2", theme === 'dark' ? 'text-white' : 'text-gray-900')}>Fans pay directly</h3>
+                <h3 className="text-lg font-bold mb-2 text-white">Fans pay directly</h3>
               </div>
-              <div className={cn(
-                "p-6 text-center rounded-2xl border",
-                theme === 'dark' ? 'bg-dark-800/50 border-dark-700' : 'bg-white border-gray-200 shadow-sm'
-              )}>
+              <div className="p-6 text-center rounded-2xl border bg-dark-800/50 border-dark-700">
                 <div className="w-14 h-14 bg-success-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <Lock className="h-7 w-7 text-success-500" />
                 </div>
-                <h3 className={cn("text-lg font-bold mb-2", theme === 'dark' ? 'text-white' : 'text-gray-900')}>PaySSD controls access</h3>
+                <h3 className="text-lg font-bold mb-2 text-white">PaySSD controls access</h3>
               </div>
             </div>
 
             <div className="max-w-4xl mx-auto">
-              <h3 className={cn("text-xl font-bold text-center mb-8", theme === 'dark' ? 'text-white' : 'text-gray-900')}>What creators can monetize:</h3>
+              <h3 className="text-xl font-bold text-center mb-8 text-white">What creators can monetize:</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
                 {[
                   { icon: Video, title: 'Video embeds', desc: 'YouTube, Facebook, Instagram' },
@@ -295,24 +277,18 @@ export default function HomePage() {
                   { icon: Download, title: 'File downloads', desc: 'PDFs, audio, guides' },
                   { icon: MessageSquare, title: 'Members-only community', desc: 'Private discussions' },
                 ].map((item, i) => (
-                  <div key={i} className={cn(
-                    "rounded-xl p-5 text-center border hover:border-grape-500/50 transition-all",
-                    theme === 'dark' ? 'bg-dark-800/50 border-dark-700' : 'bg-white border-gray-200 shadow-sm'
-                  )}>
-                    <item.icon className="h-8 w-8 text-grape-500 mx-auto mb-3" />
-                    <p className={cn("font-semibold text-sm", theme === 'dark' ? 'text-white' : 'text-gray-900')}>{item.title}</p>
-                    <p className={cn("text-xs mt-1", theme === 'dark' ? 'text-dark-400' : 'text-gray-500')}>{item.desc}</p>
+                  <div key={i} className="rounded-xl p-5 text-center border bg-dark-800/50 border-dark-700 hover:border-grape-500/50 transition-all">
+                    <item.icon className="h-8 w-8 text-grape-400 mx-auto mb-3" />
+                    <p className="font-semibold text-sm text-white">{item.title}</p>
+                    <p className="text-xs mt-1 text-dark-400">{item.desc}</p>
                   </div>
                 ))}
               </div>
 
-              <div className={cn(
-                "rounded-2xl p-8 text-center border",
-                theme === 'dark' ? 'bg-dark-800/50 border-dark-700' : 'bg-white border-gray-200 shadow-sm'
-              )}>
-                <p className={cn("text-lg mb-2", theme === 'dark' ? 'text-dark-300' : 'text-gray-600')}>Creators share one PaySSD link.</p>
-                <p className={cn("text-lg mb-2", theme === 'dark' ? 'text-dark-300' : 'text-gray-600')}>Paid users unlock content.</p>
-                <p className={cn("text-lg", theme === 'dark' ? 'text-dark-300' : 'text-gray-600')}>Others see a paywall.</p>
+              <div className="rounded-2xl p-8 text-center border bg-dark-800/50 border-dark-700">
+                <p className="text-lg mb-2 text-dark-300">Creators share one PaySSD link.</p>
+                <p className="text-lg mb-2 text-dark-300">Paid users unlock content.</p>
+                <p className="text-lg text-dark-300">Others see a paywall.</p>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
