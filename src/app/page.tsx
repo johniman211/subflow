@@ -1,164 +1,34 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Menu, XIcon, Package, BookOpen, Newspaper, Video, FileText, MessageSquare, Download } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Package, Video, FileText, MessageSquare, Download } from 'lucide-react';
 import { PricingSection } from '@/components/landing/PricingSection';
+import { useTheme } from '@/contexts/ThemeContext';
+import { cn } from '@/lib/utils';
+import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 
 export default function HomePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [useCasesOpen, setUseCasesOpen] = useState(false);
+  const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-dark-950 text-white overflow-hidden">
-      {/* Noise Overlay */}
-      <div className="noise-overlay" />
+    <div className={cn(
+      "min-h-screen overflow-hidden",
+      theme === 'dark' ? 'bg-dark-950 text-white' : 'bg-white text-gray-900'
+    )}>
+      {/* Noise Overlay - only in dark mode */}
+      {theme === 'dark' && <div className="noise-overlay" />}
       
-      {/* Background Gradient Orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-lemon-400/20 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute top-1/2 -left-40 w-80 h-80 bg-grape-500/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-lemon-400/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '4s' }} />
-      </div>
-
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-dark-950/80 backdrop-blur-xl border-b border-dark-800">
-        <div className="container mx-auto px-4 py-4">
-          <nav className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-[#F7C500] rounded-full flex items-center justify-center shadow-lemon">
-                <span className="text-[#333] font-black text-xs italic">PAY</span>
-              </div>
-              <span className="text-xl font-black text-white italic">SSD</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="#features" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Features</Link>
-              <Link href="#creator-studio" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Creator Studio</Link>
-              <Link href="#how-it-works" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">How It Works</Link>
-              
-              {/* Use Cases Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setUseCasesOpen(true)}
-                onMouseLeave={() => setUseCasesOpen(false)}
-              >
-                <button className="flex items-center gap-1 text-dark-300 hover:text-white text-sm font-medium transition-colors">
-                  Use Cases
-                  <ChevronRight className={`h-4 w-4 transition-transform ${useCasesOpen ? 'rotate-90' : ''}`} />
-                </button>
-                
-                {useCasesOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-dark-900 border border-dark-700 rounded-xl shadow-xl overflow-hidden z-50">
-                    <Link 
-                      href="/use-cases/saas" 
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-800 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
-                        <Code className="h-4 w-4 text-lemon-400" />
-                      </div>
-                      <div>
-                        <p className="text-white text-sm font-medium">SaaS & Software</p>
-                        <p className="text-dark-400 text-xs">Subscription software</p>
-                      </div>
-                    </Link>
-                    <Link 
-                      href="/use-cases/courses" 
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-800 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
-                        <BookOpen className="h-4 w-4 text-lemon-400" />
-                      </div>
-                      <div>
-                        <p className="text-white text-sm font-medium">Courses & Digital Products</p>
-                        <p className="text-dark-400 text-xs">Online education</p>
-                      </div>
-                    </Link>
-                    <Link 
-                      href="/use-cases/media" 
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-800 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
-                        <Newspaper className="h-4 w-4 text-lemon-400" />
-                      </div>
-                      <div>
-                        <p className="text-white text-sm font-medium">Media & Publishers</p>
-                        <p className="text-dark-400 text-xs">Content monetization</p>
-                      </div>
-                    </Link>
-                    <Link 
-                      href="/use-cases/creators" 
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-800 transition-colors"
-                    >
-                      <div className="w-8 h-8 bg-lemon-400/20 rounded-lg flex items-center justify-center">
-                        <Users className="h-4 w-4 text-lemon-400" />
-                      </div>
-                      <div>
-                        <p className="text-white text-sm font-medium">Creators & Public Figures</p>
-                        <p className="text-dark-400 text-xs">Audience monetization</p>
-                      </div>
-                    </Link>
-                  </div>
-                )}
-              </div>
-              
-              <Link href="#pricing" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Pricing</Link>
-              <Link href="/docs" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Docs</Link>
-            </div>
-            <div className="hidden md:flex items-center space-x-4">
-              <Link href="/auth/login" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">
-                Sign In
-              </Link>
-              <Link href="/auth/register" className="btn-primary btn-sm">
-                Get Started Free
-              </Link>
-            </div>
-            <button 
-              className="md:hidden text-white"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <XIcon className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </nav>
-          
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-dark-800 pt-4">
-              <div className="flex flex-col space-y-4">
-                <Link href="#features" className="text-dark-300 hover:text-white text-sm font-medium">Features</Link>
-                <Link href="#creator-studio" className="text-dark-300 hover:text-white text-sm font-medium">Creator Studio</Link>
-                <Link href="#how-it-works" className="text-dark-300 hover:text-white text-sm font-medium">How It Works</Link>
-                
-                {/* Use Cases - Mobile */}
-                <div className="space-y-2">
-                  <p className="text-dark-500 text-xs font-semibold uppercase tracking-wider">Use Cases</p>
-                  <Link href="/use-cases/saas" className="flex items-center gap-2 text-dark-300 hover:text-white text-sm font-medium pl-2">
-                    <Code className="h-4 w-4 text-lemon-400" />
-                    SaaS & Software
-                  </Link>
-                  <Link href="/use-cases/courses" className="flex items-center gap-2 text-dark-300 hover:text-white text-sm font-medium pl-2">
-                    <BookOpen className="h-4 w-4 text-lemon-400" />
-                    Courses & Digital Products
-                  </Link>
-                  <Link href="/use-cases/media" className="flex items-center gap-2 text-dark-300 hover:text-white text-sm font-medium pl-2">
-                    <Newspaper className="h-4 w-4 text-lemon-400" />
-                    Media & Publishers
-                  </Link>
-                  <Link href="/use-cases/creators" className="flex items-center gap-2 text-dark-300 hover:text-white text-sm font-medium pl-2">
-                    <Users className="h-4 w-4 text-lemon-400" />
-                    Creators & Public Figures
-                  </Link>
-                </div>
-                
-                <Link href="#pricing" className="text-dark-300 hover:text-white text-sm font-medium">Pricing</Link>
-                <Link href="/docs" className="text-dark-300 hover:text-white text-sm font-medium">Docs</Link>
-                <hr className="border-dark-800" />
-                <Link href="/auth/login" className="text-dark-300 hover:text-white text-sm font-medium">Sign In</Link>
-                <Link href="/auth/register" className="btn-primary text-center">Get Started Free</Link>
-              </div>
-            </div>
-          )}
+      {/* Background Gradient Orbs - only in dark mode */}
+      {theme === 'dark' && (
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 w-96 h-96 bg-lemon-400/20 rounded-full blur-3xl animate-pulse-slow" />
+          <div className="absolute top-1/2 -left-40 w-80 h-80 bg-grape-500/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
+          <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-lemon-400/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '4s' }} />
         </div>
-      </header>
+      )}
+
+      <PublicHeader showUseCases={true} />
 
       <main className="relative">
         {/* Hero Section */}
@@ -662,62 +532,7 @@ export default function HomePage() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="bg-dark-900 border-t border-dark-800 py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-5 gap-8 mb-12">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-[#F7C500] rounded-full flex items-center justify-center">
-                  <span className="text-[#333] font-black text-xs italic">PAY</span>
-                </div>
-                <span className="text-xl font-black text-white italic">SSD</span>
-              </div>
-              <p className="text-dark-400 text-sm mb-6 max-w-xs">
-                The all-in-one subscription, access control, and creator monetization platform built for Africa's digital economy.
-              </p>
-              <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 bg-dark-800 rounded-lg flex items-center justify-center text-dark-400 hover:text-lemon-400 hover:bg-dark-700 transition-all">
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-dark-800 rounded-lg flex items-center justify-center text-dark-400 hover:text-lemon-400 hover:bg-dark-700 transition-all">
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                </a>
-              </div>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-4">Product</h4>
-              <ul className="space-y-3 text-sm">
-                <li><Link href="#features" className="text-dark-400 hover:text-lemon-400 transition-colors">Features</Link></li>
-                <li><Link href="/creator" className="text-dark-400 hover:text-lemon-400 transition-colors">Creator Studio</Link></li>
-                <li><Link href="#pricing" className="text-dark-400 hover:text-lemon-400 transition-colors">Pricing</Link></li>
-                <li><Link href="#how-it-works" className="text-dark-400 hover:text-lemon-400 transition-colors">How It Works</Link></li>
-                <li><Link href="/portal" className="text-dark-400 hover:text-lemon-400 transition-colors">Customer Portal</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-4">Developers</h4>
-              <ul className="space-y-3 text-sm">
-                <li><Link href="/docs/integration" className="text-dark-400 hover:text-lemon-400 transition-colors">Integration Guide</Link></li>
-                <li><Link href="/docs/integration#api-integration" className="text-dark-400 hover:text-lemon-400 transition-colors">API Reference</Link></li>
-                <li><Link href="/docs/integration#webhooks" className="text-dark-400 hover:text-lemon-400 transition-colors">Webhooks</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-4">Company</h4>
-              <ul className="space-y-3 text-sm">
-                <li><Link href="/about" className="text-dark-400 hover:text-lemon-400 transition-colors">About</Link></li>
-                <li><Link href="/contact" className="text-dark-400 hover:text-lemon-400 transition-colors">Contact</Link></li>
-                <li><Link href="/privacy" className="text-dark-400 hover:text-lemon-400 transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-dark-400 hover:text-lemon-400 transition-colors">Terms of Service</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-dark-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-dark-500 text-sm">© 2026 PaySSD. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }
