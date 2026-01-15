@@ -1,9 +1,8 @@
 import { updateSession } from '@/lib/supabase/middleware';
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  const response = await updateSession(request);
+  const { response, supabase } = await updateSession(request);
   
   const { pathname } = request.nextUrl;
   
@@ -18,7 +17,6 @@ export async function middleware(request: NextRequest) {
 
   // Guard /creator/* routes (except /creator/onboard)
   if (pathname.startsWith('/creator') && pathname !== '/creator/onboard') {
-    const supabase = createMiddlewareClient({ req: request, res: response });
     const { data: { session } } = await supabase.auth.getSession();
     
     if (!session) {

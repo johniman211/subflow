@@ -131,9 +131,9 @@ export default function CreatorOnboardPage() {
         throw creatorError;
       }
 
-      // Redirect to creator dashboard
-      router.push('/creator');
-      router.refresh();
+      // Redirect to creator dashboard using window.location for full page reload
+      // This ensures the session is properly refreshed
+      window.location.href = '/creator';
     } catch (err: any) {
       console.error('Error enabling creator:', err);
       setError(err.message || 'Failed to enable Creator Studio. Please try again.');
