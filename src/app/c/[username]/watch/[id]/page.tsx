@@ -5,6 +5,8 @@ import { Lock, ArrowLeft, Calendar, Eye, Play, Video } from 'lucide-react';
 import { PaywallModal } from '@/components/creator/paywall-modal';
 import { ContentWatermark } from '@/components/creator/content-watermark';
 import { ShareButton } from '@/components/creator/share-button';
+import { AuthWall } from '@/components/creator/auth-wall';
+import { headers } from 'next/headers';
 
 export default async function VideoWatchPage({
   params,
@@ -16,6 +18,10 @@ export default async function VideoWatchPage({
   const { username, id } = params;
   const customerPhone = searchParams.phone;
   const supabase = createServerSupabaseClient();
+
+  // Get current user session
+  const { data: { user } } = await supabase.auth.getUser();
+  const userId = user?.id;
 
   const { data: creator } = await supabase
     .from('creators')
@@ -57,25 +63,63 @@ export default async function VideoWatchPage({
 
   if (!content) notFound();
 
-  await supabase.rpc('increment_content_view', { p_content_id: content.id });
+  // Determine access based on new logic
+  const isFreeContent = content.is_free || content.visibility === 'free';
+  let accessDecision: 'granted' | 'auth_required' | 'paywall' = 'granted';
+  let hasAccess = false;
 
-  let hasAccess = content.is_free;
-  
-  if (!hasAccess && customerPhone) {
-    const { data: subscription } = await supabase
-      .from('subscriptions')
-      .select('id')
-      .eq('customer_phone', customerPhone)
-      .in('product_id', content.product_ids || [])
-      .eq('status', 'active')
-      .gte('current_period_end', new Date().toISOString())
-      .limit(1)
-      .single();
-    hasAccess = !!subscription;
+  if (isFreeContent) {
+    // FREE content - anyone can access
+    hasAccess = true;
+    accessDecision = 'granted';
+    // Log anonymous view
+    await supabase.rpc('increment_content_view', { p_content_id: content.id });
+  } else {
+    // PREMIUM content
+    if (!userId && !customerPhone) {
+      // Not logged in and no phone - show auth wall
+      accessDecision = 'auth_required';
+      hasAccess = false;
+    } else {
+      // Check entitlement
+      let userPhone = customerPhone;
+      
+      // Try to get phone from user record if logged in
+      if (userId && !userPhone) {
+        const { data: userData } = await supabase
+          .from('users')
+          .select('phone')
+          .eq('id', userId)
+          .single();
+        userPhone = userData?.phone;
+      }
+
+      if (userPhone && content.product_ids?.length > 0) {
+        const { data: subscription } = await supabase
+          .from('subscriptions')
+          .select('id')
+          .eq('customer_phone', userPhone)
+          .in('product_id', content.product_ids)
+          .eq('status', 'active')
+          .gte('current_period_end', new Date().toISOString())
+          .limit(1)
+          .single();
+        hasAccess = !!subscription;
+      }
+
+      if (hasAccess) {
+        accessDecision = 'granted';
+        // Log premium view with user info
+        await supabase.rpc('increment_content_view', { p_content_id: content.id });
+      } else {
+        accessDecision = 'paywall';
+      }
+    }
   }
 
+  // Get products for paywall
   let products: any[] = [];
-  if (!hasAccess && content.product_ids?.length > 0) {
+  if (accessDecision === 'paywall' && content.product_ids?.length > 0) {
     const { data: productData } = await supabase
       .from('products')
       .select('id, name, merchant_id')
@@ -95,7 +139,9 @@ export default async function VideoWatchPage({
     }
   }
 
-  const shareUrl = `https://payssd.com/c/${username}/watch/${id}`;
+  const headersList = headers();
+  const currentUrl = `https://payssd.com/c/${username}/watch/${id}`;
+  const shareUrl = currentUrl;
 
   // Fetch related videos from the same creator
   const { data: relatedVideos } = await supabase
@@ -141,9 +187,9 @@ export default async function VideoWatchPage({
       </header>
 
       <div className="max-w-5xl mx-auto px-4 py-8">
-        {hasAccess ? (
+        {accessDecision === 'granted' ? (
           <>
-            <ContentWatermark customerPhone={customerPhone || 'Guest'} creatorName={creator.display_name} />
+            <ContentWatermark customerPhone={customerPhone || user?.email || 'Viewer'} creatorName={creator.display_name} />
             <div className="relative bg-black rounded-xl overflow-hidden mb-6">
               {embedUrl ? (
                 <iframe src={embedUrl} className="w-full aspect-video" allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" />
@@ -161,6 +207,27 @@ export default async function VideoWatchPage({
               </div>
               {content.description && <p className="text-dark-300">{content.description}</p>}
             </div>
+          </>
+        ) : accessDecision === 'auth_required' ? (
+          <>
+            <div className="relative bg-dark-800 rounded-xl overflow-hidden mb-6">
+              <div className="w-full aspect-video flex items-center justify-center">
+                <div className="text-center">
+                  <Lock className="h-16 w-16 text-dark-500 mx-auto mb-4" />
+                  <p className="text-dark-400 text-lg">Premium Content</p>
+                </div>
+              </div>
+            </div>
+            <div className="mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">{content.title}</h1>
+              {content.description && <p className="text-dark-300 mb-8">{content.description}</p>}
+            </div>
+            <AuthWall 
+              contentTitle={content.title}
+              creatorName={creator.display_name}
+              redirectUrl={currentUrl}
+              contentType="video"
+            />
           </>
         ) : (
           <>

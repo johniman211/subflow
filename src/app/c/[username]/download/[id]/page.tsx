@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Lock, ArrowLeft, Download, FileText, Music, Archive, File } from 'lucide-react';
 import { PaywallModal } from '@/components/creator/paywall-modal';
 import { ShareButton } from '@/components/creator/share-button';
+import { AuthWall } from '@/components/creator/auth-wall';
 
 const fileTypeIcons: { [key: string]: any } = {
   'application/pdf': FileText,
@@ -29,6 +30,10 @@ export default async function FileDownloadPage({
   const { username, id } = params;
   const customerPhone = searchParams.phone;
   const supabase = createServerSupabaseClient();
+
+  // Get current user session
+  const { data: { user } } = await supabase.auth.getUser();
+  const userId = user?.id;
 
   const { data: creator } = await supabase
     .from('creators')
@@ -69,25 +74,54 @@ export default async function FileDownloadPage({
 
   if (!content) notFound();
 
-  await supabase.rpc('increment_content_view', { p_content_id: content.id });
+  // Determine access based on new logic
+  const isFreeContent = content.is_free || content.visibility === 'free';
+  let accessDecision: 'granted' | 'auth_required' | 'paywall' = 'granted';
 
-  let hasAccess = content.is_free;
-  
-  if (!hasAccess && customerPhone) {
-    const { data: subscription } = await supabase
-      .from('subscriptions')
-      .select('id')
-      .eq('customer_phone', customerPhone)
-      .in('product_id', content.product_ids || [])
-      .eq('status', 'active')
-      .gte('current_period_end', new Date().toISOString())
-      .limit(1)
-      .single();
-    hasAccess = !!subscription;
+  if (isFreeContent) {
+    accessDecision = 'granted';
+    await supabase.rpc('increment_content_view', { p_content_id: content.id });
+  } else {
+    // PREMIUM content
+    if (!userId && !customerPhone) {
+      accessDecision = 'auth_required';
+    } else {
+      let userPhone = customerPhone;
+      
+      if (userId && !userPhone) {
+        const { data: userData } = await supabase
+          .from('users')
+          .select('phone')
+          .eq('id', userId)
+          .single();
+        userPhone = userData?.phone;
+      }
+
+      let hasAccess = false;
+      if (userPhone && content.product_ids?.length > 0) {
+        const { data: subscription } = await supabase
+          .from('subscriptions')
+          .select('id')
+          .eq('customer_phone', userPhone)
+          .in('product_id', content.product_ids)
+          .eq('status', 'active')
+          .gte('current_period_end', new Date().toISOString())
+          .limit(1)
+          .single();
+        hasAccess = !!subscription;
+      }
+
+      if (hasAccess) {
+        accessDecision = 'granted';
+        await supabase.rpc('increment_content_view', { p_content_id: content.id });
+      } else {
+        accessDecision = 'paywall';
+      }
+    }
   }
 
   let products: any[] = [];
-  if (!hasAccess && content.product_ids?.length > 0) {
+  if (accessDecision === 'paywall' && content.product_ids?.length > 0) {
     const { data: productData } = await supabase
       .from('products')
       .select('id, name, merchant_id')
@@ -107,7 +141,8 @@ export default async function FileDownloadPage({
     }
   }
 
-  const shareUrl = `https://payssd.com/c/${username}/download/${id}`;
+  const currentUrl = `https://payssd.com/c/${username}/download/${id}`;
+  const shareUrl = currentUrl;
   const FileIcon = fileTypeIcons[content.file_type] || File;
 
   return (
@@ -149,12 +184,11 @@ export default async function FileDownloadPage({
           </div>
         </div>
 
-        {hasAccess ? (
+        {accessDecision === 'granted' ? (
           <div className="bg-dark-900/50 border border-dark-800 rounded-2xl p-8 text-center">
             <p className="text-dark-300 mb-6">Your download is ready</p>
             <a
-              href={content.file_url}
-              download={content.file_name}
+              href={`/api/download/${content.id}${userId ? '' : customerPhone ? `?phone=${customerPhone}` : ''}`}
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity"
             >
               <Download className="h-6 w-6" />
@@ -162,6 +196,13 @@ export default async function FileDownloadPage({
             </a>
             <p className="text-dark-500 text-sm mt-6">{content.download_count} downloads</p>
           </div>
+        ) : accessDecision === 'auth_required' ? (
+          <AuthWall 
+            contentTitle={content.title}
+            creatorName={creator.display_name}
+            redirectUrl={currentUrl}
+            contentType="file"
+          />
         ) : (
           <PaywallModal creatorName={creator.display_name} creatorUsername={username} contentTitle={content.title} contentType="file" products={products} />
         )}

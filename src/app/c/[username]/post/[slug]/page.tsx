@@ -5,6 +5,7 @@ import { Lock, ArrowLeft, Calendar, Eye } from 'lucide-react';
 import { PaywallModal } from '@/components/creator/paywall-modal';
 import { ContentWatermark } from '@/components/creator/content-watermark';
 import { ShareButton } from '@/components/creator/share-button';
+import { AuthWall } from '@/components/creator/auth-wall';
 
 export default async function BlogPostPage({
   params,
@@ -16,6 +17,10 @@ export default async function BlogPostPage({
   const { username, slug } = params;
   const customerPhone = searchParams.phone;
   const supabase = createServerSupabaseClient();
+
+  // Get current user session
+  const { data: { user } } = await supabase.auth.getUser();
+  const userId = user?.id;
 
   const { data: creator } = await supabase
     .from('creators')
@@ -40,26 +45,54 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  await supabase.rpc('increment_content_view', { p_content_id: content.id });
+  // Determine access based on new logic
+  const isFreeContent = content.is_free || content.visibility === 'free';
+  let accessDecision: 'granted' | 'auth_required' | 'paywall' = 'granted';
 
-  let hasAccess = content.is_free;
-  
-  if (!hasAccess && customerPhone) {
-    const { data: subscription } = await supabase
-      .from('subscriptions')
-      .select('id')
-      .eq('customer_phone', customerPhone)
-      .in('product_id', content.product_ids || [])
-      .eq('status', 'active')
-      .gte('current_period_end', new Date().toISOString())
-      .limit(1)
-      .single();
+  if (isFreeContent) {
+    accessDecision = 'granted';
+    await supabase.rpc('increment_content_view', { p_content_id: content.id });
+  } else {
+    // PREMIUM content
+    if (!userId && !customerPhone) {
+      accessDecision = 'auth_required';
+    } else {
+      let userPhone = customerPhone;
+      
+      if (userId && !userPhone) {
+        const { data: userData } = await supabase
+          .from('users')
+          .select('phone')
+          .eq('id', userId)
+          .single();
+        userPhone = userData?.phone;
+      }
 
-    hasAccess = !!subscription;
+      let hasAccess = false;
+      if (userPhone && content.product_ids?.length > 0) {
+        const { data: subscription } = await supabase
+          .from('subscriptions')
+          .select('id')
+          .eq('customer_phone', userPhone)
+          .in('product_id', content.product_ids)
+          .eq('status', 'active')
+          .gte('current_period_end', new Date().toISOString())
+          .limit(1)
+          .single();
+        hasAccess = !!subscription;
+      }
+
+      if (hasAccess) {
+        accessDecision = 'granted';
+        await supabase.rpc('increment_content_view', { p_content_id: content.id });
+      } else {
+        accessDecision = 'paywall';
+      }
+    }
   }
 
   let products: any[] = [];
-  if (!hasAccess && content.product_ids?.length > 0) {
+  if (accessDecision === 'paywall' && content.product_ids?.length > 0) {
     const { data: productData } = await supabase
       .from('products')
       .select('id, name, merchant_id')
@@ -80,7 +113,8 @@ export default async function BlogPostPage({
     }
   }
 
-  const shareUrl = `https://payssd.com/c/${username}/post/${slug}`;
+  const currentUrl = `https://payssd.com/c/${username}/post/${slug}`;
+  const shareUrl = currentUrl;
 
   return (
     <div className="min-h-screen bg-dark-950">
@@ -128,12 +162,29 @@ export default async function BlogPostPage({
           </div>
         )}
 
-        {hasAccess ? (
+        {accessDecision === 'granted' ? (
           <div className="relative">
-            <ContentWatermark customerPhone={customerPhone || 'Guest'} creatorName={creator.display_name} />
+            <ContentWatermark customerPhone={customerPhone || user?.email || 'Viewer'} creatorName={creator.display_name} />
             <div className="prose prose-invert prose-lg max-w-none">
               <div className="text-dark-200 leading-relaxed whitespace-pre-wrap">{content.body_content || ''}</div>
             </div>
+          </div>
+        ) : accessDecision === 'auth_required' ? (
+          <div className="relative">
+            {content.body_content && (
+              <div className="relative overflow-hidden max-h-32">
+                <div className="text-dark-200 leading-relaxed whitespace-pre-wrap blur-sm select-none">
+                  {content.body_content.slice(0, 300)}...
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dark-950/50 to-dark-950" />
+              </div>
+            )}
+            <AuthWall 
+              contentTitle={content.title}
+              creatorName={creator.display_name}
+              redirectUrl={currentUrl}
+              contentType="post"
+            />
           </div>
         ) : (
           <div className="relative">
