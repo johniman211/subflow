@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Menu, XIcon, Package, BookOpen, Newspaper } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Globe, Smartphone, Check, X, Lock, BarChart3, Users, Code, Play, CreditCard, Bell, PieChart, Sparkles, ChevronRight, Star, Menu, XIcon, Package, BookOpen, Newspaper, Video, FileText, MessageSquare, Download } from 'lucide-react';
 import { useState } from 'react';
 import { PricingSection } from '@/components/landing/PricingSection';
 
@@ -33,6 +33,7 @@ export default function HomePage() {
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <Link href="#features" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Features</Link>
+              <Link href="#creator-studio" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">Creator Studio</Link>
               <Link href="#how-it-works" className="text-dark-300 hover:text-white text-sm font-medium transition-colors">How It Works</Link>
               
               {/* Use Cases Dropdown */}
@@ -124,6 +125,7 @@ export default function HomePage() {
             <div className="md:hidden mt-4 pb-4 border-t border-dark-800 pt-4">
               <div className="flex flex-col space-y-4">
                 <Link href="#features" className="text-dark-300 hover:text-white text-sm font-medium">Features</Link>
+                <Link href="#creator-studio" className="text-dark-300 hover:text-white text-sm font-medium">Creator Studio</Link>
                 <Link href="#how-it-works" className="text-dark-300 hover:text-white text-sm font-medium">How It Works</Link>
                 
                 {/* Use Cases - Mobile */}
@@ -159,7 +161,7 @@ export default function HomePage() {
       </header>
 
       <main className="relative">
-        {/* Hero Section - Lemon Squeezy Style */}
+        {/* Hero Section */}
         <section className="relative min-h-[90vh] flex items-center">
           <div className="container mx-auto px-4 py-20">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -275,9 +277,12 @@ export default function HomePage() {
                 </h1>
                 
                 <p className="text-xl text-dark-300 mb-4 max-w-xl">
-                  Sell software, digital products, and subscriptions.<br />
-                  Accept one-time or recurring payments.<br />
-                  Customers pay you directly. We unlock access automatically.
+                  Sell software, digital products, subscriptions — and now monetize content.
+                </p>
+                
+                <p className="text-lg text-dark-400 mb-6 max-w-xl">
+                  Customers pay you directly.<br />
+                  We unlock access automatically.
                 </p>
                 
                 <div className="flex flex-col gap-2 text-dark-400 text-sm mb-8">
@@ -293,7 +298,7 @@ export default function HomePage() {
                 
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <Link href="/auth/register" className="w-full sm:w-auto btn-primary btn-lg group">
-                    Start Free
+                    Get Started Free
                     <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link href="#how-it-works" className="w-full sm:w-auto btn-outline btn-lg">
@@ -327,6 +332,89 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* NEW - Creator Studio Section */}
+        <section id="creator-studio" className="section-darker relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-grape-500/10 via-transparent to-lemon-400/10" />
+          <div className="container mx-auto px-4 relative">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-grape-500/20 border border-grape-500/30 text-grape-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                <Sparkles className="h-4 w-4" />
+                <span>NEW — Creator Studio</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-black mb-4">
+                Monetize Any Content with{' '}
+                <span className="gradient-text-purple">PaySSD</span>
+              </h2>
+              <p className="text-xl text-dark-400 max-w-3xl mx-auto">
+                Creator Studio is a separate dashboard inside PaySSD that lets creators sell access to content using the same trusted PaySSD subscription system.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+              <div className="card p-6 text-center">
+                <div className="w-14 h-14 bg-grape-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Video className="h-7 w-7 text-grape-400" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Creators publish content</h3>
+              </div>
+              <div className="card p-6 text-center">
+                <div className="w-14 h-14 bg-lemon-400/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <CreditCard className="h-7 w-7 text-lemon-400" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Fans pay directly</h3>
+              </div>
+              <div className="card p-6 text-center">
+                <div className="w-14 h-14 bg-success-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Lock className="h-7 w-7 text-success-500" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">PaySSD controls access</h3>
+              </div>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-xl font-bold text-white text-center mb-8">What creators can monetize:</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-5 text-center hover:border-grape-500/50 transition-all">
+                  <Video className="h-8 w-8 text-grape-400 mx-auto mb-3" />
+                  <p className="font-semibold text-white text-sm">Video embeds</p>
+                  <p className="text-dark-400 text-xs mt-1">YouTube, Facebook, Instagram</p>
+                </div>
+                <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-5 text-center hover:border-grape-500/50 transition-all">
+                  <FileText className="h-8 w-8 text-grape-400 mx-auto mb-3" />
+                  <p className="font-semibold text-white text-sm">Blog posts & articles</p>
+                  <p className="text-dark-400 text-xs mt-1">Written content</p>
+                </div>
+                <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-5 text-center hover:border-grape-500/50 transition-all">
+                  <Download className="h-8 w-8 text-grape-400 mx-auto mb-3" />
+                  <p className="font-semibold text-white text-sm">File downloads</p>
+                  <p className="text-dark-400 text-xs mt-1">PDFs, audio, guides</p>
+                </div>
+                <div className="bg-dark-800/50 border border-dark-700 rounded-xl p-5 text-center hover:border-grape-500/50 transition-all">
+                  <MessageSquare className="h-8 w-8 text-grape-400 mx-auto mb-3" />
+                  <p className="font-semibold text-white text-sm">Members-only community</p>
+                  <p className="text-dark-400 text-xs mt-1">Private discussions</p>
+                </div>
+              </div>
+
+              <div className="bg-dark-800/50 border border-dark-700 rounded-2xl p-8 text-center">
+                <p className="text-dark-300 text-lg mb-2">Creators share one PaySSD link.</p>
+                <p className="text-dark-300 text-lg mb-2">Paid users unlock content.</p>
+                <p className="text-dark-300 text-lg">Others see a paywall.</p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+                <Link href="/creator" className="btn-primary btn-lg group">
+                  Start Creator Studio
+                  <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link href="/use-cases/creators" className="btn-outline btn-lg">
+                  Learn More
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Who It's For */}
         <section className="section-dark">
           <div className="container mx-auto px-4">
@@ -334,21 +422,33 @@ export default function HomePage() {
               <span className="badge-grape mb-4">Who It's For</span>
               <h2 className="text-3xl md:text-4xl font-black mb-4">Built for</h2>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8">
               {[
-                { icon: Code, label: 'SaaS & Software Companies' },
-                { icon: Smartphone, label: 'App Developers' },
-                { icon: Package, label: 'Digital Product Sellers' },
-                { icon: Globe, label: 'Online Services' },
+                { icon: Code, label: 'SaaS & Software Companies', desc: 'Sell licenses, subscriptions, and access' },
+                { icon: Smartphone, label: 'App Developers', desc: 'Control features and usage with subscription logic' },
+                { icon: Package, label: 'Digital Product Sellers', desc: 'Sell downloads, tools, and services' },
+                { icon: Globe, label: 'Online Services', desc: 'Lock access based on payment status' },
               ].map((item, i) => (
                 <div key={i} className="text-center p-6 rounded-2xl bg-dark-800/50 border border-dark-700 hover:border-lemon-400/30 transition-all">
                   <item.icon className="h-8 w-8 text-lemon-400 mx-auto mb-3" />
-                  <p className="font-semibold text-white text-sm">{item.label}</p>
+                  <p className="font-semibold text-white text-sm mb-1">{item.label}</p>
+                  <p className="text-dark-400 text-xs">{item.desc}</p>
                 </div>
               ))}
             </div>
-            <p className="text-center text-dark-400 mt-8 text-lg">
-              If you sell access, licenses, or downloads — <span className="text-lemon-400">this is for you.</span>
+            
+            <div className="text-center mb-8">
+              <h3 className="text-xl font-bold text-grape-400 mb-4">Creators & Media</h3>
+              <div className="flex flex-wrap justify-center gap-4 text-dark-300">
+                <span className="px-4 py-2 bg-dark-800/50 rounded-lg text-sm">Content creators</span>
+                <span className="px-4 py-2 bg-dark-800/50 rounded-lg text-sm">Bloggers & journalists</span>
+                <span className="px-4 py-2 bg-dark-800/50 rounded-lg text-sm">Educators & coaches</span>
+                <span className="px-4 py-2 bg-dark-800/50 rounded-lg text-sm">Public figures & communities</span>
+              </div>
+            </div>
+            
+            <p className="text-center text-dark-400 text-lg">
+              If you sell access, licenses, downloads, or content — <span className="text-lemon-400">this is for you.</span>
             </p>
           </div>
         </section>
@@ -369,15 +469,16 @@ export default function HomePage() {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {[
-                { icon: Lock, title: 'Auto Lock & Unlock', desc: 'Automatically lock & unlock subscriptions based on payment status.' },
+                { icon: Lock, title: 'Auto Lock & Unlock', desc: 'Automatically lock and unlock subscriptions and content based on payment status.' },
+                { icon: Video, title: 'Creator Studio Access Control', desc: 'Use PaySSD watch pages, gated blog posts, secure downloads, and private communities — all unlocked only for paid users.' },
                 { icon: Code, title: 'API Keys', desc: 'API keys for apps & websites. Perfect for software, SaaS, and digital products.' },
-                { icon: PieChart, title: 'No-Code Dashboard', desc: 'No-code dashboard for non-technical sellers. View payments, confirm in one click.' },
-                { icon: CreditCard, title: 'MTN MoMo & Bank', desc: 'MTN MoMo support and bank transfer support. Guest checkout, no customer login.' },
+                { icon: PieChart, title: 'No-Code Dashboard', desc: 'No-code dashboard for non-technical sellers and creators. View payments and confirm in one click.' },
+                { icon: CreditCard, title: 'MTN MoMo & Bank', desc: 'MTN MoMo and bank transfer support. Guest checkout, no customer login required.' },
                 { icon: Users, title: 'Customer Management', desc: 'See active subscribers, track revenue & growth, export customer data.' },
-                { icon: Smartphone, title: 'Mobile-First', desc: 'Built for South Sudan, expanding to East Africa. Mobile-first design.' },
-                { icon: Zap, title: 'Start in Minutes', desc: 'No bank approvals, no MoMo API needed, no legal headache. Scales as you grow.' },
-                { icon: Globe, title: 'Multi-Currency', desc: 'Support for SSP, USD, and expanding to more African currencies.' },
-                { icon: Shield, title: 'No Fund Holding', desc: 'Customer pays you directly. We never hold funds. No wallets, no escrow.' },
+                { icon: Smartphone, title: 'Mobile-First', desc: 'Built for South Sudan, expanding to East Africa. Optimized for mobile users.' },
+                { icon: Zap, title: 'Start in Minutes', desc: 'No bank approvals. No MoMo API needed. No legal headache. Scales as you grow.' },
+                { icon: Globe, title: 'Multi-Currency', desc: 'Support for SSP and USD, with more African currencies coming.' },
+                { icon: Shield, title: 'No Fund Holding', desc: 'Customer pays you directly. We never hold funds. No wallets. No escrow.' },
               ].map((feature, i) => (
                 <div key={i} className="feature-card">
                   <div className="icon">
@@ -403,11 +504,11 @@ export default function HomePage() {
               <p className="text-xl text-dark-400">That's it. Simple.</p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
               {[
-                { num: '01', title: 'Create a Product', desc: 'Set price, currency (SSP or USD), and billing (one-time, recurring, or trial period).' },
-                { num: '02', title: 'Share Checkout Link', desc: 'Customer pays you directly via MTN MoMo or bank transfer.' },
-                { num: '03', title: 'Access Unlocks', desc: 'You confirm payment → we activate the subscription or delivery. Money goes to you.' },
+                { num: '01', title: 'Create a Product', desc: 'Set price, currency (SSP or USD), and billing (one-time, recurring, or trial).' },
+                { num: '02', title: 'Share Checkout or Content Link', desc: 'Share a PaySSD checkout link or a PaySSD content link.' },
+                { num: '03', title: 'Access Unlocks', desc: 'You confirm payment → we activate access automatically.' },
               ].map((step, i) => (
                 <div key={i} className="relative">
                   <div className="card p-8 h-full hover:border-lemon-400/30 transition-all duration-300 group">
@@ -423,6 +524,31 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+
+            {/* For Creators */}
+            <div className="max-w-5xl mx-auto">
+              <h3 className="text-2xl font-bold text-grape-400 text-center mb-8">For Creators</h3>
+              <div className="grid md:grid-cols-3 gap-8">
+                {[
+                  { num: '01', title: 'Publish Content', desc: 'Create videos, blog posts, files, or community posts inside Creator Studio.' },
+                  { num: '02', title: 'Share PaySSD Link', desc: 'Share one branded PaySSD link with your audience.' },
+                  { num: '03', title: 'Access Unlocks', desc: 'Paid users unlock content. Others see a paywall.' },
+                ].map((step, i) => (
+                  <div key={i} className="relative">
+                    <div className="card p-8 h-full hover:border-grape-500/30 transition-all duration-300 group border-grape-500/20">
+                      <span className="text-6xl font-black text-dark-800 group-hover:text-grape-500/20 transition-colors">{step.num}</span>
+                      <h3 className="text-xl font-bold text-white mt-4 mb-3">{step.title}</h3>
+                      <p className="text-dark-400">{step.desc}</p>
+                    </div>
+                    {i < 2 && (
+                      <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                        <ChevronRight className="h-8 w-8 text-dark-700" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -433,7 +559,7 @@ export default function HomePage() {
               <div className="text-center mb-12">
                 <span className="badge-lemon mb-4">Payment Transparency</span>
                 <h2 className="text-3xl md:text-4xl font-black mb-4">
-                  Your money, <span className="gradient-text">your control</span>
+                  Your money. <span className="gradient-text">Your control.</span>
                 </h2>
               </div>
               
@@ -456,7 +582,7 @@ export default function HomePage() {
                   <div className="w-16 h-16 bg-dark-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <X className="h-8 w-8 text-dark-400" />
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">Payssd</h3>
+                  <h3 className="text-lg font-bold text-white mb-2">PaySSD</h3>
                   <p className="text-dark-400 font-semibold">Never holds funds</p>
                 </div>
               </div>
@@ -475,13 +601,13 @@ export default function HomePage() {
             <div className="text-center mb-16">
               <span className="badge-grape mb-4">Testimonials</span>
               <h2 className="text-3xl md:text-4xl font-black">
-                Loved by <span className="gradient-text-purple">African businesses</span>
+                Loved by <span className="gradient-text-purple">African businesses & creators</span>
               </h2>
             </div>
             
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {[
-                { name: 'John M.', role: 'SaaS Founder, Juba', quote: 'Finally a solution that works for South Sudan! No more chasing payments manually.' },
+                { name: 'John M.', role: 'SaaS Founder, Juba', quote: 'Finally a solution that works for South Sudan. No more chasing payments manually.' },
                 { name: 'Sarah K.', role: 'Digital Creator, Nairobi', quote: 'Setup took 5 minutes. Now I focus on creating content, not collecting payments.' },
                 { name: 'David O.', role: 'App Developer, Kampala', quote: 'The API is clean and the webhooks work perfectly. Exactly what I needed.' },
               ].map((testimonial, i) => (
@@ -508,8 +634,11 @@ export default function HomePage() {
           <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-5xl font-black mb-6">
-                Start Selling Software & Digital Products <span className="gradient-text">Today</span>
+                Start Selling <span className="gradient-text">Today</span>
               </h2>
+              <p className="text-xl text-dark-300 mb-6">
+                Sell software, subscriptions, digital products — or monetize your content.
+              </p>
               <div className="flex flex-wrap justify-center gap-4 text-dark-400 mb-8">
                 <span>No setup fees.</span>
                 <span>•</span>
@@ -519,7 +648,7 @@ export default function HomePage() {
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/auth/register" className="btn-primary btn-lg group">
-                  Create Merchant Account
+                  Create Account
                   <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link href="/contact" className="btn-outline btn-lg">
@@ -545,7 +674,7 @@ export default function HomePage() {
                 <span className="text-xl font-black text-white italic">SSD</span>
               </div>
               <p className="text-dark-400 text-sm mb-6 max-w-xs">
-                The all-in-one subscription and payment platform built for Africa's digital economy.
+                The all-in-one subscription, access control, and creator monetization platform built for Africa's digital economy.
               </p>
               <div className="flex gap-4">
                 <a href="#" className="w-10 h-10 bg-dark-800 rounded-lg flex items-center justify-center text-dark-400 hover:text-lemon-400 hover:bg-dark-700 transition-all">
@@ -560,6 +689,7 @@ export default function HomePage() {
               <h4 className="text-white font-semibold mb-4">Product</h4>
               <ul className="space-y-3 text-sm">
                 <li><Link href="#features" className="text-dark-400 hover:text-lemon-400 transition-colors">Features</Link></li>
+                <li><Link href="/creator" className="text-dark-400 hover:text-lemon-400 transition-colors">Creator Studio</Link></li>
                 <li><Link href="#pricing" className="text-dark-400 hover:text-lemon-400 transition-colors">Pricing</Link></li>
                 <li><Link href="#how-it-works" className="text-dark-400 hover:text-lemon-400 transition-colors">How It Works</Link></li>
                 <li><Link href="/portal" className="text-dark-400 hover:text-lemon-400 transition-colors">Customer Portal</Link></li>
@@ -584,8 +714,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="border-t border-dark-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-dark-500 text-sm">© {new Date().getFullYear()} Payssd. All rights reserved.</p>
-            <p className="text-dark-500 text-sm">Built with 💛 for Africa</p>
+            <p className="text-dark-500 text-sm">© 2026 PaySSD. All rights reserved.</p>
           </div>
         </div>
       </footer>
