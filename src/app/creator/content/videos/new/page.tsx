@@ -122,11 +122,12 @@ export default function NewVideoPage() {
     }
 
     const status = publishNow ? 'published' : 'draft';
-    const slug = formData.title
+    const baseSlug = formData.title
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
-      .slice(0, 100);
+      .slice(0, 80);
+    const slug = `${baseSlug}-${Date.now().toString(36)}`;
 
     const { error } = await supabase
       .from('content_items')

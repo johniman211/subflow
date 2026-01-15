@@ -237,3 +237,34 @@ BEGIN
     WHERE id = p_content_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Storage bucket for creator files
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('creator-files', 'creator-files', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Storage policies for creator files
+CREATE POLICY "Authenticated users can upload creator files"
+ON storage.objects FOR INSERT
+WITH CHECK (
+  bucket_id = 'creator-files' AND
+  auth.role() = 'authenticated'
+);
+
+CREATE POLICY "Anyone can view creator files"
+ON storage.objects FOR SELECT
+USING (bucket_id = 'creator-files');
+
+CREATE POLICY "Users can update their own files"
+ON storage.objects FOR UPDATE
+USING (
+  bucket_id = 'creator-files' AND
+  auth.uid()::text = (storage.foldername(name))[1]
+);
+
+CREATE POLICY "Users can delete their own files"
+ON storage.objects FOR DELETE
+USING (
+  bucket_id = 'creator-files' AND
+  auth.uid()::text = (storage.foldername(name))[1]
+);

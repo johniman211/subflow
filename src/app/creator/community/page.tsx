@@ -79,6 +79,25 @@ export default function CommunityPage() {
     setPosts(posts.filter(p => p.id !== postId));
   };
 
+  const likePost = async (postId: string) => {
+    const supabase = createClient();
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+
+    const newLikeCount = post.like_count + 1;
+    await supabase
+      .from('community_posts')
+      .update({ like_count: newLikeCount })
+      .eq('id', postId);
+
+    setPosts(posts.map(p => 
+      p.id === postId ? { ...p, like_count: newLikeCount } : p
+    ));
+  };
+
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [replyText, setReplyText] = useState('');
+
   const togglePin = async (postId: string, currentlyPinned: boolean) => {
     const supabase = createClient();
     await supabase
@@ -228,21 +247,65 @@ export default function CommunityPage() {
               </p>
 
               <div className="flex items-center gap-4 mt-4 pt-4 border-t border-dark-700">
-                <button className={cn(
-                  "flex items-center gap-1 text-sm transition-colors",
-                  theme === 'dark' ? 'text-dark-400 hover:text-pink-400' : 'text-gray-500 hover:text-pink-500'
-                )}>
+                <button 
+                  onClick={() => likePost(post.id)}
+                  className={cn(
+                    "flex items-center gap-1 text-sm transition-colors cursor-pointer",
+                    theme === 'dark' ? 'text-dark-400 hover:text-pink-400' : 'text-gray-500 hover:text-pink-500'
+                  )}
+                >
                   <Heart className="h-4 w-4" />
                   {post.like_count}
                 </button>
-                <button className={cn(
-                  "flex items-center gap-1 text-sm transition-colors",
-                  theme === 'dark' ? 'text-dark-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-500'
-                )}>
+                <button 
+                  onClick={() => setReplyingTo(replyingTo === post.id ? null : post.id)}
+                  className={cn(
+                    "flex items-center gap-1 text-sm transition-colors cursor-pointer",
+                    theme === 'dark' ? 'text-dark-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-500'
+                  )}
+                >
                   <MessageCircle className="h-4 w-4" />
                   Reply
                 </button>
               </div>
+
+              {replyingTo === post.id && (
+                <div className="mt-4 pt-4 border-t border-dark-700">
+                  <textarea
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value)}
+                    placeholder="Write a reply..."
+                    rows={3}
+                    className={cn(
+                      "w-full px-4 py-3 rounded-lg border resize-none mb-3",
+                      theme === 'dark' 
+                        ? 'bg-dark-900 border-dark-600 text-white placeholder:text-dark-500' 
+                        : 'bg-gray-50 border-gray-300'
+                    )}
+                  />
+                  <div className="flex justify-end gap-2">
+                    <button
+                      onClick={() => { setReplyingTo(null); setReplyText(''); }}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm",
+                        theme === 'dark' ? 'bg-dark-700 text-white' : 'bg-gray-200'
+                      )}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => {
+                        alert('Reply feature coming soon!');
+                        setReplyingTo(null);
+                        setReplyText('');
+                      }}
+                      className="px-4 py-2 rounded-lg text-sm bg-purple-500 text-white"
+                    >
+                      Reply
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>

@@ -59,12 +59,13 @@ export default function NewBlogPostPage() {
   };
 
   const generateSlug = (title: string) => {
-    return title
+    const baseSlug = title
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .slice(0, 100);
+      .slice(0, 80);
+    return `${baseSlug}-${Date.now().toString(36)}`;
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
