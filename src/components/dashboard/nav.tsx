@@ -38,7 +38,6 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Creator Studio', href: '/creator', icon: BookOpen },
   { name: 'Products', href: '/dashboard/products', icon: Package },
   { name: 'Payments', href: '/dashboard/payments', icon: CreditCard },
   { name: 'Subscriptions', href: '/dashboard/subscriptions', icon: Users },
@@ -57,9 +56,10 @@ const navigation = [
 interface DashboardNavProps {
   user: User | null;
   isAdmin?: boolean;
+  isCreator?: boolean;
 }
 
-export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
+export function DashboardNav({ user, isAdmin, isCreator }: DashboardNavProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -139,19 +139,35 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
               );
             })}
             <hr className={theme === 'dark' ? 'border-dark-800' : 'border-gray-200'} />
-            <Link
-              href="/creator"
-              onClick={() => setMobileMenuOpen(false)}
-              className={cn(
-                "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all",
-                theme === 'dark'
-                  ? 'bg-purple-900/20 text-purple-400 hover:bg-purple-900/30'
-                  : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
-              )}
-            >
-              <BookOpen className="h-5 w-5 mr-3" />
-              Creator Studio
-            </Link>
+            {isCreator ? (
+              <Link
+                href="/creator"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all",
+                  theme === 'dark'
+                    ? 'bg-purple-900/20 text-purple-400 hover:bg-purple-900/30'
+                    : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
+                )}
+              >
+                <BookOpen className="h-5 w-5 mr-3" />
+                Creator Studio
+              </Link>
+            ) : (
+              <Link
+                href="/creator/onboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all",
+                  theme === 'dark'
+                    ? 'bg-dark-800 text-dark-300 hover:bg-dark-700 hover:text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                )}
+              >
+                <BookOpen className="h-5 w-5 mr-3" />
+                Become a Creator
+              </Link>
+            )}
             <hr className={theme === 'dark' ? 'border-dark-800' : 'border-gray-200'} />
             <button
               onClick={handleSignOut}
@@ -278,6 +294,39 @@ export function DashboardNav({ user, isAdmin }: DashboardNavProps) {
               );
             })}
           </nav>
+
+          {/* Creator Studio Link */}
+          <div className="px-4 mb-4">
+            {isCreator ? (
+              <Link
+                href="/creator"
+                className={cn(
+                  "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all border",
+                  theme === 'dark'
+                    ? 'bg-purple-900/20 border-purple-800 text-purple-400 hover:bg-purple-900/30'
+                    : 'bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100'
+                )}
+              >
+                <BookOpen className="h-5 w-5 mr-3" />
+                Creator Studio
+                <ChevronRight className="ml-auto h-4 w-4 opacity-50" />
+              </Link>
+            ) : (
+              <Link
+                href="/creator/onboard"
+                className={cn(
+                  "flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all border",
+                  theme === 'dark'
+                    ? 'bg-dark-800 border-dark-700 text-dark-300 hover:bg-dark-700 hover:text-white'
+                    : 'bg-gray-100 border-gray-200 text-gray-600 hover:bg-gray-200'
+                )}
+              >
+                <BookOpen className="h-5 w-5 mr-3" />
+                Become a Creator
+                <ChevronRight className="ml-auto h-4 w-4 opacity-50" />
+              </Link>
+            )}
+          </div>
 
           {/* Integration Guide Link */}
           <div className="px-4 mb-4">

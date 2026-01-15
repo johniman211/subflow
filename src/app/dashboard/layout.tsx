@@ -40,11 +40,12 @@ export default async function DashboardLayout({
   }
 
   const isAdmin = profile?.is_platform_admin || false;
+  const isCreator = (profile as any)?.is_creator || false;
 
   return (
     <DashboardWrapper>
       <div className="min-h-screen transition-colors duration-200">
-        <DashboardNav user={profile} isAdmin={isAdmin} />
+        <DashboardNav user={profile} isAdmin={isAdmin} isCreator={isCreator} />
         <main className="lg:pl-72">
           <div className="px-4 py-8 sm:px-6 lg:px-8">
             {children}

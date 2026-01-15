@@ -54,9 +54,10 @@ const navigation = [
 interface CreatorNavProps {
   user: User | null;
   creator: Creator | null;
+  isCreator?: boolean;
 }
 
-export function CreatorNav({ user, creator }: CreatorNavProps) {
+export function CreatorNav({ user, creator, isCreator = true }: CreatorNavProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
